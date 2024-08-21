@@ -1,0 +1,57 @@
+version: 2
+
+models:
+  - name: followings
+    description: "Every follow action performed on the platform. Decidim counts follow in two different ways: follows on a specific resource (proposal, commentary, etc.) named 'real follow' and follows made on a component; every resource contained in that component is then marked as followed."
+    columns:
+      - name: following_way
+        description: "Describes if the follow is either on a specific resource ('real_follow') or a component as a whole ('ancestor_follow')"
+        data_tests:
+          - accepted_values:
+              values: ['real_follow', 'ancestor_follow']
+
+#unit_tests:
+#  - name: mock-test
+#    description: "Mock test to trigger type errors in dbt-postgres"
+#    model: followings
+#    given:
+#      - input: ref('stg_decidim_follows')
+#        format: dict
+#        rows:
+#          - {id: 1, decidim_followable_id: 42, decidim_followable_type: 'Decidim::Proposals::Proposal'}
+#      - input: ref('proposals')
+#        format: dict
+#        rows:
+#          - {id: 42, resource_type: 'Decidim::Proposals::Proposal'}
+#      - input: ref('components')
+#        format: dict
+#        rows:
+#          - {id: 666}
+#      - input: ref('debates')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('blogs_posts')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('int_users')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('meetings')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('budgets_projects')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: this
+#        format: dict
+#        rows:
+#          - {decidim_component_id: 666}
+#    expect:
+#      format: dict
+#      rows:
+#        - {id: 1}

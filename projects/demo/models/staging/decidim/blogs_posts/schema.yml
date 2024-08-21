@@ -1,0 +1,13 @@
+unit_tests:
+  - name: resource_type_definition
+    description: "Checks that the resource type is properly defined"
+    model: stg_decidim_blogs_posts
+    given:
+      - input: source('decidim', 'decidim_blogs_posts')
+        format: dict
+        rows:
+          - {id: 1}
+    expect:
+      format: dict
+      rows:
+          - {resource_type: 'Decidim::Blogs::Post'}

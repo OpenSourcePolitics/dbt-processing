@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: int_scopes
+    description: "Intermediate model for Decidim scopes, excluding the 'part_of' column due to ARRAY bug in tests."
+    columns:
+      - name: id
+        description: "Unique identifier for the scope."
+      - name: decidim_organization_id
+        description: "Identifier for the Decidim organization to which the scope belongs."
+      - name: created_at
+        description: "Timestamp when the scope was created."
+      - name: updated_at
+        description: "Timestamp when the scope was last updated."
+      - name: name
+        description: "Name of the scope in French, with a default value 'Sans secteur' if the name is empty."
+      - name: scope_type_id
+        description: "Identifier for the type of scope."
+      - name: parent_id
+        description: "Identifier for the parent scope, if applicable."
+      - name: code
+        description: "Code associated with the scope."
+
+#unit_tests:
+#  - name: test_default_scope_name
+#    description: "Test that the scope name defaults to 'Sans secteur' if the French name is empty"
+#    model: int_scopes
+#    given:
+#      - input: ref('stg_decidim_scopes')
+#        format: dict
+#        rows:
+#          - {id: 1, name: '{"fr": ""}'}
+#          - {id: 2, name: '{"fr": "Education"}'}
+#    expect:
+#      format: dict
+#      rows:
+#        - {id: 1, name: 'Sans secteur'}
+#        - {id: 2, name: 'Education'}
+#

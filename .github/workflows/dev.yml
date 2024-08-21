@@ -1,0 +1,74 @@
+name: Generate and Run dbt Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - '**'
+
+env:
+  HOST: ${{ secrets.HOST }}
+  PASSWORD: ${{ secrets.PASSWORD }}
+  PORT: ${{ secrets.PORT }}
+  TARGET_SCHEMA: ${{ secrets.SCHEMA_DEV }}
+  USER: ${{ secrets.USER }}
+
+jobs:
+
+  generate-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Generate matrix
+        id: set-matrix
+        run: |
+          project_dirs=$(find projects -maxdepth 1 -mindepth 1 -type d -not -name 'demo')
+          matrix=$(echo "$project_dirs" | jq -R -s -c 'split("\n") | map(select(length > 0)) | {project_dir: .}')
+          echo "matrix=$matrix" >> $GITHUB_ENV
+          echo "::set-output name=matrix::$matrix"
+
+  run-dbt-tests:
+    needs: generate-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+
+    steps:
+    - name: Check out
+      uses: actions/checkout@master
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12.x"
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Read db_secret from config.yml
+      id: read-config
+      run: |
+        config_file="${{ matrix.project_dir }}/config.yml"
+        db_secret=$(grep 'db_secret_dev:' "$config_file" | awk '{print $2}')
+        echo "DB_SECRET_NAME=$db_secret" >> $GITHUB_ENV
+
+    - name: Configure db name
+      run: |
+        echo "DBNAME_DEV=${{ secrets[env.DB_SECRET_NAME] }}" >> $GITHUB_ENV
+
+    - name: Run dbt test
+      run: |
+        echo "Switching to project directory: ${{ matrix.project_dir }}"
+        cd ${{ matrix.project_dir }}
+        dbt deps --target dev
+        dbt run --target dev
+        dbt test --target dev 

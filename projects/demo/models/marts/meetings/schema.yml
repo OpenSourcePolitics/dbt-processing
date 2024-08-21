@@ -1,0 +1,50 @@
+models:
+  - name: meetings
+    schema: "{{ var('target_schema') }}"
+    description: "Every meeting published on the platform"
+    columns:
+      - name: id
+        description: "The unique identifier for a meeting"
+unit_tests:
+  - name: test_url_concatenation
+    description: "Check URL concatenation logic"
+    model: meetings
+    given:
+      - input: ref('int_meetings')
+        format: dict
+        rows:
+          - {decidim_component_id: 1, id : 100}       
+      - input: ref('components')
+        format: dict
+        rows:
+          - {organization_host: 'host1', ps_space_type_slug: 'space_type_slug1', ps_slug: 'ps_slug1', id: 1, manifest_name: 'meetings'}
+      - input: ref("categorizations")
+        format: dict
+        rows:
+          - {categorizable_id : 100}   
+    expect:
+      format: dict
+      rows: 
+        - {meeting_url: "https://host1/space_type_slug1/ps_slug1/f/1/meetings/100"}
+  - name: test_manifest_name_is_meetings
+    description: "Check that manifest name filters on meetings"
+    model: meetings
+    given:
+      - input: ref('int_meetings')
+        format: dict
+        rows:
+          - {decidim_component_id: 1, id : 100} 
+          - {decidim_component_id: 2, id : 200}      
+      - input: ref('components')
+        format: dict
+        rows: 
+          - {id : 1, manifest_name: 'meetings'} 
+          - {id : 2, manifest_name: 'foo'}   
+      - input: ref("categorizations")
+        format: dict
+        rows:
+          - {}  
+    expect:
+      format: dict
+      rows: 
+        - {id : 100}

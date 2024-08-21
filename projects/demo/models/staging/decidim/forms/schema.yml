@@ -1,0 +1,147 @@
+version: 2
+
+sources:
+  - name: decidim
+    database: "{{ var('dbname') }}"
+    schema: public
+    tables:
+      - name: decidim_forms_answer_choices
+      - name: decidim_forms_answers
+      - name: decidim_forms_question_matrix_rows
+      - name: decidim_forms_questionnaires
+      - name: decidim_forms_questions
+
+models:
+  - name: stg_decidim_forms_answer_choices
+    description: "Table for forms answer choices when the answer is in a matrix question or in a sorting or optional question, this table stores the choice of the answerer."
+    columns:
+      - name: id
+        description: "Primary key."
+        data_tests:
+          - not_null
+          - unique
+      - name: decidim_answer_id
+        description: "Foreign key to the answer this choice belongs to from the table decidim_forms_answers"
+        data_tests:
+          - not_null
+      - name: decidim_answer_option_id
+        description: "Foreign key to the answer option from the table decidim_forms_answer_options. (Currently not used)"
+      - name: position
+        description: "Position of the answer choice when the question is of type sorting."
+      - name: body
+        description: "Content of the answer choice."
+        data_tests:
+          - not_null
+      - name: custom_body
+        description: "Custom body for the answer choice when the answer is of type free text."
+      - name: decidim_question_matrix_row_id
+        description: "Foreign key to the question matrix row when the question is of type matrix. It matches the matrix rows."
+
+  - name: stg_decidim_forms_answers
+    description: "Table for forms answer when the answer is not in a matrix or optional and sorting question. (i.e long_answer and short_answer)"
+    columns:
+      - name: id
+        description: "Primary key."
+        data_tests:
+          - not_null
+          - unique
+      - name: body
+        description: "Content of the answer. It is null if the question is a matrix or option, or sorting. It can be 'separator' if the question is a separator"
+      - name: decidim_user_id
+        description: "Foreign key to the user who gave the answer."
+      - name: decidim_questionnaire_id
+        description: "Foreign key to the questionnaire."
+      - name: decidim_question_id
+        description: "Foreign key to the question."
+      - name: created_at
+        description: "Timestamp when the answer was created."
+      - name: updated_at
+        description: "Timestamp when the answer was last updated."
+      - name: session_token
+        description: "Session token of the user."
+      - name: ip_hash
+        description: "Hashed IP address of the user."
+
+  - name: stg_decidim_forms_question_matrix_rows
+    description: "Table for forms question of type matrix."
+    columns:
+      - name: id
+        description: "Primary key."
+        data_tests:
+          - not_null
+          - unique
+      - name: decidim_question_id
+        description: "Foreign key to the question."
+        data_tests:
+          - not_null
+      - name: position
+        description: "Position of the matrix row."
+      - name: body
+        description: "Content of the matrix row."
+        data_tests:
+          - not_null
+
+  - name: stg_decidim_forms_questionnaires
+    description: "Table for forms questionnaires"
+    columns:
+      - name: id
+        description: "Primary key."
+        data_tests:
+          - not_null
+          - unique
+      - name: title
+        description: "Title of the questionnaire."
+      - name: description
+        description: "Description of the questionnaire."
+      - name: tos
+        description: "Terms of service associated with the questionnaire."
+      - name: questionnaire_for_type
+        description: "Type of entity the questionnaire is for."
+      - name: questionnaire_for_id
+        description: "ID of the entity the questionnaire is for."
+      - name: published_at
+        description: "Timestamp when the questionnaire was published."
+      - name: created_at
+        description: "Timestamp when the questionnaire was created."
+      - name: updated_at
+        description: "Timestamp when the questionnaire was last updated."
+      - name: salt
+        description: "Salt used for hashing."
+
+  - name: stg_decidim_forms_questions
+    description: "Table for forms questions"
+    columns:
+      - name: id
+        description: "Primary key."
+        data_tests:
+          - not_null
+          - unique
+      - name: decidim_questionnaire_id
+        description: "Foreign key to the questionnaire."
+      - name: position
+        description: "Position of the question."
+      - name: question_type
+        description: "Type of the question (e.g., short_answer, long_answer, single_matrix ...)."
+      - name: mandatory
+        description: "Boolean that indicates whether the question is mandatory."
+      - name: body
+        description: "Content of the question."
+      - name: description
+        description: "Description of the question."
+      - name: max_choices
+        description: "Maximum number of choices allowed for the question."
+      - name: created_at
+        description: "Timestamp when the question was created."
+      - name: updated_at
+        description: "Timestamp when the question was last updated."
+      - name: max_characters
+        description: "Maximum number of characters allowed for the question."
+
+
+
+
+
+
+
+
+

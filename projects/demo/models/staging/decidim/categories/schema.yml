@@ -1,0 +1,57 @@
+version: 2
+
+
+sources:
+  - name: decidim
+    database: "{{ var('dbname') }}"
+    schema: public  
+    tables:
+      - name : decidim_categories
+      - name : decidim_categorizations
+
+models:
+  - name: stg_decidim_categories
+    description: "Table describing categories (and sub categories) attributes used to classify ressources within a space."
+    columns:
+      - name: id
+        description: "Unique identifier of the category."
+      - name: name
+        description: "Name of the category. ex: Sports, Environment"
+      - name: description
+        description: "String describing the category"
+      - name: parent_id
+        description: "Unique identifier of the parent category. Can be null if the category is not a sub category"
+      - name: decidim_participatory_space_id
+        description: "Unique identifier of the participatory space the category is in."
+      - name: decidim_participatory_space_type
+        description: "Type of the participatory space the category is in. ex: Decidim::ParticipatoryProcess"
+      - name: weight
+        description: "Optional field. Which order will it have in relation to the other categories. Having a lower number means a higher priority. For instance, if you have two categories, 'Category a' with weight '10' and 'Category b' with weight '0', then 'Category b' will be first when ordering."
+
+  - name: stg_decidim_categorizations
+    description: "Table describing entities that are categorized (and sub categorized) within a participatory space"
+    columns:
+      - name: id
+        description: "Unique incremental identifier of the table"
+        data_tests:
+          - unique
+          - not_null
+      - name : decidim_category_id
+        description: "Unique idientifier of the category defined in the 'decidim_categories' table"
+      - name : categorizable_type
+        description: "Type of the entities categorized. ex: 'Decidim::Proposals::Proposal', 'Decidim::Budgets::Project', 'Decidim::Accountability::Result'"
+      - name : categorizable_id
+        description: "For each categorizable type, there is a unique identifier. The categorizable id is that identifier. However multiple categorizable entities can have the same idientifier. ex : All three of these 'Decidim::Proposals::Proposal', 'Decidim::Budgets::Project' and 'Decidim::Accountability::Result' can have the categorizable_id 52."
+      - name : created_at
+        description: "Creation date"
+      - name : updated_at
+        description: "Update date"
+        
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+        #description: "This test is assuming that "no categorizable entity with the same id is assigned to the same categorizable type".
+          combination_of_columns:
+            - categorizable_id
+            - categorizable_type
+  
+

@@ -1,0 +1,161 @@
+unit_tests:
+  - name: int_forms_answers_author_status_check
+    description: "Check that the author status is correctly detected"
+    model: int_forms_answers
+    given:
+      - input: ref('stg_decidim_forms_answers')
+        format: dict
+        rows:
+          - {decidim_user_id: 1}
+          - {decidim_user_id: NULL}
+    expect:
+      format: dict
+      rows:
+        - {author_status: "Inscrit"}
+        - {author_status: "Non-inscrit"}
+
+  - name: answers_short_and_long_answer_check
+    description: "Check if option and sorting answers are correctly processed in the answers_short_and_long_answer CTE"
+    model: answers_short_and_long_answer
+    given:
+      - input: ref('int_forms_answers')
+        format: dict
+        rows:
+          - {id: 1, decidim_question_id: 41, body: 'Answer 1'}
+          - {id: 2, decidim_question_id: 42, body: NULL}
+      - input: ref('stg_decidim_forms_questions')
+        format: dict
+        rows:
+          - {id: 41, decidim_questionnaire_id: 101, body: '{"fr": "Question 1"}', position: 1, question_type: 'short_answer'}
+          - {id: 42, decidim_questionnaire_id: 101, body: '{"fr": "Question 2"}', position: 2, question_type: 'long_answer'}
+      - input: ref('forms')
+        format: dict
+        rows:
+          - {id: 101}
+    expect:
+      format: dict
+      rows:
+        - {answer: 'Answer 1', sub_matrix_question: '', custom_body: '', sorting_position: -1, decidim_questionnaire_id: 101, position: 1}
+        - {answer: 'Pas de réponse', sub_matrix_question: '', custom_body: '', sorting_position: -1, decidim_questionnaire_id: 101, position: 2}
+
+  - name: answers_matrix_check
+    description: "Check if matrix answers are correctly processed"
+    model: answers_matrix
+    given:
+      - input: ref('int_forms_answers')
+        format: dict
+        rows:
+          - {id: 901, decidim_question_id: 41}
+      - input: ref('stg_decidim_forms_questions')
+        format: dict
+        rows:
+          - {id: 41, decidim_questionnaire_id: 101, body: "How often do you go there ?", question_type: 'matrix_single'}
+      - input: ref('stg_decidim_forms_answer_choices')
+        format: dict
+        rows:
+          - {decidim_answer_id: 901, body: 'Rarely', decidim_question_matrix_row_id: 1}
+          - {decidim_answer_id: 901, body: 'Never', decidim_question_matrix_row_id: 2}
+          - { decidim_answer_id: 901, body: 'Often', decidim_question_matrix_row_id: 3}
+      - input: ref('stg_decidim_forms_question_matrix_rows')
+        format: dict
+        rows:
+          - {id: 1, body: 'Place 1'}
+          - {id: 2, body: 'Place 2'}
+          - {id: 3, body: 'Place 3'}
+    expect:
+      format: dict
+      rows:
+        - {body: "How often do you go there ?", answer: "Rarely", sub_matrix_question: "Place 1", sorting_position: -1, decidim_questionnaire_id: 101, custom_body: '', question_type: 'matrix_single'}
+        - {body: "How often do you go there ?", answer: "Never", sub_matrix_question: "Place 2", sorting_position: -1, decidim_questionnaire_id: 101, custom_body: '', question_type: 'matrix_single'}
+        - {body: "How often do you go there ?", answer: "Often", sub_matrix_question: "Place 3", sorting_position: -1, decidim_questionnaire_id: 101, custom_body: '', question_type: 'matrix_single'}
+
+  - name: answers_option_and_sorting_check_on_question_type
+    description: "Check that question_type is correctly taken into account"
+    model: answers_option_and_sorting
+    given:
+      - input: ref('int_forms_answers')
+        format: dict
+        rows:
+          - {id: 901, decidim_question_id: 41}
+          - {id: 902, decidim_question_id: 42}
+          - {id: 903, decidim_question_id: 43}
+          - {id: 904, decidim_question_id: 44}
+      - input: ref('stg_decidim_forms_questions')
+        format: dict
+        rows:
+          - {id: 41, question_type: 'single_option'}
+          - {id: 42, question_type: 'multiple_option'}
+          - {id: 43, question_type: 'sorting'}
+          - {id: 44, question_type: 'matrix_single'}
+      - input: ref('stg_decidim_forms_answer_choices')
+        format: dict
+        rows:
+          - {decidim_answer_id: 901}
+          - {decidim_answer_id: 902}
+          - {decidim_answer_id: 903}
+          - {decidim_answer_id: 904}
+    expect:
+      format: dict
+      rows:
+          - {question_type: 'single_option'}
+          - {question_type: 'multiple_option'}
+          - {question_type: 'sorting'}
+
+  - name: short_and_long_answer_check_on_question_type
+    description: "Check that question_type is correctly taken into account"
+    model: answers_short_and_long_answer
+    given:
+      - input: ref('int_forms_answers')
+        format: dict
+        rows:
+          - {id: 901, decidim_question_id: 41}
+          - {id: 902, decidim_question_id: 42}
+          - {id: 903, decidim_question_id: 43}
+          - {id: 904, decidim_question_id: 44}
+      - input: ref('stg_decidim_forms_questions')
+        format: dict
+        rows:
+          - {id: 41, question_type: 'short_answer'}
+          - {id: 42, question_type: 'long_answer'}
+          - {id: 43, question_type: 'sorting'}
+          - {id: 44, question_type: 'matrix_single'}
+    expect:
+      format: dict
+      rows:
+          - {question_type: 'short_answer'}
+          - {question_type: 'long_answer'}
+
+  - name: answers_matrix_check_on_question_type
+    description: "Check that question_type is correctly taken into account"
+    model: answers_matrix
+    given:
+      - input: ref('int_forms_answers')
+        format: dict
+        rows:
+          - {id: 901, decidim_question_id: 41}
+          - {id: 902, decidim_question_id: 42}
+          - {id: 903, decidim_question_id: 43}
+          - {id: 904, decidim_question_id: 44}
+      - input: ref('stg_decidim_forms_questions')
+        format: dict
+        rows:
+          - {id: 41, question_type: 'short_answer'}
+          - {id: 42, question_type: 'long_answer'}
+          - {id: 43, question_type: 'matrix_multiple'}
+          - {id: 44, question_type: 'matrix_single'}
+      - input: ref('stg_decidim_forms_answer_choices')
+        format: dict
+        rows:
+          - {decidim_answer_id: 903, decidim_question_matrix_row_id: 1}
+          - {decidim_answer_id: 904, decidim_question_matrix_row_id: 2}
+      - input: ref('stg_decidim_forms_question_matrix_rows')
+        format: dict
+        rows:
+          - {id: 1}
+          - {id: 2}
+          - {id: 3}
+    expect:
+      format: dict
+      rows:
+          - {question_type: 'matrix_multiple'}
+          - {question_type: 'matrix_single'}

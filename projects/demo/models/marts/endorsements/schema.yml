@@ -1,0 +1,72 @@
+unit_tests:
+  - name: moderations-check
+    description: "Check if endorsements to moderated proposals/debates/blog posts are properly ignored"
+    model: endorsements
+    given:
+      - input: ref('stg_decidim_endorsements')
+        format: dict
+        rows:
+          - {id: 1, resource_id: 1, resource_type: 'Decidim::Proposals::Proposal'}
+          - {id: 2, resource_id: 2, resource_type: 'Decidim::Proposals::Proposal'}
+      - input: ref('stg_decidim_moderations')
+        format: dict
+        rows:
+          - {decidim_reportable_id: 1, decidim_reportable_type: 'Decidim::Proposals::Proposal', hidden_at: '2024-07-22'}
+          - {decidim_reportable_id: 2, decidim_reportable_type: 'Decidim::Proposals::Proposal', hidden_at: NULL}
+      - input: ref('stg_decidim_proposals')
+        format: dict
+        rows:
+          - {id: 1, resource_type: 'Decidim::Proposals::Proposal'}
+          - {id: 2, resource_type: 'Decidim::Proposals::Proposal'}
+      - input: ref('stg_decidim_debates')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_blogs_posts')
+        format: dict
+        rows:
+          - {}
+    expect:
+      format: dict
+      rows:
+        - {id: 2}
+  - name: endorsements-component-check
+    description: "Check if endorsements are properly matched to their components"
+    model: endorsements
+    given:
+      - input: ref('stg_decidim_endorsements')
+        format: dict
+        rows:
+          - {id: 1, resource_id: 42, resource_type: 'Decidim::Proposals::Proposal'}
+          - {id: 2, resource_id: 42, resource_type: 'Decidim::Debates::Debate'}
+          - {id: 3, resource_id: 42, resource_type: 'Decidim::Blogs::Post'}
+      - input: ref('stg_decidim_proposals')
+        format: dict
+        rows:
+          - {id: 42, resource_type: 'Decidim::Proposals::Proposal', decidim_component_id: 100}
+          - {id: 91, resource_type: 'Decidim::Proposals::Proposal', decidim_component_id: 991}
+      - input: ref('stg_decidim_debates')
+        format: dict
+        rows:
+          - {id: 42, resource_type: 'Decidim::Debates::Debate', decidim_component_id: 200}
+          - {id: 92, resource_type: 'Decidim::Debates::Debate', decidim_component_id: 992}
+      - input: ref('stg_decidim_blogs_posts')
+        format: dict
+        rows:
+          - {id: 42, resource_type: 'Decidim::Blogs::Post', decidim_component_id: 300}
+          - {id: 93, resource_type: 'Decidim::Blogs::Post', decidim_component_id: 993}
+      - input: ref('stg_decidim_moderations')
+        format: dict
+        rows:
+          - {}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, decidim_component_id: 100}
+        - {id: 2, decidim_component_id: 200}
+        - {id: 3, decidim_component_id: 300}
+
+
+
+
+

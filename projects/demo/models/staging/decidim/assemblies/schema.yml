@@ -1,0 +1,168 @@
+version: 2
+
+models:
+  - name: stg_decidim_assemblies
+    description: "This model represents the assemblies in Decidim, with selected and renamed fields for easier analysis."
+    columns:
+      - name: id
+        description: "Unique identifier of the assembly."
+        type: bigint
+      - name: slug
+        description: "Readable unique identifier of the assembly."
+        type: text
+      - name: hashtag
+        description: "Hashtag associated with the assembly."
+        type: text
+      - name: decidim_organization_id
+        description: "Identifier of the associated Decidim organization."
+        type: bigint
+      - name: created_at
+        description: "Date when the assembly was created."
+        type: timestamp
+      - name: updated_at
+        description: "Date when the assembly was last updated."
+        type: timestamp
+      - name: title
+        description: "Title of the assembly in French."
+        type: text
+      - name: subtitle
+        description: "Subtitle of the assembly in French."
+        type: text
+      - name: short_description
+        description: "Short description of the assembly."
+        type: text
+      - name: description
+        description: "Full description of the assembly."
+        type: text
+      - name: hero_image
+        description: "Hero image of the assembly."
+        type: text
+      - name: banner_image
+        description: "Banner image of the assembly."
+        type: text
+      - name: promoted
+        description: "Indicator if the assembly is promoted."
+        type: boolean
+      - name: published_at
+        description: "Date when the assembly was published."
+        type: timestamp
+      - name: developer_group
+        description: "Developer group associated with the assembly."
+        type: text
+      - name: meta_scope
+        description: "Meta scope of the assembly."
+        type: text
+      - name: local_area
+        description: "Local area related to the assembly."
+        type: text
+      - name: target
+        description: "Target audience of the assembly."
+        type: text
+      - name: participatory_scope
+        description: "Participatory scope of the assembly."
+        type: text
+      - name: participatory_structure
+        description: "Participatory structure of the assembly."
+        type: text
+      - name: show_statistics
+        description: "Indicator if statistics are shown for the assembly."
+        type: boolean
+      - name: decidim_scope_id
+        description: "Identifier of the Decidim scope."
+        type: bigint
+      - name: scopes_enabled
+        description: "Indicator if scopes are enabled for the assembly."
+        type: boolean
+      - name: private_space
+        description: "Indicator if the assembly is in a private space."
+        type: boolean
+      - name: reference
+        description: "Reference identifier of the assembly."
+        type: text
+      - name: decidim_area_id
+        description: "Identifier of the Decidim area."
+        type: bigint
+      - name: parent_id
+        description: "Identifier of the parent assembly."
+        type: bigint
+      - name: parents_path
+        description: "Path of parent assemblies."
+        type: text
+      - name: children_count
+        description: "Count of child assemblies."
+        type: bigint
+      - name: purpose_of_action
+        description: "Purpose of the assembly's action."
+        type: text
+      - name: composition
+        description: "Composition of the assembly."
+        type: text
+      - name: creation_date
+        description: "Creation date of the assembly."
+        type: date
+      - name: created_by
+        description: "User who created the assembly."
+        type: text
+      - name: created_by_other
+        description: "Other entity that created the assembly."
+        type: text
+      - name: duration
+        description: "Duration of the assembly."
+        type: date
+      - name: included_at
+        description: "Date when the assembly was included."
+        type: date
+      - name: closing_date
+        description: "Closing date of the assembly."
+        type: date
+      - name: closing_date_reason
+        description: "Reason for the assembly's closing date."
+        type: text
+      - name: internal_organisation
+        description: "Internal organization associated with the assembly."
+        type: text
+      - name: is_transparent
+        description: "Indicator if the assembly is transparent."
+        type: boolean
+      - name: special_features
+        description: "Special features of the assembly."
+        type: text
+      - name: twitter_handler
+        description: "Twitter handle associated with the assembly."
+        type: text
+      - name: instagram_handler
+        description: "Instagram handle associated with the assembly."
+        type: text
+      - name: facebook_handler
+        description: "Facebook handle associated with the assembly."
+        type: text
+      - name: youtube_handler
+        description: "YouTube handle associated with the assembly."
+        type: text
+      - name: github_handler
+        description: "GitHub handle associated with the assembly."
+        type: text
+      - name: decidim_assemblies_type_id
+        description: "Identifier of the Decidim assembly type."
+        type: bigint
+      - name: weight
+        description: "Weight of the assembly."
+        type: bigint
+      - name: follows_count
+        description: "Count of follows for the assembly."
+        type: bigint
+      - name: announcement
+        description: "Announcements related to the assembly."
+        type: text
+      - name: _airbyte_ab_id
+        description: "Airbyte unique identifier."
+        type: varchar
+      - name: _airbyte_emitted_at
+        description: "Timestamp when the record was emitted by Airbyte."
+        type: timestamp with time zone
+      - name: _airbyte_normalized_at
+        description: "Timestamp when the record was normalized by Airbyte."
+        type: timestamp with time zone
+      - name: _airbyte_decidim_assemblies_hashid
+        description: "Hash identifier for the Decidim assemblies record."
+        type: text

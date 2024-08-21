@@ -1,0 +1,2 @@
+db_secret_dev: ANGERS_DBNAME_DEV
+db_secret_prod: ANGERS_DBNAME_PROD

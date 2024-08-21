@@ -1,0 +1,25 @@
+
+version: 2
+
+models:
+  - name: stg_decidim_scopes
+    description: "Scopes are the set of territories or subjects that an Organization has. A scope may have child scopes."
+    columns:
+      - name: id
+        description: "Unique identifier for the scope."
+      - name: decidim_organization_id
+        description: "Identifier for the Decidim organization to which the scope belongs."
+      - name: created_at
+        description: "Timestamp when the scope was created."
+      - name: updated_at
+        description: "Timestamp when the scope was last updated."
+      - name: name
+        description: "Name of the scope."
+      - name: scope_type_id
+        description: "Identifier for the type of scope."
+      - name: parent_id
+        description: "Identifier for the parent scope, if applicable."
+      - name: code
+        description: "Code associated with the scope."
+      - name: part_of
+        description: "IDs of the parent-child scope relationship"

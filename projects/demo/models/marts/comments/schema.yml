@@ -1,0 +1,141 @@
+#unit_tests:
+#  - name: moderations_check
+#    description: "Check if comments are properly ignored due to 'hidden_at' date"
+#    model: comments
+#    given:
+#      - input: ref('stg_decidim_comments')
+#        format: dict
+#        rows:
+#          - {id: 1, decidim_root_commentable_id: 100, decidim_root_commentable_type: 'Decidim::Proposals::Proposal'}
+#          - {id: 2, decidim_root_commentable_id: 200, decidim_root_commentable_type: 'Decidim::Proposals::Proposal'}
+#      - input: ref('components')
+#        format: dict
+#        rows:
+#          - {id: 42}
+#          - {id: 43}
+#      - input: ref('stg_decidim_moderations')
+#        format: dict
+#        rows:
+#          - {decidim_reportable_id: 1, decidim_reportable_type: 'Decidim::Comments::Comment', hidden_at: '2024-07-22'}
+#          - {decidim_reportable_id: 2, decidim_reportable_type: 'Decidim::Comments::Comment', hidden_at: NULL}
+#      - input: ref('stg_decidim_proposals')
+#        format: dict
+#        rows:
+#          - {id: 100, decidim_component_id: 42}
+#          - {id: 200, decidim_component_id: 43}
+#      - input: ref('stg_decidim_debates')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('stg_decidim_blogs_posts')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('stg_decidim_accountability_results')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('stg_decidim_proposals_collaborative_drafts')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('budgets_projects_for_comments')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('stg_decidim_budgets')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('stg_decidim_meetings')
+#        format: dict
+#        rows:
+#          - {}
+#    expect:
+#      format: dict
+#      rows:
+#        - {id: 2}
+#  - name: comments_component_check
+#    description: "Check if comments are properly matched to their components"
+#    model: comments
+#    given:
+#      - input: ref('stg_decidim_comments')
+#        format: dict
+#        rows:
+#          - {id: 1, decidim_root_commentable_id: 42, decidim_root_commentable_type: 'Decidim::Proposals::Proposal'}
+#          - {id: 2, decidim_root_commentable_id: 42, decidim_root_commentable_type: 'Decidim::Debates::Debate'}
+#          - {id: 3, decidim_root_commentable_id: 42, decidim_root_commentable_type: 'Decidim::Blogs::Post'}
+#          - {id: 4, decidim_root_commentable_id: 42, decidim_root_commentable_type: 'Decidim::Accountability::Result'}
+#          - {id: 5, decidim_root_commentable_id: 42, decidim_root_commentable_type: 'Decidim::Proposals::CollaborativeDraft'}
+#          - {id: 6, decidim_root_commentable_id: 42, decidim_root_commentable_type: 'Decidim::Budgets::Project'}
+#          - {id: 7, decidim_root_commentable_id: 42, decidim_root_commentable_type: 'Decidim::Meetings::Meeting'}
+#      - input: ref('stg_decidim_proposals')
+#        format: dict
+#        rows:
+#          - {id: 42, decidim_component_id: 100}
+#          - {id: 91, decidim_component_id: 991}
+#      - input: ref('stg_decidim_debates')
+#        format: dict
+#        rows:
+#          - {id: 42, decidim_component_id: 200}
+#          - {id: 92, decidim_component_id: 992}
+#      - input: ref('stg_decidim_blogs_posts')
+#        format: dict
+#        rows:
+#          - {id: 42, decidim_component_id: 300}
+#          - {id: 93, decidim_component_id: 993}
+#      - input: ref('stg_decidim_accountability_results')
+#        format: dict
+#        rows:
+#          - {id: 42, decidim_component_id: 400}
+#          - {id: 94, decidim_component_id: 994}
+#      - input: ref('stg_decidim_proposals_collaborative_drafts')
+#        format: dict
+#        rows:
+#          - {id: 42, decidim_component_id: 500}
+#          - {id: 95, decidim_component_id: 995}
+#      - input: ref('budgets_projects_for_comments')
+#        format: dict
+#        rows:
+#          - {id: 42, decidim_component_id: 600}
+#          - {id: 96, decidim_component_id: 996}
+#      - input: ref('stg_decidim_budgets')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('stg_decidim_meetings')
+#        format: dict
+#        rows:
+#          - {id: 42, decidim_component_id: 700}
+#          - {id: 97, decidim_component_id: 997}
+#      - input: ref('components')
+#        format: dict
+#        rows:
+#          - {id: 100}
+#          - {id: 200}
+#          - {id: 300}
+#          - {id: 400}
+#          - {id: 500}
+#          - {id: 600}
+#          - {id: 700}
+#          - {id: 991}
+#          - {id: 992}
+#          - {id: 993}
+#          - {id: 994}
+#          - {id: 995}
+#          - {id: 996}
+#          - {id: 997}
+#      - input: ref('stg_decidim_moderations')
+#        format: dict
+#        rows:
+#          - {}
+#    expect:
+#      format: dict
+#      rows:
+#        - {id: 1, decidim_component_id: 100}
+#        - {id: 2, decidim_component_id: 200}
+#        - {id: 3, decidim_component_id: 300}
+#        - {id: 4, decidim_component_id: 400}
+#        - {id: 5, decidim_component_id: 500}
+#        - {id: 6, decidim_component_id: 600}
+#        - {id: 7, decidim_component_id: 700}

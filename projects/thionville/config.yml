@@ -1,0 +1,3 @@
+db_secret_dev: THIONVILLE_DBNAME_DEV
+db_secret_prod: THIONVILLE_DBNAME_PROD
+

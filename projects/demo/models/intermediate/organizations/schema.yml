@@ -1,0 +1,75 @@
+version: 2
+
+models:
+  - name: int_organizations
+    description: "A staging model for Decidim organizations"
+    columns:
+      - name: id
+        description: "Unique identifier for the organization"
+      - name: name
+        description: "Name of the organization"
+      - name: host
+        description: "Host URL for the organization"
+      - name: default_locale
+        description: "Default locale for the organization"
+      - name: available_locales
+        description: "List of available locales for the organization"
+      - name: created_at
+        description: "Timestamp when the organization was created"
+      - name: description
+        description: "Description of the organization"
+      - name: secondary_hosts
+        description: "Secondary hosts for the organization"
+      - name: available_authorizations
+        description: "List of available authorizations for the organization"
+      - name: header_snippets
+        description: "Header snippets for the organization"
+      - name: tos_version
+        description: "Version of the terms of service"
+      - name: badges_enabled
+        description: "Indicates if badges are enabled. Badges in Decidim recognize participant actions and progress, enhancing engagement through gamification."
+      - name: send_welcome_notification
+        description: "Flag indicating if welcome notifications are sent"
+      - name: users_registration_mode
+        description: "Mode of user registration"
+      - name: time_zone
+        description: "Time zone of the organization"
+
+
+unit_tests:
+  - name: test_filter_by_host
+    description: "Test that the model only includes records with the specified host."
+    model: int_organizations
+    overrides:
+      vars:
+        host: "host1.com"
+    given:
+      - input: ref('stg_decidim_organizations')
+        format: dict
+        rows:
+          - {id: 1, host: 'host1.com'}
+          - {id: 2, host: 'host2.com'}
+          - {id: 3, host: 'host3.com'}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, host: 'host1.com'}
+  - name: test_regex_clean_description
+    description: "Test that the regex properly cleans the description field by removing HTML tags and entities."
+    model: int_organizations
+    overrides:
+      vars:
+        host: "host1.com"
+    given:
+      - input: ref('stg_decidim_organizations')
+        format: dict
+        rows:
+          - {id: 1, description: '{"fr": "<p>Welcome to &amp;Decidim</p>"}', host: 'host1.com'}
+          - {id: 2, description: '{"fr": "<div>Hello &amp;World</div>"}', host: 'host1.com'}
+          - {id: 3, description: '{"fr": "No HTML tags here"}', host: 'host1.com'}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, description: "Welcome to Decidim"}
+        - {id: 2, description: "Hello World"}
+        - {id: 3, description: "No HTML tags here"}

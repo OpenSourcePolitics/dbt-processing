@@ -1,0 +1,49 @@
+unit_tests:
+  - name: testing_that_main_categories_are_properly_processed
+    description: "Checks that main categories has the correct infos "
+    model: categorizations
+    given:
+      - input: ref('stg_decidim_categories')
+        format: dict
+        rows:
+          - {id: 1, name: "Environment"}
+          - {id: 2, name: "Public Affairs"}
+      - input: ref('stg_decidim_categorizations')
+        format: dict
+        rows:
+          - {decidim_category_id: 1, categorizable_id: 23, categorizable_type: "Decidim::Proposals::Proposal"}
+          - {decidim_category_id: 2, categorizable_id: 25, categorizable_type: "Decidim::Budgets::Project"}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, category_name: "Environment" , child_id: 0, child_name: "", categorizable_id: 23 , categorizable_type: "Decidim::Proposals::Proposal"}
+        - {id: 2, category_name: "Public Affairs", child_id: 0, child_name: "" , categorizable_id: 25, categorizable_type: "Decidim::Budgets::Project"}
+  
+  - name: testing_that_sub_categories_are_properly_processed
+    description: "Checks that sub categories has the correct infos "
+    model: categorizations
+    given:
+      - input: ref('stg_decidim_categories')
+        format: dict
+        rows:
+          - {id: 1, name: "Environment", parent_id: NULL}
+          - {id: 2, name: "Public Affairs", parent_id: NULL}
+          - {id: 101, name: "Green public spaces", parent_id: 1}
+          - {id: 102, name: "Pollution", parent_id: 1}
+          - {id: 201, name: "Administration", parent_id: 2}
+      - input: ref('stg_decidim_categorizations')
+        format: dict
+        rows:
+          - {decidim_category_id: 1, categorizable_id: 23, categorizable_type: "Decidim::Proposals::Proposal"}
+          - {decidim_category_id: 2, categorizable_id: 25, categorizable_type: "Decidim::Budgets::Project"}
+          - {decidim_category_id: 101, categorizable_id: 1001, categorizable_type: "Decidim::Proposals::Proposal"}
+          - {decidim_category_id: 102, categorizable_id: 1002, categorizable_type: "Decidim::Proposals::Proposal"}
+          - {decidim_category_id: 201, categorizable_id: 2001, categorizable_type: "Decidim::Budgets::Project"}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, category_name: "Environment" , child_id: 0, child_name: "", categorizable_id: 23 , categorizable_type: "Decidim::Proposals::Proposal"}
+        - {id: 2, category_name: "Public Affairs", child_id: 0, child_name: "" , categorizable_id: 25, categorizable_type: "Decidim::Budgets::Project"}
+        - {id: 1, category_name: "Environment" , child_id: 101, child_name: "Green public spaces", categorizable_id: 1001 , categorizable_type: "Decidim::Proposals::Proposal"} 
+        - {id: 1, category_name: "Environment" , child_id: 102, child_name: "Pollution", categorizable_id: 1002 , categorizable_type: "Decidim::Proposals::Proposal"}   
+        - {id: 2, category_name: "Public Affairs", child_id: 201, child_name: "Administration" , categorizable_id: 2001, categorizable_type: "Decidim::Budgets::Project"}    

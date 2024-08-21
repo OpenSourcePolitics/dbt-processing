@@ -1,0 +1,85 @@
+version: 2
+
+models:
+  - name: int_users
+    schema: "{{ var('target_schema') }}"
+    description: ""
+    columns:
+      - name: id
+        description: "The unique identifier for a user"
+        tests:
+          - unique
+          - not_null
+      - name: email
+        description: "The user's email address"
+      - name: nickname
+        description: "The user's nickname"
+        tests:
+          - not_null
+
+
+unit_tests:
+  - name: deleted_users_check
+    description: "Check that no deleted users are retrieved"
+    model: int_users
+    given:
+      - input: ref('stg_decidim_users')
+        format: dict
+        rows:
+          - {id: 1, deleted_at: "2024-07-17", type: "Decidim::User"}
+          - {id: 2, deleted_at: NULL, type: "Decidim::User"}
+    expect:
+      format: dict
+      rows:
+          - {id: 2}
+  - name: type_check
+    description: "Check that the type contains Decidim::User"
+    model: int_users
+    given:
+      - input: ref('stg_decidim_users')
+        format: dict
+        rows:
+          - {id: 1, type: "Decidim::User"}
+          - {id: 2, type: "Decidim::Admin"}
+          - {id: 3, type: "Decidim::Admin, Decidim::User"}
+    expect:
+      format: dict
+      rows:
+          - {id: 1}
+  - name: sign_in_frequency_check
+    description: "Check that the sign in frequency is properly calculated"
+    model: int_users
+    given:
+      - input: ref('stg_decidim_users')
+        format: dict
+        rows:
+          - {sign_in_count: 0, type: Decidim::User}
+          - {sign_in_count: 1, type: Decidim::User}
+          - {sign_in_count: 2, type: Decidim::User}
+          - {sign_in_count: 3, type: Decidim::User}
+          - {sign_in_count: 4, type: Decidim::User}
+          - {sign_in_count: 5, type: Decidim::User}
+          - {sign_in_count: 6, type: Decidim::User}
+          - {sign_in_count: 7, type: Decidim::User}
+          - {sign_in_count: 8, type: Decidim::User}
+          - {sign_in_count: 9, type: Decidim::User}
+          - {sign_in_count: 10, type: Decidim::User}
+          - {sign_in_count: 11, type: Decidim::User}
+          - {sign_in_count: 100, type: Decidim::User}
+    expect:
+      format: dict
+      rows:
+          - {sign_in_frequency: 'Jamais'}
+          - {sign_in_frequency: 'Une seule fois'}
+          - {sign_in_frequency: 'Deux fois'}
+          - {sign_in_frequency: 'Entre 2 et 10 fois'}
+          - {sign_in_frequency: 'Entre 2 et 10 fois'}
+          - {sign_in_frequency: 'Entre 2 et 10 fois'}
+          - {sign_in_frequency: 'Entre 2 et 10 fois'}
+          - {sign_in_frequency: 'Entre 2 et 10 fois'}
+          - {sign_in_frequency: 'Entre 2 et 10 fois'}
+          - {sign_in_frequency: 'Entre 2 et 10 fois'}
+          - {sign_in_frequency: 'Entre 2 et 10 fois'}
+          - {sign_in_frequency: 'Plus de 10 fois'}
+          - {sign_in_frequency: 'Plus de 10 fois'}
+

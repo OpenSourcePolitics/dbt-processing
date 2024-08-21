@@ -1,0 +1,10 @@
+
+version: 2
+
+models:
+  - name: project_votes
+    schema: "{{ var('target_schema') }}"
+    description: "Splits budgets orders (i.e. votes) on a per-project basis"
+    columns:
+      - name: id
+        description: "Is actually the order ID"    

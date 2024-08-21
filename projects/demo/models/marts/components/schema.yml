@@ -1,0 +1,180 @@
+version: 2
+
+models:
+  - name: components
+    description: "Model representing the components associated with participatory spaces in Decidim."
+    columns:
+      - name: id
+        description: "Unique identifier for the component."
+        data_tests:
+          - not_null
+          - unique
+      - name: manifest_name
+        description: "Name of the component's manifest file. The manifest defines the component's configuration and metadata."
+        data_tests:
+          - not_null
+      - name: translated_manifest_name
+        description: "Translated name of the component's manifest."
+      - name: component_name
+        description: "Full name of the component, including its translated name."
+      - name: published_at
+        description: "Date when the component was published."
+      - name: created_at
+        description: "Date when the component was created."
+      - name: component_url
+        description: "URL for accessing the component."
+      - name: ps_id
+        description: "Identifier of the associated participatory space."
+      - name: ps_published_at
+        description: "Publication date of the participatory space."
+      - name: ps_title
+        description: "Title of the participatory space."
+      - name: ps_subtitle
+        description: "Subtitle of the participatory space."
+      - name: ps_slug
+        description: "Slug of the participatory space."
+      - name: ps_type
+        description: "Type of the participatory space."
+      - name: ps_space_type_slug
+        description: "Slug for the type of participatory space."
+      - name: ps_url
+        description: "URL of the participatory space."
+      - name: decidim_organization_id
+        description: "Identifier of the Decidim organization."
+        data_tests:
+          - not_null
+      - name: organization_host
+        description: "Host of the Decidim organization."
+
+unit_tests:
+  - name: test_ps_type
+    model: components
+    given:
+      - input: ref('stg_decidim_assemblies')
+        format: dict
+        rows:
+          - {id: 1, title: 'Assembly 1', published_at: '2023-01-01', decidim_organization_id: 101}
+      - input: ref('stg_decidim_participatory_processes')
+        format: dict
+        rows:
+          - {id: 2, title: 'Process 1', published_at: '2023-02-01', decidim_organization_id: 101}
+      - input: ref('int_components')
+        format: dict
+        rows:
+          - {id: 41, participatory_space_id: 1, participatory_space_type: 'Decidim::Assembly', published_at: '2024-01-01'}
+          - {id: 42, participatory_space_id: 2, participatory_space_type: 'Decidim::ParticipatoryProcess', published_at: '2024-02-01'}
+      - input: ref('int_organizations')
+        format: dict
+        rows:
+          - {id: 101}
+    expect:
+      format: dict
+      rows:
+        - {id: 41, ps_type: 'Decidim::Assembly'}
+        - {id: 42, ps_type: 'Decidim::ParticipatoryProcess'}
+  - name: test_ps_space_type_slug
+    model: components
+    given:
+      - input: ref('stg_decidim_assemblies')
+        format: dict
+        rows:
+          - {id: 1, title: 'Assembly 1', slug: 'slug1', published_at: '2023-01-01', decidim_organization_id: 101}
+      - input: ref('stg_decidim_participatory_processes')
+        format: dict
+        rows:
+          - {id: 2, title: 'Process 1', slug: 'slug2', published_at: '2023-02-01', decidim_organization_id: 101}
+      - input: ref('int_components')
+        format: dict
+        rows:
+          - {id: 41, participatory_space_id: 1, participatory_space_type: 'Decidim::Assembly', published_at: '2024-01-01'}
+          - {id: 42, participatory_space_id: 2, participatory_space_type: 'Decidim::ParticipatoryProcess', published_at: '2024-02-01'}
+      - input: ref('int_organizations')
+        format: dict
+        rows:
+          - {id: 101}
+    expect:
+      format: dict
+      rows:
+        - {id: 41, ps_space_type_slug: 'assemblies'}
+        - {id: 42, ps_space_type_slug: 'processes'}
+  - name: test_no_null_published_at
+    model: components
+    given:
+      - input: ref('stg_decidim_assemblies')
+        format: dict
+        rows:
+          - {id: 1, published_at: '2023-01-01', decidim_organization_id: 101}
+      - input: ref('stg_decidim_participatory_processes')
+        format: dict
+        rows:
+          - {id: 2, published_at: '2023-02-01', decidim_organization_id: 101}
+      - input: ref('int_components')
+        format: dict
+        rows:
+          - {id: 41, participatory_space_id: 1, participatory_space_type: 'Decidim::Assembly', published_at: '2024-01-01'}
+          - {id: 42, participatory_space_id: 2, participatory_space_type: 'Decidim::ParticipatoryProcess', published_at: '2024-02-01'}
+          - {id: 43, participatory_space_id: 1, participatory_space_type: 'Decidim::Assembly', published_at: null}
+          - {id: 44, participatory_space_id: 2, participatory_space_type: 'Decidim::ParticipatoryProcess', published_at: '2024-02-01'}
+      - input: ref('int_organizations')
+        format: dict
+        rows:
+          - {id: 101}
+    expect:
+      format: dict
+      rows:
+        - {id: 41, published_at: '2024-01-01'}
+        - {id: 42, published_at: '2024-02-01'}
+        - {id: 43, published_at: null}
+        - {id: 44, published_at: '2024-02-01'}
+  - name: test_take_only_assemblies_and_participatory_processes
+    model: components
+    given:
+      - input: ref('stg_decidim_assemblies')
+        format: dict
+        rows:
+          - {id: 1, published_at: '2023-01-01', decidim_organization_id: 101, slug: 'assemblies1'}
+      - input: ref('stg_decidim_participatory_processes')
+        format: dict
+        rows:
+          - {id: 2, published_at: '2023-01-15', decidim_organization_id: 101, slug: 'process1'}
+      - input: ref('int_components')
+        format: dict
+        rows:
+          - {id: 42, participatory_space_type: 'Decidim::Assembly', participatory_space_id: 1, published_at: '2024-01-01'}
+          - {id: 43, participatory_space_type: 'Decidim::ParticipatoryProcess', participatory_space_id: 2, published_at: '2024-02-01'}
+          - {id: 44, participatory_space_type: 'Decidim::Votations', participatory_space_id: 3, published_at: '2024-03-01'}
+      - input: ref('int_organizations')
+        format: dict
+        rows:
+          - {id: 101}
+    expect:
+      format: dict
+      rows:
+        - {id: 42, decidim_organization_id: 101}
+        - {id: 43, decidim_organization_id: 101}
+  - name: test_url_creation
+    model: components
+    given:
+      - input: ref('stg_decidim_assemblies')
+        format: dict
+        rows:
+          - {id: 1, published_at: '2023-01-01', decidim_organization_id: 101, slug: 'assemblies1'}
+      - input: ref('stg_decidim_participatory_processes')
+        format: dict
+        rows:
+          - {id: 2, published_at: '2023-01-15', decidim_organization_id: 101, slug: 'process1'}
+      - input: ref('int_components')
+        format: dict
+        rows:
+          - {id: 42, participatory_space_type: 'Decidim::Assembly', participatory_space_id: 1, published_at: '2024-01-01'}
+          - {id: 43, participatory_space_type: 'Decidim::ParticipatoryProcess', participatory_space_id: 2, published_at: '2024-02-01'}
+      - input: ref('int_organizations')
+        format: dict
+        rows:
+          - {id: 101, host: 'organization1'}
+    expect:
+      format: dict
+      rows:
+        - {id: 42, component_url: 'https://organization1/assemblies/assemblies1/f/42', ps_id: 1, ps_url: 'https://organization1/assemblies/assemblies1/', decidim_organization_id: 101}
+        - {id: 43, component_url: 'https://organization1/processes/process1/f/43', ps_id: 2, ps_url: 'https://organization1/processes/process1/', decidim_organization_id: 101}
+

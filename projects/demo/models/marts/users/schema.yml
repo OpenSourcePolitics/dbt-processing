@@ -1,0 +1,215 @@
+version: 2
+
+models:
+  - name: users
+    schema: "{{ var('target_schema') }}"
+    description: "All created users on your platform (includes admins, invited, managed, reported, blocked and deleted users)"
+    columns:
+      - name: id
+        data_tests:
+          - unique
+          - not_null
+        description: "ID of the user"
+      - name: email
+        description: "Email of the user"
+      - name: sign_in_count
+        description: "Number of times the user signed in on the platform"
+      - name: sign_in_frequency
+        description: "Classification of sign-in counts in human-readable categories"
+      - name: last_sign_in_at
+        description: "Last time the user signed in on the platform"
+      - name: created_at
+        description: "Date of creation"
+      - name: updated_at
+        description: "Date of update"
+      - name: invitation_created_at
+        description: "Users can either register on the platform by themselves or by being invited. If empty, it means the user self-registered. Else it'll give the time the invitation of the user was created"
+      - name: invitation_sent_at
+        description: "Users can either register on the platform by themselves or by being invited. If empty, it means the user self-registered. Else it'll give the time the invitation of the user was sent"
+      - name: invitation_accepted_at
+        description: "Users can either register on the platform by themselves or by being invited. If empty, it means the user self-registered. Else it'll give the time the invitation of the user was accepted"
+      - name: invited_by_id
+        description: "ID of the user that invited that user"
+      - name: invited_by_type
+        description: "Users can either register on the platform by themselves or by being invited. If empty, it means the user self-registered. Else it'll give the type of the inviter (whether an organization, a single user etc.)"
+      - name: decidim_organization_id
+        description: "ID of organization to which belong the user"
+      - name: confirmed_at
+        description: "Date at which the user confirmed its account. Empty if the account was not confirmed"
+      - name: confirmation_token
+        description: "Token of account confirmation"
+      - name: unconfirmed_email
+        description: "Whether or not the user has confirmed its email."
+      - name: name
+        description: "Name of the user"
+      - name: locale
+        description: "Language used by the user"
+      - name: deleted_at
+        description: "A user can choose to delete its account. If empty, it means the user still has an account. If not, it gives the time at which the user deleted it."
+      - name: admin
+        description: "Whether or not the user is administrator of the platform"
+      - name: managed
+        description: "A user can be managed. It means that someone else can participate in its name. This field indicate whether or not the user is managed"
+      - name: roles
+        description: "A user can have different roles inside a Decidim platform. This field list all roles that the user have"
+      - name: email_on_notification
+        description: "Whether or not the user receive a mail when he/she's notified on the platform"
+      - name: nickname
+        description: "Nickname of the user"
+      - name: accepted_tos_version
+        description: "When registering on the platform, a user must accept the Terms of Services. These terms can be versionized. This field give the version of the Terms of Services that was accepted"
+      - name: type
+        description: "Type of user can be a group, a single person, etc."
+      - name: following_count
+        description: "Number of resources followed by the user"
+      - name: followers_count
+        description: "Number of people that follows the user"
+      - name: failed_attempts
+        description: "Number of time the user failed to sign in"
+      - name: locked_at
+        description: "Datetime at which the user was blocked"
+      - name: admin_terms_accepted_at
+        description: "If the user is an admin, gives the datetime at which he/she accepted the terms of use"
+      - name: blocked
+        description: "Whether or not the user was blocked"
+      - name: blocked_at
+        description: "Datetime at which the user was blocked. Empty if not blocked"
+      - name: confirmed
+        description: "Whether or not the account of the registration of the user was confirmed"
+      - name: url
+        description: "URL of the user profile"
+      - name: extended_data
+        description: "Decidim stores in this field all data related to the user that doesn't fit into a specific column. Used in multiple Decidim modules to describe the user more precisely. Informations regarding what happens on a page and its associated metrics like visits, time spent, exits, date, url, label."
+      - name: is_endorsing
+        description: "Indicates if the user ....."
+      - name: is_following
+        description: "Indicates if the user ....."
+      - name: has_authored_comment
+        description: "Indicates if the user has authored a comment"
+      - name: has_voted
+        description: "Indicates if the user has voted"
+      - name: has_authored_proposal
+        description: "Indicates if the user has authored a proposal"
+      - name: has_answered_survey
+        description: "Indicates if the user has answered a survey"
+    data_tests:
+      - relationships:
+          column_name: id
+          to: ref('int_users')
+          field: id
+
+#unit_tests:
+#  - name: test_url_concatenation
+#    description: "Check URL concatenation logic"
+#    model: users
+#    given:
+#      - input: ref('participations')
+#        format: dict
+#        rows:
+#          - {user_id: 1, participation_type: 'Decidim::Endorsements::Endorsement'}
+#          - {user_id: 2, participation_type: 'Decidim::Comments::Comment'}
+#      - input: ref('followings')
+#        format: dict
+#        rows:
+#          - { decidim_user_id: 1 }
+#          - { decidim_user_id: 2 }
+#      - input: ref('int_users')
+#        format: dict
+#        rows:
+#          - {id: 1, nickname: 'user1', decidim_organization_id: 1, deleted_at: null, type: 'Decidim::User'}
+#          - {id: 2, nickname: 'user2', decidim_organization_id: 2, deleted_at: null, type: 'Decidim::User'}
+#          - {id: 3, nickname: 'user3', decidim_organization_id: 3, deleted_at: null, type: 'Decidim::User'}
+#      - input: ref('int_organizations')
+#        format: dict
+#        rows:
+#          - {id: 1, host: 'host1.com'}
+#          - {id: 2, host: 'host2.com'}
+#          - {id: 3, host: 'host3.com'}
+#      - input: ref('proposals')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('stg_decidim_coauthorships')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('proposals_votes')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('projects_votes')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('endorsements')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('comments')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('forms_answers')
+#        format: dict
+#        rows:
+#          - {}
+#    expect:
+#      format: dict
+#      rows:
+#        - {id: 1, url: 'https://host1.com/profiles/user1/activity'}
+#        - {id: 2, url: 'https://host2.com/profiles/user2/activity'}
+#        - {id: 3, url: 'https://host3.com/profiles/user3/activity'}
+#
+#  - name: test_coalesce_defaults
+#    model: users
+#    given:
+#      - input: ref('followings')
+#        format: dict
+#        rows:
+#          - {decidim_user_id: 1}
+#          - {decidim_user_id: 2}
+#      - input: ref('comments')
+#        format: dict
+#        rows:
+#          - {decidim_author_id: 1}
+#          - {decidim_author_id: 3}
+#      - input: ref('endorsements')
+#        format: dict
+#        rows:
+#          - {decidim_author_id: 2}
+#      - input: ref('forms_answers')
+#        format: dict
+#        rows:
+#          - {decidim_user_id: 3}
+#      - input: ref('int_organizations')
+#        format: dict
+#        rows:
+#          - {id: 100}
+#      - input: ref('int_users')
+#        format: dict
+#        rows:
+#          - {id: 1, decidim_organization_id: 100}
+#          - {id: 2, decidim_organization_id: 100}
+#          - {id: 3, decidim_organization_id: 100}
+#      - input: ref('proposals')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('stg_decidim_coauthorships')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('proposals_votes')
+#        format: dict
+#        rows:
+#          - {}
+#      - input: ref('projects_votes')
+#        format: dict
+#        rows:
+#          - {}
+#    expect:
+#      format: dict
+#      rows:
+#        - {id: 1, is_following: true, is_endorsing: false, has_authored_comment: true, has_authored_proposal: false, has_answered_survey: false}
+#        - {id: 2, is_following: true, is_endorsing: true, has_authored_comment: false, has_authored_proposal: false, has_answered_survey: false}
+#        - {id: 3, is_following: false, is_endorsing: false, has_authored_comment: true, has_authored_proposal: false, has_answered_survey: true}

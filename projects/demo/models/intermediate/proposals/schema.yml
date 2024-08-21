@@ -1,0 +1,93 @@
+version: 2
+
+models:
+  - name: int_proposals
+    description: "Intermediate model for Decidim proposals, containing basic proposal details and states."
+    columns:
+      - name: id
+        description: "Unique identifier for the proposal"
+      - name: title
+        description: "Title of the proposal"
+      - name: body
+        description: "Body text of the proposal"
+      - name: resource_type
+        description: "Type of the resource, typically 'Decidim::Proposals::Proposal'"
+      - name: decidim_component_id
+        description: "Identifier for the component within which the proposal was created"
+      - name: decidim_scope_id
+        description: "Identifier for the scope of the proposal"
+      - name: created_at
+        description: "Timestamp when the proposal was created"
+      - name: published_at
+        description: "Timestamp when the proposal was published"
+      - name: state
+        description: "Current state of the proposal, with default 'Pas d'état' if null"
+      - name: translated_state
+        description: "Human-readable translated state of the proposal"
+      - name: comments_count
+        description: "Number of comments on the proposal"
+      - name: endorsements_count
+        description: "Number of endorsements on the proposal"
+      - name: address
+        description: "Address related to the proposal, with default 'Pas d'adresse' if empty"
+
+unit_tests:
+  - name: test_default_state
+    description: "Test that the state column correctly defaults to 'Pas d'état' if null"
+    model: int_proposals
+    given:
+      - input: ref('stg_decidim_proposals')
+        format: dict
+        rows:
+          - {id: 1, published_at: '2024-08-12', state: NULL}
+          - {id: 2, published_at: '2024-08-12', state: 'rejected'}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, state: 'Pas d''état', translated_state: 'Pas d''état'}
+        - {id: 2, state: 'rejected', translated_state: 'Rejetée'}
+  - name: test_translated_state
+    description: "Test that the state column is correctly translated"
+    model: int_proposals
+    given:
+      - input: ref('stg_decidim_proposals')
+        format: dict
+        rows:
+          - {id: 1, published_at: '2024-08-12', state: 'evaluating'}
+          - {id: 2, published_at: '2024-08-12', state: 'rejected'}
+          - {id: 3, published_at: '2024-08-12', state: 'accepted'}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, translated_state: 'En cours d''évaluation'}
+        - {id: 2, translated_state: 'Rejetée'}
+        - {id: 3, translated_state: 'Acceptée'}
+  - name: test_default_address
+    description: "Test that the address column correctly defaults to 'Pas d'adresse' if empty"
+    model: int_proposals
+    given:
+      - input: ref('stg_decidim_proposals')
+        format: dict
+        rows:
+          - {id: 1, published_at: '2024-08-12', address: ''}
+          - {id: 2, published_at: '2024-08-12', address: '1 Place Hannah Arendt'}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, address: 'Pas d''adresse'}
+        - {id: 2, address: '1 Place Hannah Arendt'}
+  - name: test_published_at_not_null
+    description: "Test that only rows with non-null published_at are included"
+    model: int_proposals
+    given:
+      - input: ref('stg_decidim_proposals')
+        format: dict
+        rows:
+          - {id: 1, published_at: '2023-01-01'}
+          - {id: 2, published_at: NULL}
+          - {id: 3, published_at: '2023-02-01'}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, published_at: '2023-01-01'}
+        - {id: 3, published_at: '2023-02-01'}

@@ -1,0 +1,94 @@
+
+version: 2
+
+models:
+  - name: stg_matomo_pages
+    description: "Informations regarding what happens on a page and its associated metrics : visits, time spent, exits, date, url, label."
+    columns:
+      - name: nb_visits
+        description: "If a visitor comes to your page for the first time or if they visit this page more than 30 minutes after their last page view, this will be recorded as a visit."
+      - name: nb_uniq_visitors
+        description: "The number of unduplicated visitors that have seen this page. Every user is only counted once, even if they visit the page multiple times a day"
+      - name: nb_hits
+        description: "The number of times this page was visited. This field count all visits, even of recurring visitors."
+      - name: sum_time_spent
+        description: "The total time spent by all visitors in a day on this page"
+      - name: exit_nb_uniq_visitors
+        description: "Number of exiting unique visitors. An exiting visitor is a visitor that went immediately out of the page after arriving, without interaction"
+      - name: exit_nb_visits
+        description: "Number of visitors that have visited for the first time or if they have visited a page more than 30 minutes after their last page view"
+      - name: avg_time_on_page
+        description: "The average number of time spent on a page per visit in seconds"
+      - name: bounce_rate
+        description: "The percentage of visits that started on this page and left the website straight away"
+      - name: exit_rate
+        description: "The percentage of visits that have left your website or app after this interaction"
+      - name: url
+        description: "Url of the page"
+      - name: date
+        description: "Date"
+      - name: entry_nb_uniq_visitors
+        description: "Number of unduplicated visitors that started their visiting journey on this page"
+      - name: entry_nb_visits
+        description: "Number of visits that started on this page"
+      - name: entry_bounce_count
+        description: "Number of visits that started and ended on this page. This means that the visitor left the website after viewing only this page"
+      - name: label
+        description: "Label of the page"
+  - name: stg_matomo_visits
+    description: "A visit is a person who comes to a website for the fist time or if they visit a page more than 30 minutes after their last page view, and all informations regarding this visit."
+    columns: 
+      - name: index
+        description: "Index"
+      - name: date
+        description: "Date"
+      - name: nb_visits
+        description: "If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit"
+      - name: nb_uniq_visitors
+        description: "The number of unduplicated visitors coming to your website. Every user is only counted once, even if they visit the website multiple times a day"
+      - name: bounce_count
+        description: "Number of visits that only lasted one page. One bounce is equivalent to a visitor left the website after viewing only this page"
+      - name: bounce_rate
+        description: "Bounce rate i.e ratio of visitors that bounces on the platform versus the total number of visitors"
+      - name: bounce_rate_new
+        description: "Bounce rate i.e ratio of visitors that bounces on the platform versus the total number of new visitors"
+      - name: sum_visit_length
+        description: "The sum of each visit’s elapsed time"
+      - name: nb_visits_new
+        description: "The number of new visits"
+      - name: nb_downloads
+        description: "Number of times the link was clicked"
+  - name: stg_matomo_referrers
+    description: "Informations regarding visits linked to a referrer. (A referrer is a channel from which a visitor comes on a website. Referrers are categorized into different types, such as search engines, social networks, direct entry...)"
+    columns:
+      - name: label
+        description: "Label of the referrer"
+      - name: nb_uniq_visitors
+        description: "The number of unduplicated visitors coming to your website. Every user is only counted once, even if they visit the website multiple times a day"
+      - name: nb_visits
+        description: "If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a visit"
+      - name: nb_actions
+        description: "The number of actions performed by your visitors. Actions can be page views, internal site searches, downloads or outlinks"
+      - name: sum_visit_length
+        description: "The sum of each visit’s elapsed time"
+      - name: bounce_count
+        description: "Number of visits that started and ended on this page. This means that the visitor left the website after viewing only this page"
+      - name: sub_type
+        description: "Category to which the referrer belong"
+      - name: date
+        description: "Date"
+
+
+sources:
+  - name: matomo
+    database: "{{ var('dbname') }}"
+    schema: matomo  
+    tables:
+      - name: pages
+      - name: visits
+      - name: referrers
+      - name: device_type
+      - name: page_titles
+      - name : users_city
+
+

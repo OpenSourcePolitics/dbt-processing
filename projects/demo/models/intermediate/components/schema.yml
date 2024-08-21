@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: int_components
+    description: "An intermediate model representing the components associated with participatory spaces in Decidim."
+    columns:
+      - name: id
+        description: "The ID of the component."
+      - name: manifest_name
+        description: "The original manifest name of the component."
+      - name: translated_manifest_name
+        description: "The translated manifest name based on predefined mappings for Metabase usage "
+      - name: name
+        description: "The name of the component."
+      - name: participatory_space_id
+        description: "The ID of the participatory space."
+      - name: participatory_space_type
+        description: "The type of the participatory space."
+      - name: settings
+        description: "The settings of the component."
+      - name: weight
+        description: "The weight of the component."
+      - name: permissions
+        description: "The permissions of the component."
+      - name: published_at
+        description: "The publish date of the component."
+      - name: created_at
+        description: "The creation date of the component."
+      - name: updated_at
+        description: "The last update date of the component."
+
+
+unit_tests:
+  - name: test_translated_manifest_name
+    model: int_components
+    given:
+      - input: ref('stg_decidim_components')
+        format: dict
+        rows:
+          - {id: 1, manifest_name: 'accountability'}
+          - {id: 2, manifest_name: 'pages'}
+          - {id: 3, manifest_name: 'budgets'}
+          - {id: 4, manifest_name: 'meetings'}
+          - {id: 5, manifest_name: 'proposals'}
+          - {id: 6, manifest_name: 'surveys'}
+          - {id: 7, manifest_name: 'blogs'}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, translated_manifest_name: 'Suivi'}
+        - {id: 2, translated_manifest_name: 'Page'}
+        - {id: 3, translated_manifest_name: 'Budgets'}
+        - {id: 4, translated_manifest_name: 'Rencontres'}
+        - {id: 5, translated_manifest_name: 'Propositions'}
+        - {id: 6, translated_manifest_name: 'Enquêtes'}
+        - {id: 7, translated_manifest_name: 'Blogs'}

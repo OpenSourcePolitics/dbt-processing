@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: forms_answers
+    description: "Table gathering all types of answers (long, short, optional, sorting and matrix). "
+    columns:
+      - name: sorting_points
+        description: "In order to evaluate the weight of the sorting answers, points are given to the answer according to its sorting position."

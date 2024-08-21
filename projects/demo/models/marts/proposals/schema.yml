@@ -1,0 +1,277 @@
+
+version: 2
+
+models:
+  - name: proposals
+    description: "Every proposal that has been created on your Decidim instance, including accepted, pending, rejected and withdrawn proposals. Does not include hidden (moderation) and unpublished proposals (i.e. linked to either an unpublished participatory process or an unpublished component)."
+    columns:
+      - name: id
+        description: "Unique identifier for the proposal"
+      - name: decidim_participatory_space_id
+        description: "Identifier for the participatory space where the proposal was created"
+      - name: decidim_participatory_space_slug
+        description: "Slug for the participatory space where the proposal was created"
+      - name: decidim_scope_name
+        description: "Name of the scope for the proposal"
+      - name: title
+        description: "Title of the proposal"
+      - name: body
+        description: "Body text of the proposal"
+      - name: resource_type
+        description: "Type of the resource, typically 'Decidim::Proposals::Proposal'"
+      - name: url
+        description: "URL link to the proposal on the Decidim platform"
+      - name: decidim_component_id
+        description: "Identifier for the component within which the proposal was created"
+      - name: created_at
+        description: "Timestamp when the proposal was created"
+      - name: published_at
+        description: "Timestamp when the proposal was published"
+      - name: state
+        description: "Current state of the proposal (e.g., evaluating, rejected, accepted)"
+      - name: translated_state
+        description: "Human-readable translated state of the proposal"
+      - name: authors_ids
+        description: "Array of IDs of the authors of the proposal"
+      - name: first_author_id
+        description: "ID of the first author of the proposal"
+      - name: address
+        description: "Address related to the proposal, if any"
+      - name: categories
+        description: "Array of categories associated with the proposal"
+      - name: first_category
+        description: "First category associated with the proposal"
+      - name: sub_categories
+        description: "Array of sub-categories associated with the proposal"
+      - name: first_sub_category
+        description: "First sub-category associated with the proposal"
+      - name: comments_count
+        description: "Number of comments on the proposal"
+      - name: endorsements_count
+        description: "Number of endorsements on the proposal"
+      - name: votes_count
+        description: "Number of votes the proposal has received"
+  - name: proposals_votes
+    description : "Every vote made on propositions"
+    columns:
+      - name: decidim_author_id
+        description: "id of the user who has voted"
+      - name: decidim_proposal_id
+        description: "id of the proposal for which has been voted for"
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+        #description: "This test is assuming that no voter ('author') can vote more than once on the same proposal"
+          combination_of_columns:
+            - decidim_author_id
+            - decidim_proposal_id
+  
+unit_tests:
+  - name: withdrawn_proposals_check
+    description: "Check if withdrawn proposals are properly removed"
+    model: proposals
+    given:
+      - input: ref('int_users')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_coauthorships')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_proposals_votes')
+        format: dict
+        rows:
+          - {}
+      - input: ref('int_proposals')
+        format: dict
+        rows:
+          - {id: 41, state: 'submitted', published_at: '2023-01-01', decidim_component_id: 100}
+          - {id: 42, state: 'withdrawn', published_at: '2023-01-02', decidim_component_id: 100}
+      - input: ref('components')
+        format: dict
+        rows:
+          - {id: 100}
+      - input: ref('stg_decidim_moderations')
+        format: dict
+        rows:
+          - {}
+      - input: ref('int_scopes')
+        format: dict
+        rows:
+          - {}
+      - input: ref('categorizations')
+        format: dict
+        rows:
+          - {}
+    expect:
+      format: dict
+      rows:
+        - {id: 41, state: 'submitted'}
+  - name: moderations_proposals_check
+    description: "Check if proposals are properly ignored due to 'hidden_at' date and other moderation conditions"
+    model: proposals
+    given:
+      - input: ref('int_users')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_coauthorships')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_proposals_votes')
+        format: dict
+        rows:
+          - {}
+      - input: ref('int_proposals')
+        format: dict
+        rows:
+          - {id: 43, state: 'submitted', published_at: '2023-01-03', decidim_component_id: 100}
+          - {id: 44, state: 'submitted', published_at: '2023-01-03', decidim_component_id: 100}
+      - input: ref('components')
+        format: dict
+        rows:
+          - {id: 100}
+      - input: ref('stg_decidim_moderations')
+        format: dict
+        rows:
+          - {decidim_reportable_id: 43, decidim_reportable_type: 'Decidim::Proposals::Proposal', hidden_at: '2024-07-22'}
+      - input: ref('int_scopes')
+        format: dict
+        rows:
+          - {}
+      - input: ref('categorizations')
+        format: dict
+        rows:
+          - {}
+    expect:
+      format: dict
+      rows:
+        - {id: 44}
+  - name: conflict_on_decidim_reportable_type_check
+    description: "Check if there is no conflict in moderation table on id if there is a decidim_reportable_type that is not a proposal and has the same id"
+    model: proposals
+    given:
+      - input: ref('int_users')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_coauthorships')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_proposals_votes')
+        format: dict
+        rows:
+          - {}
+      - input: ref('int_proposals')
+        format: dict
+        rows:
+          - {id: 43, state: 'submitted', published_at: '2023-01-03', decidim_component_id: 100}
+      - input: ref('components')
+        format: dict
+        rows:
+          - {id: 100}
+      - input: ref('stg_decidim_moderations')
+        format: dict
+        rows:
+          - {decidim_reportable_id: 43, decidim_reportable_type: 'Decidim::Debates::Debate', hidden_at: NULL}
+          - {decidim_reportable_id: 43, decidim_reportable_type: 'Decidim::Proposals::Proposal', hidden_at: NULL}
+      - input: ref('int_scopes')
+        format: dict
+        rows:
+          - {}
+      - input: ref('categorizations')
+        format: dict
+        rows:
+          - {}
+    expect:
+      format: dict
+      rows:
+        - {id: 43}
+  - name: published_at_check
+    description: "Check if proposals are properly ignored if 'published_at' is null"
+    model: proposals
+    given:
+      - input: ref('int_users')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_coauthorships')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_proposals_votes')
+        format: dict
+        rows:
+          - {}
+      - input: ref('int_proposals')
+        format: dict
+        rows:
+          - {id: 43, state: 'submitted', published_at: '2023-01-03', decidim_component_id: 100}
+          - {id: 44, state: 'submitted', published_at: NULL, decidim_component_id: 100}
+      - input: ref('components')
+        format: dict
+        rows:
+          - {id: 100}
+      - input: ref('stg_decidim_moderations')
+        format: dict
+        rows:
+          - {}
+      - input: ref('int_scopes')
+        format: dict
+        rows:
+          - {}
+      - input: ref('categorizations')
+        format: dict
+        rows:
+          - {}
+    expect:
+      format: dict
+      rows:
+        - {id: 43}
+#  Test cannot be run because of ARRAY issue in unit test
+#  - name: test_aggregation_coauthors
+#    description: "Test the aggregation of co-authors by coauthorable_id"
+#    model: proposals
+#    given:
+#      - input: ref('int_users')
+#        format: dict
+#        rows:
+#          - {id: 1, name: 'User 1'}
+#          - {id: 2, name: 'User 2'}
+#      - input: ref('stg_decidim_coauthorships')
+#        format: dict
+#        rows:
+#          - {decidim_author_id: 1, coauthorable_id: 101}
+#          - {decidim_author_id: 2, coauthorable_id: 101}
+#      - input: ref('stg_decidim_proposals_votes')
+#        format: dict
+#        rows:
+#          - {id: 1, decidim_proposal_id: 101}
+#      - input: ref('int_proposals')
+#        format: dict
+#        rows:
+#          - {id: 101, decidim_component_id: 1, state: 'accepted'}
+#      - input: ref('components')
+#        format: dict
+#        rows:
+#          - {id: 1, organization_host: 'host1.com'}
+#      - input: ref('stg_decidim_moderations')
+#        format: dict
+#        rows:
+#          - {decidim_reportable_id: 101, decidim_reportable_type: 'Decidim::Proposals::Proposal', hidden_at: NULL}
+#      - input: ref('int_scopes')
+#        format: dict
+#        rows:
+#          - {id: 1, name: 'Scope 1'}
+#      - input: ref('categorizations')
+#        format: dict
+#        rows:
+#          - {id: 101}
+#    expect:
+#      format: dict
+#      rows:
+#        - {id: 101, authors_ids: [1, 2]}
+
+

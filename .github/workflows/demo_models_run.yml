@@ -1,0 +1,48 @@
+name: demo_models_run
+
+on: 
+  workflow_dispatch:
+  schedule:
+    - cron:  '30 9 * * *'
+
+env:
+  DBNAME_PROD: ${{ secrets.DEMO_DBNAME_PROD }}
+  HOST: ${{ secrets.HOST }}
+  PASSWORD: ${{ secrets.PASSWORD }}
+  PORT: ${{ secrets.PORT }}
+  TARGET_SCHEMA: ${{ secrets.SCHEMA_PROD }}
+  USER: ${{ secrets.USER }}
+  PARTICIPATION_HOST_NAME: ${{ secrets.DEMO_PARTICIPATION_HOST_NAME }}
+  WORKING_DIRECTORY: ./projects/demo
+  
+
+jobs:
+  demo_models_run:
+    name: demo_models_run
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@master
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.x"
+          cache: 'pip'
+        
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          dbt deps --target prod
+      
+      - name: Run dbt models
+        run: dbt run --target prod
+
+      - name: Test dbt models
+        run: dbt test --target prod
+
+

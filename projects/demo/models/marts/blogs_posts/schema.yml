@@ -1,0 +1,20 @@
+unit_tests:
+  - name: test_url_concatenation
+    description: "Check URL concatenation logic"
+    model: blogs_posts
+    given:
+      - input: ref('stg_decidim_blogs_posts')
+        format: dict
+        rows:
+          - {id: 1, decidim_component_id: 42}
+          - {id: 2, decidim_component_id: 43}
+      - input: ref('components')
+        format: dict
+        rows:
+          - {organization_host: 'host1.com', ps_space_type_slug: 'foo', ps_slug: 'bar', id: 42}
+          - {organization_host: 'host2.com', ps_space_type_slug: 'type', ps_slug: 'space', id: 43}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, post_url: 'https://host1.com/foo/bar/f/42/posts/1'}
+        - {id: 2, post_url: 'https://host2.com/type/space/f/43/posts/2'}
