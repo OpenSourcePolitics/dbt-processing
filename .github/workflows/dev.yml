@@ -65,7 +65,7 @@ jobs:
 
     - name: Configure db name and participation host name
       run: |
-        echo "DBNAME_DEV=${{ secrets[env.DB_SECRET_NAME] }}" >> $GITHUB_ENV
+        echo "DBNAME=${{ secrets[env.DB_SECRET_NAME] }}" >> $GITHUB_ENV
         echo "PARTICIPATION_HOST_NAME=${{ secrets[env.PARTICIPATION_HOST_NAME] }}" >> $GITHUB_ENV
 
     - name: Run dbt test

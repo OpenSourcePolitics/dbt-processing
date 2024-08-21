@@ -6,7 +6,7 @@ on:
     - cron:  '30 7 * * *'
 
 env:
-  DBNAME_PROD: ${{ secrets.THIONVILLE_DBNAME_PROD }}
+  DBNAME: ${{ secrets.THIONVILLE_DBNAME_PROD }}
   HOST: ${{ secrets.HOST }}
   PASSWORD: ${{ secrets.PASSWORD }}
   PORT: ${{ secrets.PORT }}

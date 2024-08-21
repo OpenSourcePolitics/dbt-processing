@@ -6,7 +6,7 @@ on:
     - cron:  '0 5 * * *'
 
 env:
-  DBNAME_PROD: ${{ secrets.LYON_DBNAME_PROD }}
+  DBNAME: ${{ secrets.LYON_DBNAME_PROD }}
   HOST: ${{ secrets.HOST }}
   PASSWORD: ${{ secrets.PASSWORD }}
   PORT: ${{ secrets.PORT }}
