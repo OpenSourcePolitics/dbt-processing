@@ -59,11 +59,14 @@ jobs:
       run: |
         config_file="${{ matrix.project_dir }}/config.yml"
         db_secret=$(grep 'db_secret_dev:' "$config_file" | awk '{print $2}')
+        participation_host_name=$(grep 'participation_host_name:' "$config_file" | awk '{print $2}')
         echo "DB_SECRET_NAME=$db_secret" >> $GITHUB_ENV
+        echo "PARTICIPATION_HOST_NAME=$participation_host_name" >> $GITHUB_ENV
 
-    - name: Configure db name
+    - name: Configure db name and participation host name
       run: |
         echo "DBNAME_DEV=${{ secrets[env.DB_SECRET_NAME] }}" >> $GITHUB_ENV
+        echo "PARTICIPATION_HOST_NAME=${{ secrets[env.PARTICIPATION_HOST_NAME] }}" >> $GITHUB_ENV
 
     - name: Run dbt test
       run: |

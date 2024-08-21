@@ -1,3 +1,4 @@
 db_secret_dev: THIONVILLE_DBNAME_DEV
 db_secret_prod: THIONVILLE_DBNAME_PROD
+participation_host_name: THIONVILLE_PARTICIPATION_HOST_NAME
 
