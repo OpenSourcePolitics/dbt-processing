@@ -25,6 +25,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 vars:
   dbname: "{{ env_var('DBNAME') }}"
+  target_schema: "{{ env_var('TARGET_SCHEMA') }}"
   host: "{{ env_var('PARTICIPATION_HOST_NAME') }}"
 
 # Configuring models
