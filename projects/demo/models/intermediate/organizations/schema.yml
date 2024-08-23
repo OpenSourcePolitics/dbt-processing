@@ -41,8 +41,8 @@ unit_tests:
     description: "Test that the model only includes records with the specified host."
     model: int_organizations
     overrides:
-      vars:
-        host: "host1.com"
+      env_vars:
+        PARTICIPATION_HOST_NAME: "host1.com"
     given:
       - input: ref('stg_decidim_organizations')
         format: dict
@@ -58,8 +58,8 @@ unit_tests:
     description: "Test that the regex properly cleans the description field by removing HTML tags and entities."
     model: int_organizations
     overrides:
-      vars:
-        host: "host1.com"
+      env_vars:
+        PARTICIPATION_HOST_NAME: "host1.com"
     given:
       - input: ref('stg_decidim_organizations')
         format: dict
