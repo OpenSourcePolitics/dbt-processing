@@ -19,6 +19,6 @@ renamed AS (
         users_registration_mode,
         time_zone
     FROM source
-    WHERE host = '{{ var('host') }}'
+    WHERE host = '{{ env_var('PARTICIPATION_HOST_NAME') }}'
 )
 SELECT * FROM renamed

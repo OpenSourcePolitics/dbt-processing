@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: int_users
-    schema: "{{ var('target_schema') }}"
+    schema: "{{ env_var('TARGET_SCHEMA') }}"
     description: ""
     columns:
       - name: id

@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: users
-    schema: "{{ var('target_schema') }}"
+    schema: "{{ env_var('TARGET_SCHEMA') }}"
     description: "All created users on your platform (includes admins, invited, managed, reported, blocked and deleted users)"
     columns:
       - name: id

@@ -3,8 +3,8 @@ version: 2
 
 sources:
   - name: decidim
-    database: "{{ var('dbname') }}"
-    schema: public  
+    database: "{{ env_var('DBNAME') }}"
+    schema: public
     tables:
       - name : decidim_categories
       - name : decidim_categorizations

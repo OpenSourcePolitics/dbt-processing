@@ -1,6 +1,6 @@
 models:
   - name: meetings
-    schema: "{{ var('target_schema') }}"
+    schema: "{{ env_var('TARGET_SCHEMA') }}"
     description: "Every meeting published on the platform"
     columns:
       - name: id

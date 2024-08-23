@@ -4,7 +4,7 @@ version: 2
 
 sources:
   - name: decidim
-    database: "{{ var('dbname') }}"
+    database: "{{ env_var('DBNAME') }}"
     schema: public  
     tables:
       - name: decidim_components

@@ -72,6 +72,12 @@ jobs:
       run: |
         echo "Switching to project directory: ${{ matrix.project_dir }}"
         cd ${{ matrix.project_dir }}
+        
+        echo "Running dbt deps"
         dbt deps --target dev
+        
+        echo "Running dbt run"
         dbt run --target dev
+        
+        echo "Running dbt test"
         dbt test --target dev 

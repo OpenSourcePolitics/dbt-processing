@@ -23,11 +23,6 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
-vars:
-  dbname: "{{ env_var('DBNAME') }}"
-  target_schema: "{{ env_var('TARGET_SCHEMA') }}"
-  host: "{{ env_var('PARTICIPATION_HOST_NAME') }}"
-
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 
@@ -36,7 +31,7 @@ vars:
 # files using the `{{ config(...) }}` macro.
 models:
   demo:
-    # Config indicated by + and applies to all files under models/stagin/
+    # Config indicated by + and applies to all files under models/staging/
     # All staging models materialized as tables because Airbyte deletes downstream views when refreshing source tables.
     staging:
       +materialized: table

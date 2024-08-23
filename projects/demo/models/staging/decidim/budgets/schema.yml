@@ -4,8 +4,8 @@ version: 2
 
 sources:
   - name: decidim
-    database: "{{ var('dbname') }}"
-    schema: public  
+    database: "{{ env_var('DBNAME') }}"
+    schema: public
     tables:
       - name: decidim_budgets_projects
       - name: decidim_budgets_budgets
@@ -13,7 +13,7 @@ sources:
       - name: decidim_budgets_orders
 models:
   - name: stg_decidim_budgets
-    schema: "{{ var('target_schema') }}"
+    schema: "{{ env_var('TARGET_SCHEMA') }}"
     description: "Lists every budget on the platform and their component"
     columns:
       - name: id
@@ -23,7 +23,7 @@ models:
       - name: decidim_component_id
         description: "ID of the component to which the budget is linked to. Multiple budgets can share the same component"
   - name: stg_decidim_budgets_projects
-    schema: "{{ var('target_schema') }}"
+    schema: "{{ env_var('TARGET_SCHEMA') }}"
     description: "Lists every project for every budget on the platform"
     columns:
       - name: id
@@ -43,7 +43,7 @@ models:
       - name: resource_type
         description: "Hardcoded resource type"
   - name: stg_decidim_budgets_orders
-    schema: "{{ var('target_schema') }}"
+    schema: "{{ env_var('TARGET_SCHEMA') }}"
     description: "An order is a vote from a single user to a given budget, and can be linked to one or several budget projects"
     columns:
       - name: id
@@ -59,7 +59,7 @@ models:
       - name: decidim_budgets_budget_id
         description: "ID of the budget for which the order is issued"
   - name: stg_decidim_budgets_line_items
-    schema: "{{ var('target_schema') }}"
+    schema: "{{ env_var('TARGET_SCHEMA') }}"
     description: "A line item links a given order to a given budget project"
     columns:
       - name: id

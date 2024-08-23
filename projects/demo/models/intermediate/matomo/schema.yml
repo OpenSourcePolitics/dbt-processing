@@ -2,13 +2,13 @@ version: 2
 
 models:
   - name: int_matomo_referrers
-    schema: "{{ var('target_schema') }}"
+    schema: "{{ env_var('TARGET_SCHEMA') }}"
     description: Info about visits linked to a referrer (a referrer describes a channel acquisition your visitors used to get to your website. Referrers are sorted by type, such as search engines, social networks, direct entries...)
     columns:
       - name: renamed_label
         description: Undefined keyword is due to Matomo being unable to fetch keyword typed in most search engines, and is not acceptable in user-facing dashboards
   - name: int_matomo_visits
-    schema: "{{ var('target_schema') }}"
+    schema: "{{ env_var('TARGET_SCHEMA') }}"
     description: If a visitor comes for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit
     columns:
       - name: bounce_rate_as_number

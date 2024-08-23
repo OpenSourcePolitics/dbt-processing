@@ -3,7 +3,7 @@ version: 2
 
 models:
   - name: matomo_pages
-    schema: "{{ var('target_schema') }}"
+    schema: "{{ env_var('TARGET_SCHEMA') }}"
     description: "Info related to a page and its associated settings: visits, time spent, exits, date, url, tag"
 
 unit_tests:

@@ -81,8 +81,8 @@ models:
 
 sources:
   - name: matomo
-    database: "{{ var('dbname') }}"
-    schema: matomo  
+    database: "{{ env_var('DBNAME') }}"
+    schema: matomo
     tables:
       - name: pages
       - name: visits
