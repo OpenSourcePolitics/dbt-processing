@@ -1,3 +1,3 @@
-db_secret_dev: VALBONNE_DBNAME_DEV
-db_secret_prod: VALBONNE_DBNAME_PROD
+db_name_dev: VALBONNE_DBNAME_DEV
+db_name_prod: VALBONNE_DBNAME_PROD
 participation_host_name: VALBONNE_PARTICIPATION_HOST_NAME

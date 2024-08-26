@@ -9,11 +9,11 @@ on:
       - '**'
 
 env:
-  HOST: ${{ secrets.HOST }}
-  PASSWORD: ${{ secrets.PASSWORD }}
-  PORT: ${{ secrets.PORT }}
-  TARGET_SCHEMA: ${{ secrets.SCHEMA_DEV }}
-  USER: ${{ secrets.USER }}
+  HOST_PREPROD: ${{ secrets.HOST_PREPROD }}
+  PASSWORD_PREPROD: ${{ secrets.PASSWORD_PREPROD }}
+  PORT_PREPROD: ${{ secrets.PORT_PREPROD }}
+  TARGET_SCHEMA: ${{ secrets.SCHEMA_PROD }}
+  USER_PREPROD: ${{ secrets.USER_PREPROD }}
 
 jobs:
 
@@ -58,7 +58,7 @@ jobs:
       id: read-config
       run: |
         config_file="${{ matrix.project_dir }}/config.yml"
-        db_secret=$(grep 'db_secret_dev:' "$config_file" | awk '{print $2}')
+        db_secret=$(grep 'db_name_prod:' "$config_file" | awk '{print $2}')
         participation_host_name=$(grep 'participation_host_name:' "$config_file" | awk '{print $2}')
         echo "DB_SECRET_NAME=$db_secret" >> $GITHUB_ENV
         echo "PARTICIPATION_HOST_NAME=$participation_host_name" >> $GITHUB_ENV
@@ -74,10 +74,10 @@ jobs:
         cd ${{ matrix.project_dir }}
         
         echo "Running dbt deps"
-        dbt deps --target dev
+        dbt deps --target preprod
         
         echo "Running dbt run"
-        dbt run --target dev
+        dbt run --target preprod
         
         echo "Running dbt test"
-        dbt test --target dev 
+        dbt test --target preprod 
