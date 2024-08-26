@@ -15,7 +15,7 @@ demo:
       host: "{{ env_var('HOST_PREPROD') }}"
       pass: "{{ env_var('PASSWORD_PREPROD') }}"
       port: "{{ env_var('PORT_PREPROD') | as_number }}"
-      schema: "{{ env_var('TARGET_SCHEMA_PREPROD') }}"
+      schema: "{{ env_var('TARGET_SCHEMA') }}"
       threads: 1
       type: postgres
       user: "{{ env_var('USER_PREPROD') }}"

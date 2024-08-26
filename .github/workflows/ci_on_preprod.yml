@@ -12,7 +12,7 @@ env:
   HOST_PREPROD: ${{ secrets.HOST_PREPROD }}
   PASSWORD_PREPROD: ${{ secrets.PASSWORD_PREPROD }}
   PORT_PREPROD: ${{ secrets.PORT_PREPROD }}
-  TARGET_SCHEMA_PREPROD: ${{ secrets.SCHEMA_PROD }}
+  TARGET_SCHEMA: ${{ secrets.SCHEMA_PROD }}
   USER_PREPROD: ${{ secrets.USER_PREPROD }}
 
 jobs:
