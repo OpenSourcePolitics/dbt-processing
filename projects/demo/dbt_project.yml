@@ -31,7 +31,4 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   demo:
-    # Config indicated by + and applies to all files under models/staging/
-    # All staging models materialized as tables because Airbyte deletes downstream views when refreshing source tables.
-    staging:
-      +materialized: table
+    +materialized: table

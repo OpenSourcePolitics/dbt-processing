@@ -36,6 +36,4 @@ models:
         stg_matomo_page_titles:
           +enabled: false
   angers:
-    # Config indicated by + and applies to all files under models/example/
-    staging:
-      +materialized: view
+    +materialized: table
