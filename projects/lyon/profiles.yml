@@ -11,7 +11,7 @@ lyon:
       type: postgres
       user: "{{ env_var('USER') }}"
     preprod:
-      dbname: "{{ env_var('DBNAME_PREPROD') }}"
+      dbname: "{{ env_var('DBNAME') }}"
       host: "{{ env_var('HOST_PREPROD') }}"
       pass: "{{ env_var('PASSWORD_PREPROD') }}"
       port: "{{ env_var('PORT_PREPROD') | as_number }}"
