@@ -1,3 +1,3 @@
-db_secret_dev: SYTRAL_DBNAME_DEV
-db_secret_prod: SYTRAL_DBNAME_PROD
+db_name_dev: SYTRAL_DBNAME_DEV
+db_name_prod: SYTRAL_DBNAME_PROD
 participation_host_name: SYTRAL_PARTICIPATION_HOST_NAME
