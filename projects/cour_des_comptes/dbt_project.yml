@@ -29,6 +29,20 @@ clean-targets:         # directories to be removed by `dbt clean`
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
 models:
+  demo:
+    staging:
+      decidim:
+        stg_decidim_users:
+          +enabled: false
+    intermediate:
+      users:
+        int_users:
+          +enabled: false
+    marts:
+      users:
+        users:
+          +enabled: false
+
   cour_des_comptes:
     # Config indicated by + and applies to all files under models/example/
     example:
