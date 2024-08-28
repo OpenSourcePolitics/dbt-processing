@@ -70,7 +70,9 @@ SELECT
     decidim_users.confirmed,
     concat('https://', decidim_organizations.host, '/profiles/', decidim_users.nickname, '/activity') as url,
     decidim_users.extended_data,
-    decidim_users.date_of_birth
+    decidim_users.date_of_birth,
+    decidim_users.age,
+    decidim_users.age_category
 FROM {{ ref ("int_users")}} as decidim_users
 LEFT JOIN followings on followings.decidim_user_id = decidim_users.id
 LEFT JOIN participations ON participations.user_id = decidim_users.id
