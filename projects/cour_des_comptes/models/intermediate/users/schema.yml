@@ -1,5 +1,5 @@
 unit_tests:
- 
+
    - name: testing_that_extended_age_data_matches_age_categories
      description: "Checks that age matching fetches the correct infos "
      model: int_users
@@ -20,5 +20,3 @@ unit_tests:
         - {id: 3, date_of_birth: "1932-05-23", age: 92, age_category: "[75 ans ou plus]"}
         - {id: 4, date_of_birth: "2009-12-01", age: 14, age_category: "[0-15 ans]"}
         - {id: 5, date_of_birth: null, age: null, age_category: 'Âge non défini'}
-
-        
