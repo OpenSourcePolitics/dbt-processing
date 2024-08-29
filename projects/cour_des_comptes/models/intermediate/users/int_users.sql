@@ -58,7 +58,7 @@ FROM users_with_date_of_birth
 SELECT
     *,
     (CASE
-        when age < 15 then '[0-15]'
+        when age < 15 then '[0-15 ans]'
         when age >= 15 and age <= 19 then '[15-19 ans]'
         when age >= 20 and age <= 24 then '[20-24 ans]'
         when age >= 25 and age <= 29 then '[25-29 ans]'
