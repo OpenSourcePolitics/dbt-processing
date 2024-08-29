@@ -1,0 +1,25 @@
+version: 2
+
+
+sources:
+  - name: decidim
+    database: "{{ env_var('DBNAME') }}"
+    schema: public
+    tables:
+      - name: decidim_awesome_private_proposal_fields
+
+models:
+  - name: stg_decidim_awesome_private_proposal_fields
+    description: "Table for private proposal fields in the module decidim awesome."
+    columns:
+      - name: id
+        description: "Primary key."
+        data_tests:
+          - not_null
+          - unique
+      - name: proposal_id
+        description: "Id of the proposal the private field is linked to."
+        data_tests:
+          - not_null
+      - name: private_body
+        description: "Body of the answers of the private proposals fields answered by the user. The format is XML."
