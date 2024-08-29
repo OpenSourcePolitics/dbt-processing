@@ -1,10 +1,7 @@
 .vscode/
-
 .user.yml
 .env
 .idea
 .DS_Store
-
 package-lock.yml
-
-logs/dbt.log
+logs/
