@@ -11,8 +11,8 @@ unit_tests:
     expect:
       format: dict
       rows:
-        - {author_status: "Inscrit"}
-        - {author_status: "Non-inscrit"}
+        - {author_status: "Inscrit et connecté"}
+        - {author_status: "Non connecté"}
 
   - name: answers_short_and_long_answer_check
     description: "Check if option and sorting answers are correctly processed in the answers_short_and_long_answer CTE"
