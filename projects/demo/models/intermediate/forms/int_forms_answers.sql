@@ -6,8 +6,8 @@ SELECT
     decidim_question_id,
     created_at,
     (CASE
-        WHEN decidim_user_id IS NULL THEN 'Non-inscrit'
-        ELSE 'Inscrit'
+        WHEN decidim_user_id IS NULL THEN 'Non connecté'
+        ELSE 'Inscrit et connecté'
         END
     ) as author_status,
     updated_at,
