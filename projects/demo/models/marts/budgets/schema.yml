@@ -6,5 +6,5 @@ models:
     schema: "{{ env_var('TARGET_SCHEMA') }}"
     description: "Splits budgets orders (i.e. votes) on a per-project basis"
     columns:
-      - name: id
-        description: "Is actually the order ID"    
+      - name: order_id
+        description: "ID of the budget order through which the vote has been issued"    
