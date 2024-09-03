@@ -22,4 +22,4 @@ FROM {{ ref('int_forms_answers') }} decidim_forms_answers
 JOIN {{ ref('stg_decidim_forms_questions') }} AS decidim_forms_questions ON decidim_forms_questions.id = decidim_forms_answers.decidim_question_id
 JOIN {{ ref('stg_decidim_attachments') }} decidim_attachments ON decidim_attachments.attached_to_id = decidim_forms_answers.id
 CROSS JOIN org
-WHERE kattached_to_type = 'Decidim::Forms::Answer'
+WHERE attached_to_type = 'Decidim::Forms::Answer'
