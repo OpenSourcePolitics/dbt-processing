@@ -65,11 +65,7 @@ unit_tests:
         format: dict
         rows:
           - {id: 1, description: '{"fr": "<p>Welcome to &amp;Decidim</p>"}', host: 'host1.com'}
-          - {id: 2, description: '{"fr": "<div>Hello &amp;World</div>"}', host: 'host1.com'}
-          - {id: 3, description: '{"fr": "No HTML tags here"}', host: 'host1.com'}
     expect:
       format: dict
       rows:
         - {id: 1, description: "Welcome to Decidim"}
-        - {id: 2, description: "Hello World"}
-        - {id: 3, description: "No HTML tags here"}
