@@ -8,7 +8,8 @@ renamed AS (
     regexp_replace(description::jsonb->>'fr', E'(<[^>]+>)|(&[a-z]+;)', '', 'gi') as description,
     created_at,
     decidim_scope_id, 
-    budget_amount as project_amount, 
+    budget_amount as project_amount,
+    selected_at,
     decidim_budgets_budget_id,
     'Decidim::Budgets::Project' as resource_type
     FROM source
