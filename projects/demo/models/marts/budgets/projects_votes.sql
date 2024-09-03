@@ -11,7 +11,7 @@ WITH budgets_projects AS (
         JOIN {{ ref("budgets_projects")}} decidim_budgets_projects on decidim_budgets_projects.id = decidim_budgets_line_items.decidim_project_id
 )
     SELECT
-        decidim_budgets_orders.id,
+        decidim_budgets_orders.id as order_id,
         decidim_budgets_orders.decidim_user_id,
         budgets_projects.project_id,
         budgets_projects.project_title,

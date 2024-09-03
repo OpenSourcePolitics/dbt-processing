@@ -53,7 +53,7 @@
                 decidim_user_id,
                 decidim_component_id,
                 'Decidim::Budgets::Project::Vote' as participation_type,
-                id::text as participation_id,
+                order_id::text as participation_id,
                 created_at as participation_date
             FROM {{ ref("projects_votes")}} decidim_bugdets_projects_votes
     ), participations_meetings_registrations as (
