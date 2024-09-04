@@ -1,0 +1,30 @@
+unit_tests:
+  - name: vote_finished_test
+    description: "Checks that the boolean is properly set to True only if there is a checked_out_at timestamp"
+    model: int_budgets_orders
+    given:
+      - input: ref('stg_decidim_budgets_orders')
+        format: dict
+        rows:
+          - {id: 1, checked_out_at: '2024-04-03'}
+          - {id: 2, checked_out_at: NULL}
+    expect:
+      format: dict
+      rows:
+          - {id: 1, vote_finished: True}
+          - {id: 2, vote_finished: False}
+  - name: is_selected_test
+    description: "Checks that the boolean is properly set to True only if there is a selected_at timestamp"
+    model: int_budgets_projects
+    given:
+      - input: ref('stg_decidim_budgets_projects')
+        format: dict
+        rows:
+          - {id: 1, selected_at: '2024-04-03'}
+          - {id: 2, selected_at: NULL}
+    expect:
+      format: dict
+      rows:
+          - {id: 1, is_selected: True}
+          - {id: 2, is_selected: False}
+

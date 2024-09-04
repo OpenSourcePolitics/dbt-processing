@@ -38,6 +38,8 @@ models:
         description: "ID of the scope to which the project may be linked to"
       - name: project_amount
         description: "Cost of the project"
+      - name: selected_at
+        description: "Timestamp of the selection of the project (if selected)"
       - name: decidim_budgets_budget_id
         description: "ID of the related budget"
       - name: resource_type
