@@ -44,9 +44,7 @@ models:
           +enabled: false
 
   cour_des_comptes:
-    # Config indicated by + and applies to all files under models/example/
-    example:
-      +materialized: view
+    +materialized: table
 
 tests:
   demo:
