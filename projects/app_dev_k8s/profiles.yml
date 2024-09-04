@@ -1,4 +1,4 @@
-k8s:
+app_dev_k8s:
   target: preprod
   outputs:
     dev:
