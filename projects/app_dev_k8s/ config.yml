@@ -1,0 +1,3 @@
+db_name_dev: APP_DEV_K8S_DBNAME_DEV
+db_name_prod: APP_DEV_K8S_DBNAME_PROD
+participation_host_name: APP_DEV_K8S_PARTICIPATION_HOST_NAME
