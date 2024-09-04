@@ -1,3 +1,9 @@
+WITH org AS (
+    -- Assumption: There is only one organization, so we select the first available host
+    SELECT host
+    FROM {{ ref('organizations') }}
+    LIMIT 1
+)
 SELECT DISTINCT
     decidim_forms_answers.decidim_user_id,
     decidim_forms_answers.session_token,
@@ -6,7 +12,7 @@ SELECT DISTINCT
     decidim_forms_questions.position AS "position",
     decidim_attachments.file AS "answer",
     '' AS "sub_matrix_question",
-    CONCAT('https://',(SELECT host FROM {{ ref('organizations') }} decidim_organizations),'/uploads/decidim/attachment/file/',decidim_attachments.id,'/',decidim_attachments.file) AS custom_body,
+    CONCAT('https://', org.host, '/uploads/decidim/attachment/file/', decidim_attachments.id, '/', decidim_attachments.file) AS custom_body,
     -1 AS sorting_position,
     decidim_forms_questions.decidim_questionnaire_id,
     decidim_forms_questions.body,
@@ -15,4 +21,5 @@ SELECT DISTINCT
 FROM {{ ref('int_forms_answers') }} decidim_forms_answers
 JOIN {{ ref('stg_decidim_forms_questions') }} AS decidim_forms_questions ON decidim_forms_questions.id = decidim_forms_answers.decidim_question_id
 JOIN {{ ref('stg_decidim_attachments') }} decidim_attachments ON decidim_attachments.attached_to_id = decidim_forms_answers.id
+CROSS JOIN org
 WHERE attached_to_type = 'Decidim::Forms::Answer'

@@ -20,5 +20,7 @@ renamed AS (
         time_zone
     FROM source
     WHERE host = '{{ env_var('PARTICIPATION_HOST_NAME') }}'
+    -- Assumption: There is only one organization, so we select the first available host
+    LIMIT 1
 )
 SELECT * FROM renamed
