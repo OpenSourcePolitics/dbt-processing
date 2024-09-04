@@ -1,4 +1,4 @@
-name: app_dev_k8s
+name: app_dev_k8s_models_run
 
 on: 
   workflow_dispatch:
