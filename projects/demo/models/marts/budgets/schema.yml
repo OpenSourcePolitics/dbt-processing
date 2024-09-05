@@ -2,8 +2,7 @@
 version: 2
 
 models:
-  - name: project_votes
-    schema: "{{ env_var('TARGET_SCHEMA') }}"
+  - name: projects_votes
     description: "Splits budgets orders (i.e. votes) on a per-project basis"
     columns:
       - name: order_id
