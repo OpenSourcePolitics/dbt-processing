@@ -36,8 +36,8 @@ WITH decidim_organizations AS (
         CONCAT('https://', decidim_organizations.host, '/initiatives/i-', decidim_initiatives.id) AS url,
         decidim_initiatives_type_scopes.supports_required,
         decidim_areas.id AS area_id,
-        coalesce(nullif(decidim_areas.name::jsonb->>'fr', ''), 'No sub category') AS area_name,
-        coalesce(nullif(decidim_area_types.name::jsonb->>'fr',''), 'No category') AS area_type_name,
+        coalesce(nullif(decidim_areas.name::jsonb->>'fr', ''), 'Pas de sous catégorie') AS area_name,
+        coalesce(nullif(decidim_area_types.name::jsonb->>'fr',''), 'Pas de catégorie') AS area_type_name,
         decidim_initiatives.resource_type,
         decidim_initiatives.id_as_text
     FROM {{ ref("int_initiatives")}} decidim_initiatives
