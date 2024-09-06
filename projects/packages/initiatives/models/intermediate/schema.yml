@@ -1,3 +1,18 @@
+
+version: 2
+
+models:
+  - name: int_initiatives
+    description: "Table for intermediate initiatives"
+    columns:
+      - name: id
+        description: "Id of the initiative."
+      - name: parsed_state
+        description: "Translated state of an integer state. (See decidim documentation)"
+      - name: sum_votes
+        description: "Sum total of votes from both online and offline votes. "
+
+
 unit_tests:
   - name: sum_votes
     description: "Test that the total of parsed votes is correcly calculated."

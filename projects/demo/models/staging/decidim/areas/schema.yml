@@ -1,0 +1,26 @@
+
+version: 2
+
+
+sources:
+  - name: decidim
+    database: "{{ env_var('DBNAME') }}"
+    schema: public  
+    tables:
+      - name: decidim_areas
+      - name: decidim_area_types
+        
+models:
+  - name: stg_decidim_area_types
+    description: "Table for (deprecated) area types. Area types are used mainly as categories and super categories for decidim area."
+    columns:
+      - name: id
+        description: "Primary key."
+
+  - name: stg_decidim_areas
+    description: "Table for (deprecated) areas. Areas are sub categories for area types."
+    columns:
+      - name: id
+        description: "Primary key."
+      - name: area_type_id
+        description: "Id of the area type, the area is linked to."
