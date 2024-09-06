@@ -5,7 +5,7 @@ unit_tests:
       - input: ref('stg_decidim_initiatives_type_scopes')
         format: dict
         rows:
-          - {id: 77, supports_required: '2000'}
+          - {id: 77}
       - input: ref('stg_decidim_areas')
         format: dict
         rows:
@@ -13,7 +13,7 @@ unit_tests:
       - input: ref('stg_decidim_area_types')
         format: dict
         rows:
-          - {id: 66, name: 'Category type'}
+          - {id: 66, name: 'Catégorie1'}
       - input: ref('int_initiatives')
         format: dict
         rows:
@@ -30,4 +30,36 @@ unit_tests:
       rows:
         - {id: 42, url: 'https://organization1/initiatives/i-42'}
         - {id: 43, url: 'https://organization1/initiatives/i-43'}
+  - name: null_category_name
+    model: initiatives
+    given: 
+      - input: ref('stg_decidim_initiatives_type_scopes')
+        format: dict
+        rows:
+          - {id: 77}
+      - input: ref('stg_decidim_areas')
+        format: dict
+        rows:
+          - {id: 55, area_type_id: 66, name: '{"fr": "Environnement"}'}
+      - input: ref('stg_decidim_area_types')
+        format: dict
+        rows:
+          - {id: 66, name: '{"fr": "Education"}'}
+      - input: ref('int_initiatives')
+        format: dict
+        rows:
+          - {id: 42, decidim_organization_id: 101, scoped_type_id: 77, decidim_area_id: 55}
+          - {id: 43, decidim_organization_id: 101, scoped_type_id: 77, decidim_area_id: null}
+      - input: ref('int_organizations')
+        format: dict
+        rows:
+          - {id: 101, host: 'organization1'}
+    expect:
+      format: dict
+      rows:
+        - {id: 42,  area_id: 55, area_name: 'Environnement', area_type_name: 'Education'}
+        - {id: 43,  area_id: null, area_name: 'Pas de sous catégorie', area_type_name: 'Pas de catégorie'}
+
+
+
 
