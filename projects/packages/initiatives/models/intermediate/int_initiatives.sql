@@ -32,7 +32,6 @@
         decidim_area_id,
         comments_count,
         follows_count,
-        concat('https://', (SELECT host FROM {{ ref("organizations")}} org), '/initiatives/i-',decidim_initiatives.id) AS url,
         'Decidim::Initiative' AS resource_type,
         decidim_initiatives.id::text AS id_as_text
     FROM {{ ref("stg_decidim_initiatives")}} decidim_initiatives,
