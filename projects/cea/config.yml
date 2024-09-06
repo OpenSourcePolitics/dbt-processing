@@ -1,0 +1,3 @@
+db_name_dev: CEA_DBNAME_DEV
+db_name_prod: CEA_DBNAME_PROD
+participation_host_name: CEA_PARTICIPATION_HOST_NAME
