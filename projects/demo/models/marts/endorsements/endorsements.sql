@@ -1,3 +1,9 @@
+{{ config(
+    indexes=[
+      {'columns': ['decidim_author_id'], 'type': 'btree'},
+    ]
+)}}
+
 WITH endorsements_proposals AS (
     SELECT
         decidim_endorsements.*,
