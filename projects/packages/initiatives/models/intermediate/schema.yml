@@ -37,3 +37,17 @@ unit_tests:
           - {id: 5, parsed_state: 'Invalide'}
           - {id: 6, parsed_state: 'Validation technique'}
           - {id: 7, parsed_state: 'Publiée'}
+  - name: null_votes
+    description: "Testing that null votes appear as 0"
+    model: int_initiatives
+    given:
+      - input: ref('stg_decidim_initiatives')
+        format: dict
+        rows:
+          - {id: 1, online_votes: '{}', offline_votes: '{"total": 50000, "global": 50000}'}
+          - {id: 2, online_votes: '{"total": 55, "global": 1}', offline_votes: '{}'}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, parsed_online_votes: 0, parsed_offline_votes: 50000}
+        - {id: 2, parsed_online_votes: 55, parsed_offline_votes: 0}

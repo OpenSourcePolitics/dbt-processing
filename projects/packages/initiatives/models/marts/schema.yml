@@ -18,15 +18,16 @@ unit_tests:
         format: dict
         rows:
           - {id: 42, decidim_organization_id: 101, scoped_type_id: 77, decidim_area_id: 55}
-          - {id: 43, decidim_organization_id: 102, scoped_type_id: 77, decidim_area_id: 55}
-      - input: ref('organizations')
+          - {id: 43, decidim_organization_id: 101, scoped_type_id: 77, decidim_area_id: 55}
+          - {id: 44, decidim_organization_id: 102, scoped_type_id: 77, decidim_area_id: 55}
+
+      - input: ref('int_organizations')
         format: dict
         rows:
           - {id: 101, host: 'organization1'}
-          - {id: 102, host: 'organization2'}
     expect:
       format: dict
       rows:
         - {id: 42, url: 'https://organization1/initiatives/i-42'}
-        - {id: 43, url: 'https://organization2/initiatives/i-43'}
+        - {id: 43, url: 'https://organization1/initiatives/i-43'}
 

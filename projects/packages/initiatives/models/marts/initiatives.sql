@@ -6,7 +6,7 @@ WITH decidim_organizations AS (
     SELECT 
       id,
       host
-    FROM {{ ref('organizations') }}
+    FROM {{ ref('int_organizations') }}
     LIMIT 1
 )
     SELECT
