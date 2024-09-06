@@ -1,0 +1,32 @@
+unit_tests:
+  - name: test_url_creation
+    model: initiatives
+    given:
+      - input: ref('stg_decidim_initiatives_type_scopes')
+        format: dict
+        rows:
+          - {id: 77, supports_required: '2000'}
+      - input: ref('stg_decidim_areas')
+        format: dict
+        rows:
+          - {id: 55, area_type_id: 66}
+      - input: ref('stg_decidim_area_types')
+        format: dict
+        rows:
+          - {id: 66, name: 'Category type'}
+      - input: ref('int_initiatives')
+        format: dict
+        rows:
+          - {id: 42, decidim_organization_id: 101, scoped_type_id: 77, decidim_area_id: 55}
+          - {id: 43, decidim_organization_id: 102, scoped_type_id: 77, decidim_area_id: 55}
+      - input: ref('organizations')
+        format: dict
+        rows:
+          - {id: 101, host: 'organization1'}
+          - {id: 102, host: 'organization2'}
+    expect:
+      format: dict
+      rows:
+        - {id: 42, url: 'https://organization1/initiatives/i-42'}
+        - {id: 43, url: 'https://organization2/initiatives/i-43'}
+

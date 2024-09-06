@@ -1,0 +1,39 @@
+unit_tests:
+  - name: sum_votes
+    description: "Test that the total of parsed votes is correcly calculated."
+    model: int_initiatives
+    given:
+      - input: ref('stg_decidim_initiatives')
+        format: dict
+        rows:
+          - {id: 1, online_votes: '{"total": 1, "global": 1}', offline_votes: '{"total": 50000, "global": 50000}'}
+          - {id: 2, online_votes: '{"total": 42, "global": 0}', offline_votes: '{"total": 300, "global": 0}'}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, sum_votes: '50001'}
+        - {id: 2, sum_votes: '342'}
+  - name: state_parsing
+    description: "Test that the numbered states are correctly parsed."
+    model: int_initiatives
+    given:
+      - input: ref('stg_decidim_initiatives')
+        format: dict
+        rows:
+          - {id: 1, state: 5}
+          - {id: 2, state: 2}
+          - {id: 3, state: 4}
+          - {id: 4, state: 0}
+          - {id: 5, state: 6}
+          - {id: 6, state: 1}
+          - {id: 7, state: 3}
+    expect:
+      format: dict
+      rows:
+          - {id: 1, parsed_state: 'Assez de signatures'}
+          - {id: 2, parsed_state: 'Retirée'}
+          - {id: 3, parsed_state: 'Pas assez de signatures'}
+          - {id: 4, parsed_state: 'Créée'}
+          - {id: 5, parsed_state: 'Invalide'}
+          - {id: 6, parsed_state: 'Validation technique'}
+          - {id: 7, parsed_state: 'Publiée'}
