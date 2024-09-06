@@ -41,8 +41,8 @@ WITH decidim_organizations AS (
         decidim_initiatives.resource_type,
         decidim_initiatives.id_as_text
     FROM {{ ref("int_initiatives")}} decidim_initiatives
-        JOIN {{ ref("stg_decidim_initiatives_type_scopes")}} decidim_initiatives_type_scopes on scoped_type_id = decidim_initiatives_type_scopes.id
+        JOIN {{ ref("stg_decidim_initiatives_type_scopes")}} decidim_initiatives_type_scopes on decidim_initiatives.scoped_type_id = decidim_initiatives_type_scopes.id
         LEFT JOIN {{ ref("stg_decidim_areas")}} decidim_areas on decidim_areas.id = decidim_initiatives.decidim_area_id
-        LEFT JOIN {{ ref("stg_decidim_area_types")}} decidim_area_types on decidim_area_types.id = area_type_id
+        LEFT JOIN {{ ref("stg_decidim_area_types")}} decidim_area_types on decidim_area_types.id = decidim_areas.area_type_id
         CROSS JOIN decidim_organizations
         WHERE decidim_organizations.id = decidim_initiatives.decidim_organization_id
