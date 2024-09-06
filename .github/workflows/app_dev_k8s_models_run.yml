@@ -1,0 +1,46 @@
+name: app_dev_k8s_models_run
+
+on: 
+  workflow_dispatch:
+  schedule:
+    - cron:  '0 8 * * *'
+
+env:
+  DBNAME: ${{ secrets.APP_DEV_K8S_DBNAME_PROD }}
+  HOST_PREPROD: ${{ secrets.HOST_PREPROD }}
+  PASSWORD_PREPROD: ${{ secrets.PASSWORD_PREPROD }}
+  PORT_PREPROD: ${{ secrets.PORT_PREPROD }}
+  TARGET_SCHEMA: ${{ secrets.SCHEMA_PROD }}
+  USER_PREPROD: ${{ secrets.USER_PREPROD }}
+  PARTICIPATION_HOST_NAME: ${{ secrets.APP_DEV_K8S_PARTICIPATION_HOST_NAME }}
+  WORKING_DIRECTORY: ./projects/app_dev_k8s
+  
+
+jobs:
+  app_dev_k8s_models_run:
+    name: app_dev_k8s_models_run
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@master
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.x"
+          cache: 'pip'
+        
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          dbt deps --target preprod
+      
+      - name: Run dbt models
+        run: dbt run --target preprod
+
+      - name: Test dbt models
+        run: dbt test --target preprod
