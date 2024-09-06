@@ -6,8 +6,8 @@ unit_tests:
       - input: ref('stg_decidim_initiatives')
         format: dict
         rows:
-          - {id: 1, online_votes: '{"total": 1, "global": 1}', offline_votes: '{"total": 50000, "global": 50000}'}
-          - {id: 2, online_votes: '{"total": 42, "global": 0}', offline_votes: '{"total": 300, "global": 0}'}
+          - {id: 1, online_votes: '{"total": 1, "global": 2}', offline_votes: '{"total": 50000, "global": 50000}'}
+          - {id: 2, online_votes: '{"total": 42, "global": 1}', offline_votes: '{"total": 300, "global": 3}'}
     expect:
       format: dict
       rows:
