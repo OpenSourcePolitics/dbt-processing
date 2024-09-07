@@ -16,10 +16,26 @@ sources:
       - name: decidim_initiatives_type_scopes
       
 
-
-      
-
-
+models:
+  - name: stg_decidim_initiatives
+    description: "Table for initiatives in Decidim."
+    columns:
+      - name: id
+        description: "Primary key."
+      - name: title
+        description: "Title of the initiative."
+      - name: decidim_author_id
+        description: "Id of the user that has authored the initiative."
+      - name: state
+        description: "Integer from 0 to 6"
+      - name: follows_count
+        description: "Number of follows of the initiative."
+      - name: online_votes
+        description: "Votes done online"
+      - name: offline_votes
+        description: "Votes done offline, i.e IRL and reported back."
+      - name: decidim_area_id
+        description: "Id of the area (category)"
 
 
 

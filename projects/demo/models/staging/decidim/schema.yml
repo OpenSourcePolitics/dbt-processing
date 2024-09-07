@@ -25,8 +25,6 @@ sources:
       - name: decidim_endorsements
       - name: decidim_follows
       - name: decidim_initiatives
-      - name: decidim_areas
-      - name: decidim_area_types
       - name: decidim_initiatives_type_scopes
       - name: decidim_surveys_surveys
       - name: decidim_attachments
