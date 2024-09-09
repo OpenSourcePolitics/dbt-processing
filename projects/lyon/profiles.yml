@@ -7,7 +7,7 @@ lyon:
       pass: "{{ env_var('PASSWORD') }}"
       port: "{{ env_var('PORT') | as_number }}"
       schema: "{{ env_var('TARGET_SCHEMA') }}"
-      threads: 1
+      threads: 2
       type: postgres
       user: "{{ env_var('USER') }}"
     preprod:
@@ -17,7 +17,7 @@ lyon:
       port: "{{ env_var('PORT_PREPROD') | as_number }}"
       schema: "{{ env_var('TARGET_SCHEMA') }}"
       user: "{{ env_var('USER_PREPROD') }}"
-      threads: 1
+      threads: 2
       type: postgres
       job_execution_timeout_seconds: 600
     prod:
