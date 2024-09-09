@@ -1,4 +1,11 @@
 -- Warning: are not taken by default into account Conferences, Consultations, Elections, Initiatives, Votations
+
+{{ config(
+    indexes=[
+      {'columns': ['id'], 'type': 'btree'},
+    ]
+)}}
+
 WITH assemblies_spaces AS (
     SELECT
         id AS ps_id,

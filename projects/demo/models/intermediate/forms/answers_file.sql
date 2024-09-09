@@ -1,3 +1,9 @@
+{{ config(
+    indexes=[
+      {'columns': ['decidim_questionnaire_id'], 'type': 'btree'},
+    ]
+)}}
+
 WITH org AS (
     -- Assumption: There is only one organization, so we select the first available host
     SELECT host

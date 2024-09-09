@@ -1,3 +1,12 @@
+{{ config(
+    indexes=[
+      {'columns': ['id'], 'type': 'btree'},
+      {'columns': ['decidim_author_id'], 'type': 'btree'},
+      {'columns': ['coauthorable_id'], 'type': 'btree'},
+      {'columns': ['coauthorable_type'], 'type': 'btree'},
+    ]
+)}}
+
 WITH source AS (
       SELECT * FROM {{ source('decidim', 'decidim_coauthorships') }}
 ),

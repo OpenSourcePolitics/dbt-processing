@@ -1,3 +1,10 @@
+{{ config(
+    indexes=[
+      {'columns': ['id'], 'type': 'btree'},
+    ]
+)}}
+
+
 WITH source AS (
       SELECT * FROM {{ ref ("stg_decidim_organizations")}}
 ),
