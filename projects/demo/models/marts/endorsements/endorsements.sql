@@ -1,3 +1,9 @@
+{{ config(
+    indexes=[
+      {'columns': ['decidim_author_id'], 'type': 'btree'},
+    ]
+)}}
+
 WITH endorsements_proposals AS (
     SELECT
         decidim_endorsements.*,
@@ -24,17 +30,18 @@ WITH endorsements_proposals AS (
     SELECT * FROM endorsements_debates union all
     SELECT * FROM endorsements_blogs_posts
 )
+
 SELECT
-          endorsements.id,
-          endorsements.resource_type,
-          endorsements.resource_id,
-          endorsements.decidim_author_type,
-          endorsements.decidim_author_id,
-          endorsements.created_at,
-          endorsements.updated_at,
-          endorsements.decidim_component_id
-      FROM endorsements
-          LEFT JOIN {{ ref("stg_decidim_moderations")}} as decidim_moderations
-              on decidim_moderations.decidim_reportable_type = endorsements.resource_type
-              and decidim_moderations.decidim_reportable_id = endorsements.resource_id
-      where decidim_moderations.hidden_at is null
+    endorsements.id,
+    endorsements.resource_type,
+    endorsements.resource_id,
+    endorsements.decidim_author_type,
+    endorsements.decidim_author_id,
+    endorsements.created_at,
+    endorsements.updated_at,
+    endorsements.decidim_component_id
+FROM endorsements
+LEFT JOIN {{ ref("stg_decidim_moderations")}} AS decidim_moderations
+  ON decidim_moderations.decidim_reportable_type = endorsements.resource_type
+  AND decidim_moderations.decidim_reportable_id = endorsements.resource_id
+WHERE decidim_moderations.hidden_at IS NULL

@@ -1,3 +1,9 @@
+{{ config(
+    indexes=[
+      {'columns': ['decidim_user_id'], 'type': 'btree'},
+    ]
+)}}
+
 WITH answers_short_and_long_answer AS (
     SELECT * FROM {{ ref('answers_short_and_long_answer') }}
 ), answers_option_and_sorting AS (
@@ -15,6 +21,7 @@ WITH answers_short_and_long_answer AS (
     UNION ALL
     SELECT * FROM answers_file
 )
+
 SELECT
     answers.decidim_user_id,
     answers.session_token,

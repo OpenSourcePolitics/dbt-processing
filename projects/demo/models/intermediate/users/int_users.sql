@@ -1,4 +1,10 @@
-SELECT 
+{{ config(
+    indexes=[
+      {'columns': ['id'], 'type': 'btree'},
+    ]
+)}}
+
+SELECT
     decidim_users.id,
     decidim_users.email,
     decidim_users.sign_in_count,

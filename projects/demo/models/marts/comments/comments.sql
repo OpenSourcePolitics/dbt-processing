@@ -1,3 +1,10 @@
+{{ config(
+    indexes=[
+      {'columns': ['decidim_author_id'], 'type': 'btree'},
+    ]
+)}}
+
+
 {% set commentable_tables = [
     {"table": "stg_decidim_accountability_results", "type": "Decidim::Accountability::Result"},
     {"table": "blogs_posts", "type": "Decidim::Blogs::Post"},

@@ -1,3 +1,10 @@
+{{ config(
+    indexes=[
+      {'columns': ['id'], 'type': 'btree'},
+      {'columns': ['resource_type'], 'type': 'btree'}
+    ]
+)}}
+
 WITH coauthorships AS (
     SELECT 
         array_agg(decidim_users.id) AS authors_ids,
@@ -21,27 +28,27 @@ proposals AS (
     SELECT
         decidim_proposals.id,
         decidim_components.ps_id AS decidim_participatory_space_id,
-        decidim_components.ps_slug as decidim_participatory_space_slug,
-        decidim_scopes.name as decidim_scope_name,
+        decidim_components.ps_slug AS decidim_participatory_space_slug,
+        decidim_scopes.name AS decidim_scope_name,
         decidim_proposals.title,
         decidim_proposals.body,
         decidim_proposals.resource_type,
-        concat('https://', decidim_components.organization_host, '/', decidim_components.ps_space_type_slug, '/', decidim_components.ps_slug, '/f/', decidim_proposals.decidim_component_id, '/proposals/', decidim_proposals.id) as url,
+        concat('https://', decidim_components.organization_host, '/', decidim_components.ps_space_type_slug, '/', decidim_components.ps_slug, '/f/', decidim_proposals.decidim_component_id, '/proposals/', decidim_proposals.id) AS url,
         decidim_proposals.decidim_component_id,
         decidim_proposals.created_at,
         decidim_proposals.published_at,
         decidim_proposals.state,
         decidim_proposals.translated_state,
         coauthorships.authors_ids,
-        coalesce(coauthorships.authors_ids[1], -1) as first_author_id,
+        COALESCE(coauthorships.authors_ids[1], -1) AS first_author_id,
         decidim_proposals.address,
         categorizations.categories,
-        coalesce(categorizations.categories[1], 'Sans catégorie') as first_category,
+        COALESCE(categorizations.categories[1], 'Sans catégorie') AS first_category,
         categorizations.sub_categories,
-        coalesce(categorizations.sub_categories[1], 'Sans sous-catégorie') as first_sub_category,
+        COALESCE(categorizations.sub_categories[1], 'Sans sous-catégorie') AS first_sub_category,
         decidim_proposals.comments_count,
         decidim_proposals.endorsements_count,
-        coalesce(votes.votes_count,0) as votes_count
+        COALESCE(votes.votes_count,0) AS votes_count
     FROM {{ ref("int_proposals")}} AS decidim_proposals
     JOIN {{ ref("components")}} AS decidim_components ON decidim_components.id = decidim_component_id
     LEFT JOIN coauthorships ON decidim_proposals.id = coauthorships.coauthorable_id

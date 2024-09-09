@@ -1,3 +1,10 @@
+{{ config(
+    indexes=[
+      {'columns': ['id'], 'type': 'btree'},
+      {'columns': ['decidim_question_id'], 'type': 'btree'},
+    ]
+)}}
+
 SELECT
     id,
     body,
@@ -9,7 +16,7 @@ SELECT
         WHEN decidim_user_id IS NULL THEN 'Non connecté'
         ELSE 'Inscrit et connecté'
         END
-    ) as author_status,
+    ) AS author_status,
     updated_at,
     session_token,
     ip_hash

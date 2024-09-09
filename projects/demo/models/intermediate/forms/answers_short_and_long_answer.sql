@@ -1,3 +1,9 @@
+{{ config(
+    indexes=[
+      {'columns': ['decidim_questionnaire_id'], 'type': 'btree'},
+    ]
+)}}
+
 SELECT
     decidim_user_id,
     session_token,

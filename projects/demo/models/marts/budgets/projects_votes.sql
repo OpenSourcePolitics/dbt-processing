@@ -1,5 +1,12 @@
-    -- /!\ Warning : counts unfinished votes !
-    -- /!\ Warning : should be filtered on the corresponding budget to get the good values
+-- /!\ Warning : counts unfinished votes !
+-- /!\ Warning : should be filtered on the corresponding budget to get the good values
+
+{{ config(
+    indexes=[
+      {'columns': ['decidim_user_id'], 'type': 'btree'},
+    ]
+)}}
+
 WITH budgets_projects AS (
     SELECT
         decidim_budgets_line_items.decidim_order_id,

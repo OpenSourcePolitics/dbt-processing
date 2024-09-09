@@ -7,7 +7,7 @@ angers:
       pass: "{{ env_var('PASSWORD') }}"
       port: "{{ env_var('PORT') | as_number }}"
       schema: "{{ env_var('TARGET_SCHEMA') }}"
-      threads: 1
+      threads: 2
       type: postgres
       user: "{{ env_var('USER') }}"
     preprod:
@@ -16,7 +16,7 @@ angers:
       pass: "{{ env_var('PASSWORD_PREPROD') }}"
       port: "{{ env_var('PORT_PREPROD') | as_number }}"
       schema: "{{ env_var('TARGET_SCHEMA') }}"
-      threads: 1
+      threads: 2
       type: postgres
       user: "{{ env_var('USER_PREPROD') }}"
     prod:
@@ -25,7 +25,7 @@ angers:
       pass: "{{ env_var('PASSWORD') }}"
       port: "{{ env_var('PORT') | as_number }}"
       schema: "{{ env_var('TARGET_SCHEMA') }}"
-      threads: 1
+      threads: 2
       type: postgres
       user: "{{ env_var('USER') }}"
 
