@@ -30,10 +30,6 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   demo:
-    staging:
-      decidim:
-        stg_decidim_users:
-          +enabled: false
     intermediate:
       users:
         int_users:

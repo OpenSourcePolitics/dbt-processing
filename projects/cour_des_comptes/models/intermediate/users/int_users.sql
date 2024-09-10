@@ -29,7 +29,6 @@ SELECT
     decidim_users.admin,
     decidim_users.managed,
     decidim_users.roles,
-    -- decidim_users.email_on_notification,
     decidim_users.nickname,
     decidim_users.accepted_tos_version,
     decidim_users.type,

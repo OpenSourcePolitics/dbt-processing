@@ -32,19 +32,8 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   demo:
     staging:
-      decidim:
-        stg_decidim_users:
-          +enabled: false
       matomo:
         stg_matomo_referrers:
-          +enabled: false
-    intermediate:
-      users:
-        int_users:
-          +enabled: false
-    marts:
-      users:
-        users:
           +enabled: false
   cese:
     +materialized: table
