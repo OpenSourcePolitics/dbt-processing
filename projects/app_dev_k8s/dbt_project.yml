@@ -31,24 +31,10 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   demo:
-    staging:
-      decidim:
-        stg_decidim_users:
-          +enabled: false
       matomo:
         stg_matomo_referrers:
           +enabled: false
         stg_matomo_page_titles:
           +enabled: false
-    intermediate:
-      users:
-        int_users:
-          +enabled: false
-    marts:
-      users:
-        users:
-          +enabled: false
-  k8s:
-    # Config indicated by + and applies to all files under models/example/
-    example:
-      +materialized: view
+  app_dev_k8s:
+    +materialized: table

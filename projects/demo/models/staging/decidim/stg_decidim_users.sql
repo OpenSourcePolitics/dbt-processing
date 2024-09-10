@@ -24,7 +24,6 @@ renamed AS (
         admin,
         managed,
         roles::text AS roles,
-        email_on_notification,
         nickname,
         accepted_tos_version,
         type,
