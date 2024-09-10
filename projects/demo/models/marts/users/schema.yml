@@ -52,8 +52,6 @@ models:
         description: "A user can be managed. It means that someone else can participate in its name. This field indicate whether or not the user is managed"
       - name: roles
         description: "A user can have different roles inside a Decidim platform. This field list all roles that the user have"
-      - name: email_on_notification
-        description: "Whether or not the user receive a mail when he/she's notified on the platform"
       - name: nickname
         description: "Nickname of the user"
       - name: accepted_tos_version
