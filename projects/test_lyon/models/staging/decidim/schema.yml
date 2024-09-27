@@ -6,10 +6,10 @@ sources:
     database: "{{ env_var('DBNAME') }}"
     schema: public
     tables:
-      - name: decidim_awesome_private_proposal_fields
+      - name: decidim_awesome_proposal_extra_fields
 
 models:
-  - name: stg_decidim_awesome_private_proposal_fields
+  - name: stg_decidim_awesome_proposal_extra_fields
     description: "Table for private proposal fields in the module decidim awesome."
     columns:
       - name: id

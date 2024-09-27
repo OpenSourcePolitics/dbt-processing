@@ -37,3 +37,22 @@ models:
     staging:
       matomo:
         +enabled: false
+    marts:
+      matomo:
+        +enabled: false
+    intermediate:
+      matomo:
+        +enabled: false
+      
+tests:
+  demo:
+    staging:
+      matomo:
+        +enabled: false
+    marts:
+      matomo:
+        +enabled: false
+    intermediate:
+      matomo:
+        +enabled: false
+  

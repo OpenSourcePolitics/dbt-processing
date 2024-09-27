@@ -18,16 +18,15 @@ unit_tests:
 
    - name: testing_that_the_correct_xml_information_are_parsed
      description: "Checks that age matching fetches the correct infos "
-     model: int_decidim_awesome_private_proposal_fields
+     model: int_decidim_awesome_proposal_extra_fields
      given:
-      - input: ref('stg_decidim_awesome_private_proposal_fields')
+      - input: ref('stg_decidim_awesome_proposal_extra_fields')
         format: dict
         rows:
-          - {id: 1, proposal_id: 101, private_body: '<xml><dl class="decidim_awesome-custom_fields" data-generator="decidim_awesome" data-version="0.9.2"><dt name="radio-group-1724336804706-0">Vous êtes :</dt><dd id="radio-group-1724336804706-0" name="radio-group"><div alt="sans_emploi">Sans emploi</div></dd><dt name="number-1724336900935-0">Code postal</dt><dd id="number-1724336900935-0" name="number"><div>75003</div></dd><dt name="checkbox-group-1724336967989-0">Comment avez-vous eu connaissance de la plateforme ?</dt><dd id="checkbox-group-1724336967989-0" name="checkbox-group"><div alt="option2">Par la Cour des comptes et les CRTC (site web, réseaux sociaux…)</div><div alt="option5">Par mon entourage personnel ou professionnel</div></dd></dl></xml>'}
+          - {id: 1, proposal_id: 101, private_body: "<xml><dl class=\"decidim_awesome-custom_fields\" data-generator=\"decidim_awesome\" data-version=\"0.10.3\"><dt name=\"radio-group-1725003392539-0\">Cette idée est déposée à titre :</dt><dd id=\"radio-group-1725003392539-0\" name=\"radio-group\"><div alt=\"individuel\">Individuel</div></dd><dt name=\"radio-group-1725003468065-0\">Votre tranche d'âge&nbsp; :</dt><dd id=\"radio-group-1725003468065-0\" name=\"radio-group\"><div alt=\"1625\">16-25 ans</div></dd></dl></xml>"}
      expect:
       format: dict
       rows:
-        - {id: 1, proposal_id: 101, private_field_description: "Vous êtes :", private_field_content: "Sans emploi"}
-        - {id: 1, proposal_id: 101, private_field_description: "Code postal", private_field_content: "75003"}
-        - {id: 1, proposal_id: 101, private_field_description: "Comment avez-vous eu connaissance de la plateforme ?", private_field_content: "Par la Cour des comptes et les CRTC (site web, réseaux sociaux…)"}
-        - {id: 1, proposal_id: 101, private_field_description: "Comment avez-vous eu connaissance de la plateforme ?", private_field_content: "Par mon entourage personnel ou professionnel"}
+        - {id: 1, proposal_id: 101, private_field_description: "Cette idée est déposée à titre :", private_field_content: "Individuel"}
+        - {id: 1, proposal_id: 101, private_field_description: "Votre tranche d'âge", private_field_content: "16-25 ans"}
+       
