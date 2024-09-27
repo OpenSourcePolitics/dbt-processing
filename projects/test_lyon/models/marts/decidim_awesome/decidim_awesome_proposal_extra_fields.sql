@@ -6,6 +6,6 @@ SELECT
     decidim_proposals_proposals.decidim_component_id,
     components.ps_title
 FROM
-    {{ ref ("int_decidim_awesome_private_proposal_fields")}} AS decidim_awesome_proposal_extra_fields
+    {{ ref ("int_decidim_awesome_proposal_extra_fields")}} AS decidim_awesome_proposal_extra_fields
 JOIN {{ ref ("stg_decidim_proposals")}} AS decidim_proposals_proposals ON decidim_awesome_proposal_extra_fields.proposal_id = decidim_proposals_proposals.id
 JOIN {{ ref ("components")}} AS components ON decidim_proposals_proposals.decidim_component_id = components.id

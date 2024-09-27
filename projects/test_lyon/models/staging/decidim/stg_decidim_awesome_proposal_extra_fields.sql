@@ -7,5 +7,5 @@ SELECT
     decidim_proposal_id AS proposal_id,
     updated_at,
     created_at,
-    private_body_clear
+    replace(private_body_clear, '&nbsp;', '') AS private_body_clear
 FROM source
