@@ -23,10 +23,10 @@ unit_tests:
       - input: ref('stg_decidim_awesome_proposal_extra_fields')
         format: dict
         rows:
-          - {id: 1, proposal_id: 101, private_body: "<xml><dl class=\"decidim_awesome-custom_fields\" data-generator=\"decidim_awesome\" data-version=\"0.10.3\"><dt name=\"radio-group-1725003392539-0\">Cette idée est déposée à titre :</dt><dd id=\"radio-group-1725003392539-0\" name=\"radio-group\"><div alt=\"individuel\">Individuel</div></dd><dt name=\"radio-group-1725003468065-0\">Votre tranche d'âge&nbsp; :</dt><dd id=\"radio-group-1725003468065-0\" name=\"radio-group\"><div alt=\"1625\">16-25 ans</div></dd></dl></xml>"}
+          - {id: 1, proposal_id: 101, private_body_clear: "<xml><dl class=\"decidim_awesome-custom_fields\" data-generator=\"decidim_awesome\" data-version=\"0.10.3\"><dt name=\"radio-group-1725003392539-0\">Cette idée est déposée à titre :</dt><dd id=\"radio-group-1725003392539-0\" name=\"radio-group\"><div alt=\"individuel\">Individuel</div></dd><dt name=\"radio-group-1725003468065-0\">Votre tranche d'âge :</dt><dd id=\"radio-group-1725003468065-0\" name=\"radio-group\"><div alt=\"1625\">16-25 ans</div></dd></dl></xml>"}
      expect:
       format: dict
       rows:
         - {id: 1, proposal_id: 101, private_field_description: "Cette idée est déposée à titre :", private_field_content: "Individuel"}
-        - {id: 1, proposal_id: 101, private_field_description: "Votre tranche d'âge", private_field_content: "16-25 ans"}
+        - {id: 1, proposal_id: 101, private_field_description: "Votre tranche d'âge :", private_field_content: "16-25 ans"}
        
