@@ -6,7 +6,7 @@ sources:
     database: "{{ env_var('DBNAME') }}"
     schema: public
     tables:
-      - name: decidim_awesome_proposal_extra_fields
+      - name: decidim_awesome_proposal_extra_fields_test
 
 models:
   - name: stg_decidim_awesome_proposal_extra_fields

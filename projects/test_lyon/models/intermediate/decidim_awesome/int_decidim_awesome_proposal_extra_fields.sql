@@ -6,7 +6,7 @@ WITH parsed_data AS (
         unnest(xpath('//dd/div/text()', unnest(xpath('//dd', xml_data))))::text AS private_field_content
     FROM
         {{ ref ("stg_decidim_awesome_proposal_extra_fields")}} AS decidim_awesome_proposal_extra_fields,
-        LATERAL xmlparse(document private_body) AS xml_data
+        LATERAL xmlparse(document private_body_clear) AS xml_data
 )
 SELECT
     parsed_data.id,
