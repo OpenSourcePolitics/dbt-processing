@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: int_decidim_awesome_private_proposal_fields
+    description: "Model for parsing the information in the private proposals fields and unnest the XML data into readable questions and answers columns."
+    columns:
+      - name: id
+        description: "Primary key."
+      - name: proposal_id
+        description: "Id of the proposal the private field is linked to."
+      - name: private_field_description
+        description: "Description of the private field to be answered."
+      - name: private_field_content
+        description: "The content filled by the user for a specific private field. There can be multiple content for the same private field description."
+
+
+unit_tests:
+
+   - name: testing_that_the_correct_xml_information_are_parsed
+     description: "Checks that age matching fetches the correct infos "
+     model: int_decidim_awesome_proposal_extra_fields
+     given:
+      - input: ref('stg_decidim_awesome_proposal_extra_fields')
+        format: dict
+        rows:
+          - {id: 1, proposal_id: 101, private_body_clear: "<xml><dl class=\"decidim_awesome-custom_fields\" data-generator=\"decidim_awesome\" data-version=\"0.10.3\"><dt name=\"radio-group-1725003392539-0\">Cette idée est déposée à titre :</dt><dd id=\"radio-group-1725003392539-0\" name=\"radio-group\"><div alt=\"individuel\">Individuel</div></dd><dt name=\"radio-group-1725003468065-0\">Votre tranche d'âge :</dt><dd id=\"radio-group-1725003468065-0\" name=\"radio-group\"><div alt=\"1625\">16-25 ans</div></dd></dl></xml>"}
+     expect:
+      format: dict
+      rows:
+        - {id: 1, proposal_id: 101, private_field_description: "Cette idée est déposée à titre :", private_field_content: "Individuel"}
+        - {id: 1, proposal_id: 101, private_field_description: "Votre tranche d'âge :", private_field_content: "16-25 ans"}
+       
