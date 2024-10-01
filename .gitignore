@@ -1,6 +1,7 @@
 .vscode/
 .user.yml
 .env
+.venv
 .idea
 .DS_Store
 package-lock.yml
