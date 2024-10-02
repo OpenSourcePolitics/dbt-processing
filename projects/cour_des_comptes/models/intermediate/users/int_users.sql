@@ -47,11 +47,51 @@ FROM {{ ref ("stg_decidim_users")}} as decidim_users
     AND type LIKE 'Decidim::User'
 ),
 
+users_with_correct_age AS (
+SELECT
+    users_with_date_of_birth.id,
+    users_with_date_of_birth.email,
+    users_with_date_of_birth.sign_in_count,
+    users_with_date_of_birth.sign_in_frequency,
+    users_with_date_of_birth.last_sign_in_at,
+    users_with_date_of_birth.created_at,
+    users_with_date_of_birth.updated_at,
+    users_with_date_of_birth.invitation_created_at,
+    users_with_date_of_birth.invitation_sent_at,
+    users_with_date_of_birth.invitation_accepted_at,
+    users_with_date_of_birth.invited_by_id,
+    users_with_date_of_birth.invited_by_type,
+    users_with_date_of_birth.decidim_organization_id,
+    users_with_date_of_birth.confirmed_at,
+    users_with_date_of_birth.confirmation_token,
+    users_with_date_of_birth.unconfirmed_email,
+    users_with_date_of_birth.name,
+    users_with_date_of_birth.locale,
+    users_with_date_of_birth.deleted_at,
+    users_with_date_of_birth.admin,
+    users_with_date_of_birth.managed,
+    users_with_date_of_birth.roles,
+    users_with_date_of_birth.nickname,
+    users_with_date_of_birth.accepted_tos_version,
+    users_with_date_of_birth.type,
+    users_with_date_of_birth.following_count,
+    users_with_date_of_birth.followers_count,
+    users_with_date_of_birth.failed_attempts,
+    users_with_date_of_birth.locked_at,
+    users_with_date_of_birth.admin_terms_accepted_at,
+    users_with_date_of_birth.blocked,
+    users_with_date_of_birth.blocked_at,
+    users_with_date_of_birth.confirmed,
+    users_with_date_of_birth.extended_data,
+    (CASE WHEN date_of_birth > '1900-01-01' THEN date_of_birth ELSE NULL END) AS date_of_birth
+FROM users_with_date_of_birth
+    ),
+
 users_with_age AS (
 SELECT
     *,
-    EXTRACT(YEAR FROM AGE(CURRENT_DATE, DATE(users_with_date_of_birth.date_of_birth))) AS age
-FROM users_with_date_of_birth
+    EXTRACT(YEAR FROM AGE(CURRENT_DATE, DATE(users_with_correct_age.date_of_birth))) AS age
+FROM users_with_correct_age
 )
 
 SELECT
