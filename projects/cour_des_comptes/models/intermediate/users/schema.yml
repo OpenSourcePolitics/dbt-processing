@@ -20,3 +20,16 @@ unit_tests:
         - {id: 3, date_of_birth: "1932-05-23", age: 92, age_category: "[75 ans ou plus]"}
         - {id: 4, date_of_birth: "2009-12-01", age: 14, age_category: "[0-15 ans]"}
         - {id: 5, date_of_birth: null, age: null, age_category: 'Âge non défini'}
+
+   - name: testing_date_out_of_range
+     description: "Checks that age is undefined if field value out of range"
+     model: int_users
+     given:
+      - input: ref('stg_decidim_users')
+        format: dict
+        rows:
+          - {id: 1, extended_data: '{"date_of_birth": "0000-11-06"}', type: 'Decidim::User'}
+     expect:
+      format: dict
+      rows:
+        - {id: 1, date_of_birth: null, age: null, age_category: "Âge non défini"}
