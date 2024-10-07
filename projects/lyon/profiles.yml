@@ -19,7 +19,6 @@ lyon:
       user: "{{ env_var('USER_PREPROD') }}"
       threads: 2
       type: postgres
-      job_execution_timeout_seconds: 600
     prod:
       dbname: "{{ env_var('DBNAME') }}"
       host: "{{ env_var('HOST') }}"
