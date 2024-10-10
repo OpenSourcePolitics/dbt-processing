@@ -3,7 +3,7 @@ name: lyon_models_run
 on: 
   workflow_dispatch:
   schedule:
-    - cron:  '0 5 * * *'
+    - cron:  '0 9 * * *'
 
 env:
   DBNAME: ${{ secrets.LYON_DBNAME_PROD }}
