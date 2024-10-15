@@ -1,0 +1,49 @@
+unit_tests:
+  - name: test_custom_state_unicity
+    description: "Test that a single proposal cannot be assigned to 2 different custom states "
+    model: proposals
+    given:
+      - input: ref('int_users')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_coauthorships')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_proposals_votes')
+        format: dict
+        rows:
+          - {}
+      - input: ref('components')
+        format: dict
+        rows:
+          - {id: 100}
+      - input: ref('stg_decidim_moderations')
+        format: dict
+        rows:
+          - {}
+      - input: ref('int_scopes')
+        format: dict
+        rows:
+          - {}
+      - input: ref('categorizations')
+        format: dict
+        rows:
+          - {}
+      - input: ref('int_proposals')
+        format: dict
+        rows:
+          - {id: 41, published_at: '2023-01-01', decidim_component_id: 100, decidim_proposals_proposal_state_id: 45}
+          - {id: 42, published_at: '2023-01-02', decidim_component_id: 100, decidim_proposals_proposal_state_id: 46}
+      - input: ref('stg_decidim_proposals_custom_states')
+        format: dict
+        rows:
+          - {id: 45, token: 'withdrawn', title: 'Retirée'}
+          - {id: 46, token: 'accepted', title: 'Acceptée'}
+    expect:
+      format: dict
+      rows:
+        - {id: 41, state: 'withdrawn', custom_state: 'Retirée', custom_state_id: 45}
+        - {id: 42, state: 'accepted', custom_state: 'Acceptée', custom_state_id: 46}
+  

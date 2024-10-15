@@ -7,6 +7,9 @@ models:
     columns:
       - name: id
         description: "Unique identifier for the proposal"
+        tests:
+          - unique
+          - not_null
       - name: decidim_participatory_space_id
         description: "Identifier for the participatory space where the proposal was created"
       - name: decidim_participatory_space_slug

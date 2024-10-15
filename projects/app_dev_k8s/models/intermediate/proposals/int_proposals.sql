@@ -13,15 +13,8 @@ SELECT
     decidim_proposals.decidim_scope_id,
     decidim_proposals.created_at,
     decidim_proposals.published_at,
-    COALESCE(decidim_proposals.state,'Pas d''état') AS state,
-    (CASE
-        WHEN decidim_proposals.state = 'evaluating' THEN 'En cours d''évaluation'
-        WHEN decidim_proposals.state = 'rejected' THEN 'Rejetée'
-        WHEN decidim_proposals.state = 'accepted' THEN 'Acceptée'
-        WHEN decidim_proposals.state IS NULL THEN 'Pas d''état'
-        ELSE decidim_proposals.state
-        END
-    ) AS translated_state,
+    decidim_proposals.state,
+    decidim_proposals.decidim_proposals_proposal_state_id, 
     decidim_proposals.comments_count,
     decidim_proposals.endorsements_count,
     COALESCE(NULLIF(decidim_proposals.address,''),'Pas d''adresse') AS address

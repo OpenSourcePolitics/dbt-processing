@@ -44,8 +44,8 @@ unit_tests:
     expect:
       format: dict
       rows:
-        - {id: 1, state: 'Pas d''état', translated_state: 'Pas d''état'}
-        - {id: 2, state: 'rejected', translated_state: 'Rejetée'}
+        - {id: 1, state: 'Pas d''état'}
+        - {id: 2, state: 'rejected'}
   - name: test_translated_state
     description: "Test that the state column is correctly translated"
     model: int_proposals
@@ -56,12 +56,14 @@ unit_tests:
           - {id: 1, published_at: '2024-08-12', state: 'evaluating'}
           - {id: 2, published_at: '2024-08-12', state: 'rejected'}
           - {id: 3, published_at: '2024-08-12', state: 'accepted'}
+          - {id: 4, published_at: '2024-08-12', state:  NULL}
     expect:
       format: dict
       rows:
         - {id: 1, translated_state: 'En cours d''évaluation'}
         - {id: 2, translated_state: 'Rejetée'}
         - {id: 3, translated_state: 'Acceptée'}
+        - {id: 4, translated_state: 'Pas d''état'}
   - name: test_default_address
     description: "Test that the address column correctly defaults to 'Pas d'adresse' if empty"
     model: int_proposals
