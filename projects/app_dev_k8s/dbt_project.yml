@@ -15,7 +15,7 @@ model-paths: ["models"]
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
 seed-paths: ["seeds"]
-macro-paths: ["macros"]
+macro-paths: ["../demo/macros"]
 snapshot-paths: ["snapshots"]
 
 clean-targets:         # directories to be removed by `dbt clean`
@@ -32,10 +32,29 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   demo:
     staging:
+      decidim: 
+        proposals: 
+          stg_decidim_proposals:
+            +enabled: false 
       matomo:
         stg_matomo_referrers:
           +enabled: false
         stg_matomo_page_titles:
           +enabled: false
+    intermediate: 
+        proposals: 
+          int_proposals:
+            +enabled: false
+    marts:
+      proposals:
+        proposals:
+          +enabled: false
+    
   app_dev_k8s:
     +materialized: table
+  
+tests:
+  demo:
+    marts:
+      proposals:
+        +enabled: false
