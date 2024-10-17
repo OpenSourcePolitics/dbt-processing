@@ -5,7 +5,6 @@ renamed AS (
     select
         date,
         min_time_server,
-        min_time_network,
         min_time_dom_processing,
         nb_hits_with_time_on_load,
         coalesce(exit_nb_uniq_visitors::float::int, 0) AS exit_nb_uniq_visitors,

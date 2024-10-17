@@ -6,7 +6,6 @@ renamed AS (
         date,
         country,
         nb_actions,
-        city,
         bounce_count,
         index,
         label,
