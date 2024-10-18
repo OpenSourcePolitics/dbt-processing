@@ -7,4 +7,3 @@ SELECT
     bounce_count,
     date
 FROM {{ source('matomo', 'referrers') }}
-WHERE sub_type IS NOT null
