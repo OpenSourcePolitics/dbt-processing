@@ -35,7 +35,6 @@ models:
       matomo:
         stg_matomo_referrers:
           +enabled: false
+
   meyzieu:
-    # Config indicated by + and applies to all files under models/example/
-    example:
-      +materialized: view
+    +materialized: table
