@@ -51,6 +51,8 @@ models:
         description: "Number of endorsements on the proposal"
       - name: votes_count
         description: "Number of votes the proposal has received"
+      - name: hidden_at
+        description: "Timestamp when the proposal has been hidden by moderation"
   - name: proposals_votes
     description : "Every vote made on propositions"
     columns:
@@ -70,39 +72,11 @@ unit_tests:
     description: "Check if withdrawn proposals are properly removed"
     model: proposals
     given:
-      - input: ref('int_users')
+      - input: ref('all_proposals')
         format: dict
         rows:
-          - {}
-      - input: ref('stg_decidim_coauthorships')
-        format: dict
-        rows:
-          - {}
-      - input: ref('stg_decidim_proposals_votes')
-        format: dict
-        rows:
-          - {}
-      - input: ref('int_proposals')
-        format: dict
-        rows:
-          - {id: 41, state: 'submitted', published_at: '2023-01-01', decidim_component_id: 100}
-          - {id: 42, state: 'withdrawn', published_at: '2023-01-02', decidim_component_id: 100}
-      - input: ref('components')
-        format: dict
-        rows:
-          - {id: 100}
-      - input: ref('stg_decidim_moderations')
-        format: dict
-        rows:
-          - {}
-      - input: ref('int_scopes')
-        format: dict
-        rows:
-          - {}
-      - input: ref('categorizations')
-        format: dict
-        rows:
-          - {}
+          - {id: 41, state: 'submitted', published_at: '2023-01-01'}
+          - {id: 42, state: 'withdrawn', published_at: '2023-01-02'}
     expect:
       format: dict
       rows:
@@ -111,46 +85,18 @@ unit_tests:
     description: "Check if proposals are properly ignored due to 'hidden_at' date and other moderation conditions"
     model: proposals
     given:
-      - input: ref('int_users')
+      - input: ref('all_proposals')
         format: dict
         rows:
-          - {}
-      - input: ref('stg_decidim_coauthorships')
-        format: dict
-        rows:
-          - {}
-      - input: ref('stg_decidim_proposals_votes')
-        format: dict
-        rows:
-          - {}
-      - input: ref('int_proposals')
-        format: dict
-        rows:
-          - {id: 43, state: 'submitted', published_at: '2023-01-03', decidim_component_id: 100}
-          - {id: 44, state: 'submitted', published_at: '2023-01-03', decidim_component_id: 100}
-      - input: ref('components')
-        format: dict
-        rows:
-          - {id: 100}
-      - input: ref('stg_decidim_moderations')
-        format: dict
-        rows:
-          - {decidim_reportable_id: 43, decidim_reportable_type: 'Decidim::Proposals::Proposal', hidden_at: '2024-07-22'}
-      - input: ref('int_scopes')
-        format: dict
-        rows:
-          - {}
-      - input: ref('categorizations')
-        format: dict
-        rows:
-          - {}
+          - {id: 43, state: 'submitted', published_at: '2023-01-03', hidden_at: '2024-07-22'}
+          - {id: 44, state: 'submitted', published_at: '2023-01-03', hidden_at: NULL}
     expect:
       format: dict
       rows:
         - {id: 44}
   - name: conflict_on_decidim_reportable_type_check
     description: "Check if there is no conflict in moderation table on id if there is a decidim_reportable_type that is not a proposal and has the same id"
-    model: proposals
+    model: all_proposals
     given:
       - input: ref('int_users')
         format: dict
@@ -193,39 +139,11 @@ unit_tests:
     description: "Check if proposals are properly ignored if 'published_at' is null"
     model: proposals
     given:
-      - input: ref('int_users')
+      - input: ref('all_proposals')
         format: dict
         rows:
-          - {}
-      - input: ref('stg_decidim_coauthorships')
-        format: dict
-        rows:
-          - {}
-      - input: ref('stg_decidim_proposals_votes')
-        format: dict
-        rows:
-          - {}
-      - input: ref('int_proposals')
-        format: dict
-        rows:
-          - {id: 43, state: 'submitted', published_at: '2023-01-03', decidim_component_id: 100}
-          - {id: 44, state: 'submitted', published_at: NULL, decidim_component_id: 100}
-      - input: ref('components')
-        format: dict
-        rows:
-          - {id: 100}
-      - input: ref('stg_decidim_moderations')
-        format: dict
-        rows:
-          - {}
-      - input: ref('int_scopes')
-        format: dict
-        rows:
-          - {}
-      - input: ref('categorizations')
-        format: dict
-        rows:
-          - {}
+          - {id: 43, state: 'submitted', published_at: '2023-01-03'}
+          - {id: 44, state: 'submitted', published_at: NULL}
     expect:
       format: dict
       rows:
