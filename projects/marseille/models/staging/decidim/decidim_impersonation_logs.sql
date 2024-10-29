@@ -4,7 +4,7 @@ WITH source AS (
 
 SELECT
     id,
-    decidim_user_id as user_id,
+    decidim_user_id AS user_id,
     reason,
     started_at,
     ended_at
