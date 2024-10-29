@@ -73,7 +73,7 @@ SELECT
     decidim_users.unconfirmed_email,
     decidim_users.name,
     decidim_users.locale,
-    decidim_users.deleted_at,
+    --decidim_users.deleted_at,
     decidim_users.admin,
     decidim_users.managed,
     decidim_users.roles,
@@ -85,8 +85,8 @@ SELECT
     decidim_users.failed_attempts,
     decidim_users.locked_at,
     decidim_users.admin_terms_accepted_at,
-    decidim_users.blocked,
-    decidim_users.blocked_at,
+    --decidim_users.blocked,
+    --decidim_users.blocked_at,
     COALESCE(endorsements.is_endorsing, 0)::boolean AS is_endorsing,
     (CASE WHEN followings.decidim_user_id IS NULL THEN false ELSE true END) AS is_following,
     COALESCE(comments.has_authored_comment, 0)::boolean AS has_authored_comment,
@@ -107,3 +107,6 @@ LEFT JOIN project_votes ON project_votes.decidim_user_id = decidim_users.id
 LEFT JOIN participations_proposals ON participations_proposals.decidim_author_id = decidim_users.id
 JOIN {{ ref("int_organizations") }} AS decidim_organizations
     ON decidim_organizations.id = decidim_users.decidim_organization_id
+WHERE decidim_users.blocked != true
+AND decidim_users.admin != true
+AND decidim_users.confirmed = true
