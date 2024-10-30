@@ -1,0 +1,13 @@
+unit_tests:
+  - name: 
+    description: ""
+    model: proposals_with_impersonation_info
+    given:
+      - input: ref('')
+        format: dict
+        rows:
+          - {}
+    expect:
+      format: dict
+      rows:
+        - {}
