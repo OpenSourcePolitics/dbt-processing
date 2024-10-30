@@ -31,7 +31,7 @@ unit_tests:
         format: dict
         rows:
           - {}
-      - input: ref('int_proposals')
+      - input: ref('int_proposals_with_state')
         format: dict
         rows:
           - {id: 41, published_at: '2023-01-01', decidim_component_id: 100, decidim_proposals_proposal_state_id: 45}
