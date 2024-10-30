@@ -1,7 +1,7 @@
 unit_tests:
   - name: test_custom_state_unicity
     description: "Test that a single proposal cannot be assigned to 2 different custom states "
-    model: proposals
+    model: proposals_with_state
     given:
       - input: ref('int_users')
         format: dict
