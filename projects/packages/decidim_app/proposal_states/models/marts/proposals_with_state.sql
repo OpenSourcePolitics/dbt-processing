@@ -53,7 +53,7 @@ proposals AS (
         decidim_proposals_proposal_states.title AS custom_state,
         decidim_proposals_proposal_states.description,
         decidim_proposals_proposal_states.proposals_count
-    FROM {{ ref("int_proposals")}} AS decidim_proposals
+    FROM {{ ref("int_proposals_with_state")}} AS decidim_proposals
     JOIN {{ ref("components")}} AS decidim_components ON decidim_components.id = decidim_proposals.decidim_component_id
     LEFT JOIN coauthorships ON decidim_proposals.id = coauthorships.coauthorable_id
     LEFT JOIN {{ ref("stg_decidim_moderations")}} AS decidim_moderations

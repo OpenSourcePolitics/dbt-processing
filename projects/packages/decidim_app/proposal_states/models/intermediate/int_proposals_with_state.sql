@@ -18,5 +18,5 @@ SELECT
     decidim_proposals.comments_count,
     decidim_proposals.endorsements_count,
     COALESCE(NULLIF(decidim_proposals.address,''),'Pas d''adresse') AS address
-FROM {{ ref ("stg_decidim_proposals")}} AS decidim_proposals
+FROM {{ ref ("stg_decidim_proposals_with_state")}} AS decidim_proposals
 WHERE published_at IS NOT NULL
