@@ -5,27 +5,5 @@ sources:
     database: "{{ env_var('DBNAME') }}"
     schema: public  
     tables:
-      - name: decidim_components
-      - name: decidim_assemblies
-      - name: decidim_participatory_processes
-      - name: decidim_participatory_process_steps
-      - name: decidim_users
       - name: decidim_proposals_proposals
-      - name: decidim_coauthorships
-      - name: decidim_moderations
-      - name: decidim_scopes
-      - name: decidim_blogs_posts
-      - name: decidim_debates_debates
-      - name: decidim_meetings_meetings
-      - name: decidim_accountability_results
-      - name: decidim_comments_comments
-      - name: decidim_proposals_collaborative_drafts
-      - name: decidim_endorsements
-      - name: decidim_follows
-      - name: decidim_initiatives
-      - name: decidim_initiatives_type_scopes
-      - name: decidim_surveys_surveys
-      - name: decidim_attachments
-      - name: decidim_proposals_proposal_votes
-      - name: decidim_meetings_registrations
       - name: decidim_proposals_proposal_states
