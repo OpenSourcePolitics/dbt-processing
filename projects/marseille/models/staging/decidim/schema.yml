@@ -6,3 +6,4 @@ sources:
     schema: public  
     tables:
       - name: decidim_impersonation_logs
+      - name: decidim_action_logs
