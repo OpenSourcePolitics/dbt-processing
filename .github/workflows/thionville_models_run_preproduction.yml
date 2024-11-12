@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  DBNAME: ${{ secrets.THIONVILLE_DBNAME_PREPROD }}
+  DBNAME: ${{ secrets.THIONVILLE_DBNAME_PROD }}
   HOST_PREPROD: ${{ secrets.HOST_PREPROD }}
   PASSWORD_PREPROD: ${{ secrets.PASSWORD_PREPROD }}
   PORT_PREPROD: ${{ secrets.PORT_PREPROD }}
