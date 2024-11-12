@@ -11,7 +11,7 @@ env:
   TARGET_SCHEMA: ${{ secrets.SCHEMA_PROD }}
   USER_PREPROD: ${{ secrets.USER_PREPROD }}
   PARTICIPATION_HOST_NAME: ${{ secrets.COUR_DES_COMPTES_PARTICIPATION_HOST_NAME }}
-  WORKING_DIRECTORY: ./projects/cdc
+  WORKING_DIRECTORY: ./projects/cour_des_comptes
   
 
 jobs:
