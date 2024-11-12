@@ -11,7 +11,7 @@ env:
   TARGET_SCHEMA: ${{ secrets.SCHEMA_PROD }}
   USER_PREPROD: ${{ secrets.USER_PREPROD }}
   PARTICIPATION_HOST_NAME: ${{ secrets.TOURS_PARTICIPATION_HOST_NAME }}
-  WORKING_DIRECTORY: ./projects/angers
+  WORKING_DIRECTORY: ./projects/tours
   
 
 jobs:
