@@ -1,0 +1,18 @@
+version: 2
+
+exposures:
+
+  - name: referrers_in_metabase
+    label: Metabase Referrers 
+    type: dashboard
+    maturity: medium
+    url: https://metabase.osp.cat/question/5931-top-6-des-sources-darrivees-des-visites-sur-la-periode
+    description: >
+      Top 6 channels from which visitors come on a Decidim platform.
+
+    depends_on:
+      - ref('int_matomo_referrers')
+
+    owner:
+      name: Data Team
+      email: data@opensourcepolitics.eu 

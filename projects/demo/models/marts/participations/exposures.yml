@@ -14,5 +14,5 @@ exposures:
       - ref('participations')
 
     owner:
-      name: Callum McData
-      email: data@jaffleshop.com
+      name: Data Team
+      email: data@opensourcepolitics.eu 

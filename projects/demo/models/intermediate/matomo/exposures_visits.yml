@@ -1,0 +1,18 @@
+version: 2
+
+exposures:
+
+  - name: average_visit_time_in_metabase
+    label: Metabase Average Visit Time 
+    type: dashboard
+    maturity: medium
+    url: https://metabase.osp.cat/question/6021-duree-moyenne-des-visites
+    description: >
+      Average time spent spent by visitors on a decidim platform.
+
+    depends_on:
+      - ref('int_matomo_visits')
+
+    owner:
+      name: Data Team
+      email: data@opensourcepolitics.eu 
