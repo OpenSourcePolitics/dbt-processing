@@ -2,7 +2,7 @@ version: 2
 
 exposures:
 
-  - name: page_views_in_metabase
+  - name: bounce_rate_in_metabase
     label: Metabase Page Views 
     type: dashboard
     maturity: medium
