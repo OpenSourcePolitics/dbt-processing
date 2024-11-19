@@ -1,0 +1,19 @@
+version: 2
+
+exposures:
+
+  - name: page_views_in_metabase
+    label: Metabase Page Views 
+    type: dashboard
+    maturity: medium
+    url: https://metabase.osp.cat/question/6020-taux-de-rebond-sur-vues-de-pages-uniques
+    description: >
+      Bounce rate of unique pages views on a Decidim platform. 
+
+    depends_on:
+      - ref('matomo_pages')
+      - ref('components')
+
+    owner:
+      name: Data Team
+      email: data@opensourcepolitics.eu 

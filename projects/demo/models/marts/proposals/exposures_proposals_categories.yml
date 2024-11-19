@@ -1,0 +1,19 @@
+version: 2
+
+exposures:
+
+  - name: proposals_categories_in_metabase
+    label: Metabase Proposals Categories
+    type: dashboard
+    maturity: medium
+    url: https://metabase.osp.cat/question/6032-categories-les-plus-proposees
+    description: >
+      Most chosen submitted proposal categories.
+
+    depends_on:
+      - ref('proposals')
+      - ref('components')
+
+    owner:
+      name: Data Team
+      email: data@opensourcepolitics.eu 

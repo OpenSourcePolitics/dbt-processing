@@ -1,0 +1,20 @@
+version: 2
+
+exposures:
+
+  - name: meetings_initiated_in_metabase
+    label: Metabase Meetings Initiated by Users
+    type: dashboard
+    maturity: medium
+    url: https://metabase.osp.cat/question/6911-rencontres-par-initiateur
+      Number of meetings initiated per user. 
+
+    depends_on:
+      - ref('proposals')
+      - ref('components')
+      - ref('users')
+
+
+    owner:
+      name: Data Team
+      email: data@opensourcepolitics.eu 
