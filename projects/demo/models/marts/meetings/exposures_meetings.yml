@@ -1,0 +1,19 @@
+version: 2
+
+exposures:
+
+  - name: meetings_in_metabase
+    label: Metabase Proposals 
+    type: dashboard
+    maturity: medium
+    url: https://metabase.osp.cat/question/6171-nombre-de-propositions-par-processus?ps_title=Budget%20participatif%202023%20&component_name=&date=
+    description: >
+      Number of proposals submitted on a Decidim Platform. 
+
+    depends_on:
+      - ref('proposals')
+      - ref('components')
+
+    owner:
+      name: Data Team
+      email: data@opensourcepolitics.eu 

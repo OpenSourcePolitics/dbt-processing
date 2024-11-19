@@ -1,0 +1,19 @@
+version: 2
+
+exposures:
+
+  - name: meetings_type_in_metabase
+    label: Metabase Meetings By Type
+    type: dashboard
+    maturity: medium
+    url: https://metabase.osp.cat/question/6910-rencontres-par-type
+    description: >
+      Number of meetings per meetings type (remote or not). 
+
+    depends_on:
+      - ref('proposals')
+      - ref('components')
+
+    owner:
+      name: Data Team
+      email: data@opensourcepolitics.eu 

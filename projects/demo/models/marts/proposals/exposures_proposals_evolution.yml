@@ -1,0 +1,18 @@
+version: 2
+
+exposures:
+
+  - name: proposals_through_time_in_metabase
+    label: Metabase Proposals Evolution
+    type: dashboard
+    maturity: medium
+    url: https://metabase.osp.cat/question/6031-evolution-du-nombre-de-propositions-par-processus
+    description: >
+      Cumulative number of proposals submitted on a Decidim Platform throughout time. 
+
+    depends_on:
+      - ref('proposals')
+
+    owner:
+      name: Data Team
+      email: data@opensourcepolitics.eu 
