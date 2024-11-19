@@ -1,0 +1,19 @@
+version: 2
+
+exposures:
+
+  - name: device_type_in_metabase
+    label: Metabase Device Type
+    type: dashboard
+    maturity: medium
+    url: https://metabase.osp.cat/question/6024-peripheriques-des-visiteurs
+         
+    description: >
+      Devices used by visitors to visit a Decidim platform.
+
+    depends_on:
+      - ref('stg_matomo_device_type')
+
+    owner:
+      name: Data Team
+      email: data@opensourcepolitics.eu 

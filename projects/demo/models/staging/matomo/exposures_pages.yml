@@ -1,0 +1,19 @@
+version: 2
+
+exposures:
+
+  - name: pages_in_metabase
+    label: Metabase Matomo Pages
+    type: dashboard
+    maturity: medium
+    url: https://metabase.osp.cat/question/6013-top-20-des-pages-les-plus-visitees
+         
+    description: >
+      Top 20 most visited pages on a Decidim platform. 
+
+    depends_on:
+      - ref('stg_matomo_pages')
+
+    owner:
+      name: Data Team
+      email: data@opensourcepolitics.eu 

@@ -1,0 +1,18 @@
+version: 2
+
+exposures:
+
+  - name: participations_in_metabase
+    label: Metabase Participations 
+    type: dashboard
+    maturity: medium
+    url: https://metabase.osp.cat/question/5932-nombre-de-contributions
+    description: >
+      Actions made by users on a Decidim platform.
+
+    depends_on:
+      - ref('participations')
+
+    owner:
+      name: Data Team
+      email: data@opensourcepolitics.eu 

@@ -1,0 +1,19 @@
+version: 2
+
+exposures:
+
+  - name: visitors_location_in_metabase
+    label: Metabase Visitors Location
+    type: dashboard
+    maturity: medium
+    url: https://metabase.osp.cat/question/6914-carte-des-visites
+         
+    description: >
+      Location from where visitors are visiting a Decidim platform.
+
+    depends_on:
+      - ref('stg_matomo_users_city')
+
+    owner:
+      name: Data Team
+      email: data@opensourcepolitics.eu 
