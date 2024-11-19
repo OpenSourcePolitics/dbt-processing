@@ -2,7 +2,7 @@ version: 2
 
 exposures:
 
-  - name: proposals_in_metabase
+  - name: meetings_in_metabase
     label: Metabase Proposals 
     type: dashboard
     maturity: medium
