@@ -7,11 +7,9 @@ exposures:
     type: dashboard
     maturity: medium
     url: https://metabase.osp.cat/question/6013-top-20-des-pages-les-plus-visitees
-         https://metabase.osp.cat/question/6023-top-20-des-pages-dentree
          
     description: >
       Top 20 most visited pages on a Decidim platform. 
-      Top 20 most entry pages by which visitors come on a Decidim platform.
 
     depends_on:
       - ref('stg_matomo_pages')

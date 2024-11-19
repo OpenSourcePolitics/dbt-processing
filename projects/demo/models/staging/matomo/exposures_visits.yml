@@ -6,8 +6,7 @@ exposures:
     label: Metabase Visits
     type: dashboard
     maturity: medium
-    url: https://metabase.osp.cat/question/6023-top-20-des-pages-dentree
-         https://metabase.osp.cat/question/5925-evolution-du-nombre-de-visites
+    url: https://metabase.osp.cat/question/5925-evolution-du-nombre-de-visites
          
     description: >
       Visits on the a Decidim platform, and throughout time.

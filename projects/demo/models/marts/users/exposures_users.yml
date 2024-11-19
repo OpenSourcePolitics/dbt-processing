@@ -6,10 +6,8 @@ exposures:
     label: Metabase Users 
     type: dashboard
     maturity: medium
-    url: https://metabase.osp.cat/question/5930-inscrits 
-         https://metabase.osp.cat/question/5926-evolution-du-nombre-dinscrits 
+    url: https://metabase.osp.cat/question/5926-evolution-du-nombre-dinscrits 
     description: >
-      Numbers of users registered on a Decidim platform.
       Numbers of users registered on a Decidim platform throughout its lifetime.
 
     depends_on:
