@@ -2,7 +2,7 @@ version: 2
 
 exposures:
 
-  - name: referrers_in_metabase
+  - name: int_referrers_in_metabase
     label: Metabase Referrers 
     type: dashboard
     maturity: medium
