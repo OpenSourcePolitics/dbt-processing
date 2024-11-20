@@ -1,4 +1,4 @@
-name: casa_models_run
+name: casa_models_run_preproduction
 
 on: 
   workflow_dispatch:
@@ -18,7 +18,7 @@ env:
 
 jobs:
   casa_models_run:
-    name: casa_models_run
+    name: casa_models_run_preproduction
     runs-on: ubuntu-latest
     defaults:
       run:
