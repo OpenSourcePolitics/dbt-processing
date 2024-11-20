@@ -2,16 +2,14 @@ name: casa_models_run_preproduction
 
 on: 
   workflow_dispatch:
-  schedule:
-    - cron:  '0 5 * * *'
 
 env:
   DBNAME: ${{ secrets.CASA_DBNAME_PROD }}
-  HOST: ${{ secrets.HOST }}
-  PASSWORD: ${{ secrets.PASSWORD }}
-  PORT: ${{ secrets.PORT }}
+  HOST: ${{ secrets.HOST_PREPROD }}
+  PASSWORD: ${{ secrets.PASSWORD_PREPROD }}
+  PORT: ${{ secrets.PORT_PREPROD }}
   TARGET_SCHEMA: ${{ secrets.SCHEMA_PROD }}
-  USER: ${{ secrets.USER }}
+  USER: ${{ secrets.USER_PREPROD }}
   PARTICIPATION_HOST_NAME: ${{ secrets.CASA_PARTICIPATION_HOST_NAME }}
   WORKING_DIRECTORY: ./projects/casa
   
