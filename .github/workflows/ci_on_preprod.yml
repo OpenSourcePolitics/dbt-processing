@@ -18,6 +18,7 @@ env:
 jobs:
 
   generate-matrix:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')" # Skip if commit message contains [skip dbt]
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -35,6 +36,7 @@ jobs:
           echo "::set-output name=matrix::$matrix"
 
   run-dbt-tests:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')" # Skip if commit message contains [skip dbt]
     needs: generate-matrix
     runs-on: ubuntu-latest
     strategy:
