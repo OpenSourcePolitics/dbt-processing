@@ -2,8 +2,6 @@ name: casa_models_run
 
 on: 
   workflow_dispatch:
-  schedule:
-    - cron:  '0 5 * * *'
 
 env:
   DBNAME: ${{ secrets.CASA_DBNAME_PROD }}

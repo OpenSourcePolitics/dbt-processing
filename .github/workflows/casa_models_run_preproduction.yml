@@ -35,12 +35,12 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          dbt deps --target prod
+          dbt deps --target preprod
       
       - name: Run dbt models
-        run: dbt run --target prod
+        run: dbt run --target preprod
 
       - name: Test dbt models
-        run: dbt test --target prod
+        run: dbt test --target preprod
 
 
