@@ -1,0 +1,46 @@
+name: colombes_models_run_preproduction
+
+on: 
+  workflow_dispatch:
+
+env:
+  DBNAME: ${{ secrets.COLOMBES_DBNAME_PROD }}
+  HOST_PREPROD: ${{ secrets.HOST_PREPROD }}
+  PASSWORD_PREPROD: ${{ secrets.PASSWORD_PREPROD }}
+  PORT_PREPROD: ${{ secrets.PORT_PREPROD }}
+  TARGET_SCHEMA: ${{ secrets.SCHEMA_PROD }}
+  USER_PREPROD: ${{ secrets.USER_PREPROD }}
+  PARTICIPATION_HOST_NAME: ${{ secrets.COLOMBES_PARTICIPATION_HOST_NAME }}
+  WORKING_DIRECTORY: ./projects/colombes
+  
+
+jobs:
+  COLOMBES_models_run:
+    name: colombes_models_run_preproduction
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@master
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.x"
+          cache: 'pip'
+        
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          dbt deps --target preprod
+      
+      - name: Run dbt models
+        run: dbt run --target preprod
+
+      - name: Test dbt models
+        run: dbt test --target preprod
+
+
