@@ -1,0 +1,3 @@
+db_name_dev: REAL_DEAL_DBNAME_DEV
+db_name_prod: REAL_DEAL_DBNAME_PROD
+participation_host_name: REAL_DEAL_PARTICIPATION_HOST_NAME
