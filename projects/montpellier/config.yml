@@ -1,0 +1,3 @@
+db_name_dev: MONTPELLIER_DBNAME_DEV
+db_name_prod: MONTPELLIER_DBNAME_PROD
+participation_host_name: MONTPELLIER_PARTICIPATION_HOST_NAME

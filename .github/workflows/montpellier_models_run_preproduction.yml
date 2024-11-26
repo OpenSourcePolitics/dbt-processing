@@ -1,22 +1,22 @@
-name: colombes_models_run_preproduction
+name: montpellier_models_run_preproduction
 
 on: 
   workflow_dispatch:
 
 env:
-  DBNAME: ${{ secrets.COLOMBES_DBNAME_PROD }}
+  DBNAME: ${{ secrets.MONTPELLIER_DBNAME_PROD }}
   HOST_PREPROD: ${{ secrets.HOST_PREPROD }}
   PASSWORD_PREPROD: ${{ secrets.PASSWORD_PREPROD }}
   PORT_PREPROD: ${{ secrets.PORT_PREPROD }}
   TARGET_SCHEMA: ${{ secrets.SCHEMA_PROD }}
   USER_PREPROD: ${{ secrets.USER_PREPROD }}
-  PARTICIPATION_HOST_NAME: ${{ secrets.COLOMBES_PARTICIPATION_HOST_NAME }}
-  WORKING_DIRECTORY: ./projects/colombes
+  PARTICIPATION_HOST_NAME: ${{ secrets.MONTPELLIER_PARTICIPATION_HOST_NAME }}
+  WORKING_DIRECTORY: ./projects/montpellier
   
 
 jobs:
-  colombes_models_run:
-    name: colombes_models_run_preproduction
+ montpellier_models_run:
+    name: montpellier_models_run_preproduction
     runs-on: ubuntu-latest
     defaults:
       run:
