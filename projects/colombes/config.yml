@@ -1,0 +1,3 @@
+db_name_dev: COLOMBES_DBNAME_DEV
+db_name_prod: COLOMBES_DBNAME_PROD
+participation_host_name: COLOMBES_PARTICIPATION_HOST_NAME
