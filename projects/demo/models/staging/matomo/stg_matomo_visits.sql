@@ -1,5 +1,4 @@
 SELECT
-    index,
     date,
     nb_visits,
     nb_uniq_visitors,
