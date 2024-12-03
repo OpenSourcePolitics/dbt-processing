@@ -1,24 +1,22 @@
-name: lyon_models_run
+name: thionville_models_run_production
 
 on: 
   workflow_dispatch:
-  schedule:
-    - cron:  '0 9 * * *'
 
 env:
-  DBNAME: ${{ secrets.LYON_DBNAME_PROD }}
+  DBNAME: ${{ secrets.THIONVILLE_DBNAME_PROD }}
   HOST: ${{ secrets.HOST }}
   PASSWORD: ${{ secrets.PASSWORD }}
   PORT: ${{ secrets.PORT }}
   TARGET_SCHEMA: ${{ secrets.SCHEMA_PROD }}
   USER: ${{ secrets.USER }}
-  PARTICIPATION_HOST_NAME: ${{ secrets.LYON_PARTICIPATION_HOST_NAME }}
-  WORKING_DIRECTORY: ./projects/lyon
+  PARTICIPATION_HOST_NAME: ${{ secrets.THIONVILLE_PARTICIPATION_HOST_NAME }}
+  WORKING_DIRECTORY: ./projects/thionville
   
 
 jobs:
-  lyon_models_run:
-    name: lyon_models_run
+  thionville_models_run:
+    name: thionville_models_run_production
     runs-on: ubuntu-latest
     defaults:
       run:

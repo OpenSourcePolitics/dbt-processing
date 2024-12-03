@@ -1,22 +1,22 @@
-name: montpellier_models_run
+name: real_deal_models_run_production
 
 on: 
   workflow_dispatch:
 
 env:
-  DBNAME: ${{ secrets.MONTPELLIER_DBNAME_PROD }}
+  DBNAME: ${{ secrets.REAL_DEAL_DBNAME_PROD }}
   HOST: ${{ secrets.HOST }}
   PASSWORD: ${{ secrets.PASSWORD }}
   PORT: ${{ secrets.PORT }}
   TARGET_SCHEMA: ${{ secrets.SCHEMA_PROD }}
   USER: ${{ secrets.USER }}
-  PARTICIPATION_HOST_NAME: ${{ secrets.MONTPELLIER_PARTICIPATION_HOST_NAME }}
-  WORKING_DIRECTORY: ./projects/montpellier
+  PARTICIPATION_HOST_NAME: ${{ secrets.REAL_DEAL_PARTICIPATION_HOST_NAME }}
+  WORKING_DIRECTORY: ./projects/real_deal
   
 
 jobs:
-  montpellier_models_run:
-    name: montpellier_models_run
+  real_deal_models_run:
+    name: real_deal_models_run_production
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -42,3 +42,5 @@ jobs:
 
       - name: Test dbt models
         run: dbt test --target prod
+
+

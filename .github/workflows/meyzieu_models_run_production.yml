@@ -1,24 +1,22 @@
-name: marseille_models_run
+name: meyzieu_models_run_production
 
-on:
+on: 
   workflow_dispatch:
-  schedule:
-    - cron:  '30 7 * * *'
 
 env:
-  DBNAME: ${{ secrets.MARSEILLE_DBNAME_PROD }}
+  DBNAME: ${{ secrets.MEYZIEU_DBNAME_PROD }}
   HOST: ${{ secrets.HOST }}
   PASSWORD: ${{ secrets.PASSWORD }}
   PORT: ${{ secrets.PORT }}
   TARGET_SCHEMA: ${{ secrets.SCHEMA_PROD }}
   USER: ${{ secrets.USER }}
-  PARTICIPATION_HOST_NAME: ${{ secrets.MARSEILLE_PARTICIPATION_HOST_NAME }}
-  WORKING_DIRECTORY: ./projects/marseille
-
+  PARTICIPATION_HOST_NAME: ${{ secrets.MEYZIEU_PARTICIPATION_HOST_NAME }}
+  WORKING_DIRECTORY: ./projects/meyzieu
+  
 
 jobs:
-  marseille_models_run:
-    name: marseille_models_run
+  meyzieu_models_run:
+    name: meyzieu_models_run_production
     runs-on: ubuntu-latest
     defaults:
       run:

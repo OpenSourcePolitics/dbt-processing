@@ -1,24 +1,22 @@
-name: cour_des_comptes_models_run
+name: lyon_models_run_production
 
 on: 
   workflow_dispatch:
-  schedule:
-    - cron:  '0 8 * * *'
 
 env:
-  DBNAME: ${{ secrets.COUR_DES_COMPTES_DBNAME_PROD }}
+  DBNAME: ${{ secrets.LYON_DBNAME_PROD }}
   HOST: ${{ secrets.HOST }}
   PASSWORD: ${{ secrets.PASSWORD }}
   PORT: ${{ secrets.PORT }}
   TARGET_SCHEMA: ${{ secrets.SCHEMA_PROD }}
   USER: ${{ secrets.USER }}
-  PARTICIPATION_HOST_NAME: ${{ secrets.COUR_DES_COMPTES_PARTICIPATION_HOST_NAME }}
-  WORKING_DIRECTORY: ./projects/cour_des_comptes
-
+  PARTICIPATION_HOST_NAME: ${{ secrets.LYON_PARTICIPATION_HOST_NAME }}
+  WORKING_DIRECTORY: ./projects/lyon
+  
 
 jobs:
-  cour_des_comptes_models_run:
-    name: cour_des_comptes_models_run
+  lyon_models_run:
+    name: lyon_models_run_production
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -27,13 +25,13 @@ jobs:
     steps:
       - name: Check out
         uses: actions/checkout@master
-
+      
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12.x"
           cache: 'pip'
-
+        
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
@@ -44,3 +42,5 @@ jobs:
 
       - name: Test dbt models
         run: dbt test --target prod
+
+

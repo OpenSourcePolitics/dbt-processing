@@ -1,9 +1,7 @@
-name: grand_nancy_models_run
+name: grand_nancy_models_run_production
 
 on: 
   workflow_dispatch:
-  schedule:
-    - cron:  '30 6 * * *'
 
 env:
   DBNAME: ${{ secrets.GRAND_NANCY_DBNAME_PROD }}
@@ -18,7 +16,7 @@ env:
 
 jobs:
   grand_nancy_models_run:
-    name: grand_nancy_models_run
+    name: grand_nancy_models_run_production
     runs-on: ubuntu-latest
     defaults:
       run:

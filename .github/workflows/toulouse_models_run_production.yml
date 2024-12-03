@@ -1,9 +1,7 @@
-name: toulouse_models_run
+name: toulouse_models_run_production
 
 on: 
   workflow_dispatch:
-  schedule:
-    - cron:  '0 5 * * *'
 
 env:
   DBNAME: ${{ secrets.TOULOUSE_DBNAME_PROD }}
@@ -18,7 +16,7 @@ env:
 
 jobs:
   toulouse_models_run:
-    name: toulouse_models_run
+    name: toulouse_models_run_production
     runs-on: ubuntu-latest
     defaults:
       run:

@@ -1,22 +1,22 @@
-name: casa_models_run
+name: sytral_models_run_production
 
 on: 
   workflow_dispatch:
 
 env:
-  DBNAME: ${{ secrets.CASA_DBNAME_PROD }}
+  DBNAME: ${{ secrets.SYTRAL_DBNAME_PROD }}
   HOST: ${{ secrets.HOST }}
   PASSWORD: ${{ secrets.PASSWORD }}
   PORT: ${{ secrets.PORT }}
   TARGET_SCHEMA: ${{ secrets.SCHEMA_PROD }}
   USER: ${{ secrets.USER }}
-  PARTICIPATION_HOST_NAME: ${{ secrets.CASA_PARTICIPATION_HOST_NAME }}
-  WORKING_DIRECTORY: ./projects/casa
+  PARTICIPATION_HOST_NAME: ${{ secrets.SYTRAL_PARTICIPATION_HOST_NAME }}
+  WORKING_DIRECTORY: ./projects/sytral
   
 
 jobs:
-  casa_models_run:
-    name: casa_models_run
+  sytral_models_run:
+    name: sytral_models_run_production
     runs-on: ubuntu-latest
     defaults:
       run:

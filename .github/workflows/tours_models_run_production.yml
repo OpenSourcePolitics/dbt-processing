@@ -1,24 +1,22 @@
-name: cese_models_run
+name: tours_models_run_production
 
 on: 
   workflow_dispatch:
-  schedule:
-    - cron:  '0 8 * * *'
 
 env:
-  DBNAME: ${{ secrets.CESE_DBNAME_PROD }}
+  DBNAME: ${{ secrets.TOURS_DBNAME_PROD }}
   HOST: ${{ secrets.HOST }}
   PASSWORD: ${{ secrets.PASSWORD }}
   PORT: ${{ secrets.PORT }}
   TARGET_SCHEMA: ${{ secrets.SCHEMA_PROD }}
   USER: ${{ secrets.USER }}
-  PARTICIPATION_HOST_NAME: ${{ secrets.CESE_PARTICIPATION_HOST_NAME }}
-  WORKING_DIRECTORY: ./projects/cese
+  PARTICIPATION_HOST_NAME: ${{ secrets.TOURS_PARTICIPATION_HOST_NAME }}
+  WORKING_DIRECTORY: ./projects/tours
   
 
 jobs:
-  cese_models_run:
-    name: cese_models_run
+  tours_models_run:
+    name: tours_models_run_production
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -44,3 +42,5 @@ jobs:
 
       - name: Test dbt models
         run: dbt test --target prod
+
+

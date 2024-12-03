@@ -1,22 +1,22 @@
-name: colombes_models_run
+name: angers_models_run_production
 
 on: 
   workflow_dispatch:
 
 env:
-  DBNAME: ${{ secrets.COLOMBES_DBNAME_PROD }}
+  DBNAME: ${{ secrets.ANGERS_DBNAME_PROD }}
   HOST: ${{ secrets.HOST }}
   PASSWORD: ${{ secrets.PASSWORD }}
   PORT: ${{ secrets.PORT }}
   TARGET_SCHEMA: ${{ secrets.SCHEMA_PROD }}
   USER: ${{ secrets.USER }}
-  PARTICIPATION_HOST_NAME: ${{ secrets.COLOMBES_PARTICIPATION_HOST_NAME }}
-  WORKING_DIRECTORY: ./projects/colombes
+  PARTICIPATION_HOST_NAME: ${{ secrets.ANGERS_PARTICIPATION_HOST_NAME }}
+  WORKING_DIRECTORY: ./projects/angers
   
 
 jobs:
-  colombes_models_run:
-    name: colombes_models_run
+  angers_models_run:
+    name: angers_models_run_production
     runs-on: ubuntu-latest
     defaults:
       run:

@@ -1,24 +1,22 @@
-name: cea_models_run
+name: colombes_models_run_production
 
 on: 
   workflow_dispatch:
-  schedule:
-    - cron:  '30 5 * * *'
 
 env:
-  DBNAME: ${{ secrets.CEA_DBNAME_PROD }}
+  DBNAME: ${{ secrets.COLOMBES_DBNAME_PROD }}
   HOST: ${{ secrets.HOST }}
   PASSWORD: ${{ secrets.PASSWORD }}
   PORT: ${{ secrets.PORT }}
   TARGET_SCHEMA: ${{ secrets.SCHEMA_PROD }}
   USER: ${{ secrets.USER }}
-  PARTICIPATION_HOST_NAME: ${{ secrets.CEA_PARTICIPATION_HOST_NAME }}
-  WORKING_DIRECTORY: ./projects/cea
+  PARTICIPATION_HOST_NAME: ${{ secrets.COLOMBES_PARTICIPATION_HOST_NAME }}
+  WORKING_DIRECTORY: ./projects/colombes
   
 
 jobs:
-  cea_models_run:
-    name: cea_models_run
+  colombes_models_run:
+    name: colombes_models_run_production
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -44,3 +42,5 @@ jobs:
 
       - name: Test dbt models
         run: dbt test --target prod
+
+
