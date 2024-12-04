@@ -30,6 +30,8 @@ sources:
       - name: decidim_attachments
       - name: decidim_proposals_proposal_votes
       - name: decidim_meetings_registrations
+      - name: decidim_user_moderations
+      - name: decidim_user_reports
 
 
 
