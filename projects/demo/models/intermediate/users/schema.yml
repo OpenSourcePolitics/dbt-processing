@@ -19,19 +19,6 @@ models:
 
 
 unit_tests:
-  - name: deleted_users_check
-    description: "Check that no deleted users are retrieved"
-    model: int_users
-    given:
-      - input: ref('stg_decidim_users')
-        format: dict
-        rows:
-          - {id: 1, deleted_at: "2024-07-17", type: "Decidim::User"}
-          - {id: 2, deleted_at: NULL, type: "Decidim::User"}
-    expect:
-      format: dict
-      rows:
-          - {id: 2}
   - name: type_check
     description: "Check that the type contains Decidim::User"
     model: int_users

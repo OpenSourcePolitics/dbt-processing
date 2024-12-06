@@ -47,5 +47,4 @@ SELECT
     (CASE WHEN decidim_users.confirmed_at IS NULL THEN false ELSE true END) AS confirmed,
     decidim_users.extended_data
 FROM {{ ref ("stg_decidim_users")}} as decidim_users
-    WHERE deleted_at IS NULL
-    AND type LIKE 'Decidim::User'
+    WHERE type LIKE 'Decidim::User'
