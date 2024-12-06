@@ -7,19 +7,22 @@ unit_tests:
       - input: ref('stg_decidim_users')
         format: dict
         rows:
-          - {id: 1, extended_data: '{"date_of_birth": "1955-11-06"}', type: 'Decidim::User'}
-          - {id: 2, extended_data: '{"date_of_birth": "1970-06-23"}', type: 'Decidim::User'} 
+          - {id: 1, extended_data: '{"date_of_birth": "1943-11-06"}', type: 'Decidim::User'}
+          - {id: 2, extended_data: '{"date_of_birth": "1958-06-23"}', type: 'Decidim::User'} 
           - {id: 3, extended_data: '{"date_of_birth": "1932-05-23"}', type: 'Decidim::User'} 
-          - {id: 4, extended_data: '{"date_of_birth": "2009-12-01"}', type: 'Decidim::User'}
+          - {id: 4, extended_data: '{"date_of_birth": "1992-12-01"}', type: 'Decidim::User'}
           - {id: 5, extended_data: null, type: 'Decidim::User'} 
      expect:
       format: dict
       rows:
-        - {id: 1, date_of_birth: "1955-11-06", age: 69, age_category: "[65-69 ans]"}
-        - {id: 2, date_of_birth: "1970-06-23", age: 54, age_category: "[50-54 ans]"}
-        - {id: 3, date_of_birth: "1932-05-23", age: 92, age_category: "[75 ans ou plus]"}
-        - {id: 4, date_of_birth: "2009-12-01", age: 14, age_category: "[0-15 ans]"}
+        - {id: 1, date_of_birth: "1943-11-06", age: 66, age_category: "[65-69 ans]"}
+        - {id: 2, date_of_birth: "1958-06-23", age: 51, age_category: "[50-54 ans]"}
+        - {id: 3, date_of_birth: "1932-05-23", age: 77, age_category: "[75 ans ou plus]"}
+        - {id: 4, date_of_birth: "1992-12-01", age: 17, age_category: "[15-19 ans]"}
         - {id: 5, date_of_birth: null, age: null, age_category: 'Âge non défini'}
+     overrides:
+      macros:
+       dbt_date.today: "'2010-01-01'"
 
    - name: testing_date_out_of_range
      description: "Checks that age is undefined if field value out of range"

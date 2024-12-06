@@ -90,7 +90,7 @@ FROM users_with_date_of_birth
 users_with_age AS (
 SELECT
     *,
-    EXTRACT(YEAR FROM AGE(CURRENT_DATE, DATE(users_with_correct_age.date_of_birth))) AS age
+    EXTRACT(YEAR FROM AGE({{ dbt_date.today() }}, DATE(users_with_correct_age.date_of_birth))) AS age
 FROM users_with_correct_age
 )
 
