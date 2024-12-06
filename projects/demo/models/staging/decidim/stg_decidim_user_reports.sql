@@ -6,4 +6,4 @@ SELECT
     details,
     created_at,
     updated_at
-FROM {{ source('decidim', 'decidim_user_reports')   
+FROM {{ source('decidim', 'decidim_user_reports') }}
