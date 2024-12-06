@@ -22,6 +22,9 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
+vars:
+    "dbt_date:time_zone": "Europe/Paris"
+
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 
@@ -36,8 +39,7 @@ models:
           +enabled: false
     marts:
       users:
-        users:
-          +enabled: false
+        +enabled: false
 
   cour_des_comptes:
     +materialized: table
