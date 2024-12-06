@@ -96,10 +96,23 @@ models:
           to: ref('int_users')
           field: id
 
-#unit_tests:
+unit_tests:
+  - name: deleted_users_check
+    description: "Check that no deleted users are retrieved"
+    model: users
+    given:
+      - input: ref('all_users')
+        format: dict
+        rows:
+          - {id: 1, deleted_at: "2024-07-17", blocked: false, admin: false, confirmed: true}
+          - {id: 2, deleted_at: NULL, blocked: false, admin: false, confirmed: true}
+    expect:
+      format: dict
+      rows:
+          - {id: 2}
 #  - name: test_url_concatenation
 #    description: "Check URL concatenation logic"
-#    model: users
+#    model: all_users
 #    given:
 #      - input: ref('participations')
 #        format: dict
@@ -159,7 +172,7 @@ models:
 #        - {id: 3, url: 'https://host3.com/profiles/user3/activity'}
 #
 #  - name: test_coalesce_defaults
-#    model: users
+#    model: all_users
 #    given:
 #      - input: ref('followings')
 #        format: dict
