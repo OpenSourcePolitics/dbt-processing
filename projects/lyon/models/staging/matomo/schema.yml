@@ -1,9 +1,0 @@
-version: 2
- 
-sources:
-  - name: matomo
-    database: "{{ env_var('DBNAME') }}"
-    schema: matomo
-    tables:
-      - name : downloads
-      - name : hourly_visits
