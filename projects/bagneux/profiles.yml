@@ -1,4 +1,4 @@
-BAGNEUX:
+bagneux:
   target: preprod
   outputs:
     dev:

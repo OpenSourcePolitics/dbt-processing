@@ -1,4 +1,4 @@
-name: bagneux_models_run
+name: bagneux_models_run_production
 
 on: 
   workflow_dispatch:
@@ -16,7 +16,7 @@ env:
 
 jobs:
   bagneux_models_run:
-    name: bagneux_models_run
+    name: bagneux_models_run_production
     runs-on: ubuntu-latest
     defaults:
       run:
