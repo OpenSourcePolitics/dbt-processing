@@ -1,0 +1,3 @@
+db_name_dev: MEL_DBNAME_DEV
+db_name_prod: MEL_DBNAME_PROD
+participation_host_name: MEL_PARTICIPATION_HOST_NAME
