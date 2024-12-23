@@ -1,0 +1,4 @@
+db_name_dev: MALAKOFF_DBNAME_DEV
+db_name_prod: MALAKOFF_DBNAME_PROD
+participation_host_name: MALAKOFF_PARTICIPATION_HOST_NAME
+
