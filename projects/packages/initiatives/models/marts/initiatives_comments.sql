@@ -29,7 +29,6 @@ SELECT
     commentaries.decidim_author_type,
     commentaries.body,
     concat('https://', commentaries.host, '/initiatives/i-', commentaries.decidim_root_commentable_id, '?commentId=', commentaries.id, '&initiative_slug=i-', commentaries.decidim_root_commentable_id, '#comment_', commentaries.id) AS comment_url
-    -- concat('https://', components.organization_host, '/', components.ps_space_type_slug, '/', components.ps_slug, '/f/', components.id, '/', components.manifest_name,'/', commentaries.decidim_root_commentable_id, '?commentId=', commentaries.id, '#comment_', commentaries.id) AS comment_url
 FROM commentaries
 LEFT JOIN {{ ref('stg_decidim_moderations') }} AS decidim_moderations
     on decidim_moderations.decidim_reportable_type = 'Decidim::Comments::Comment' 
