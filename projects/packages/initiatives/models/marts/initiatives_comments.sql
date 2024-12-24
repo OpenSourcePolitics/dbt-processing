@@ -6,11 +6,14 @@
 
 WITH commentaries AS (
     SELECT
-        comments.*
+        comments.*,
+        decidim_organizations.host
     FROM {{ ref("stg_decidim_initiatives") }}
     JOIN {{ ref("stg_decidim_comments") }} AS comments
         on comments.decidim_root_commentable_id = {{ ref("stg_decidim_initiatives") }}.id
         and comments.decidim_root_commentable_type = 'Decidim::Initiative'
+    JOIN {{ ref('int_organizations') }} AS decidim_organizations
+        ON decidim_organizations.id = {{ ref("stg_decidim_initiatives") }}.decidim_organization_id
 )
 
 SELECT
@@ -25,7 +28,7 @@ SELECT
     commentaries.decidim_root_commentable_type,
     commentaries.decidim_author_type,
     commentaries.body,
-    concat('https://toto.caca', '/initiatives/i-', commentaries.decidim_commentable_id, '?commentId=', commentaries.id, '&initiative_slug=i-', commentaries.decidim_commentable_id) AS comment_url
+    concat('https://', commentaries.host, '/initiatives/i-', commentaries.decidim_root_commentable_id, '?commentId=', commentaries.id, '&initiative_slug=i-', commentaries.decidim_root_commentable_id, '#comment_', commentaries.id) AS comment_url
     -- concat('https://', components.organization_host, '/', components.ps_space_type_slug, '/', components.ps_slug, '/f/', components.id, '/', components.manifest_name,'/', commentaries.decidim_root_commentable_id, '?commentId=', commentaries.id, '#comment_', commentaries.id) AS comment_url
 FROM commentaries
 LEFT JOIN {{ ref('stg_decidim_moderations') }} AS decidim_moderations
