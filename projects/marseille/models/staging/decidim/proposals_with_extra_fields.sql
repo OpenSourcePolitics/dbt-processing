@@ -28,8 +28,8 @@ parsed_data AS (
     -- Step 3: Parse the cleaned XML content and extract the desired fields
     SELECT
         cleaned_content.id,
-        xpath('//text()', unnest(xpath('//dt', xml_data)))::text AS private_field_description, -- Extract field descriptions from <dt>
-        unnest(xpath('//dd/div/text()', unnest(xpath('//dd', xml_data))))::text AS private_field_content -- Extract field values from <dd><div>
+        xpath('//text()', unnest(xpath('//dt', xml_data)))::text AS field_description, -- Extract field descriptions from <dt>
+        unnest(xpath('//dd/div/text()', unnest(xpath('//dd', xml_data))))::text AS field_content -- Extract field values from <dd><div>
     FROM
         cleaned_content,
         LATERAL xmlparse(document cleaned_xml_content) AS xml_data -- Parse the cleaned XML content
@@ -37,9 +37,9 @@ parsed_data AS (
 -- Step 4: Final selection of parsed fields with cleaning of the description
 SELECT
     parsed_data.id,
-    replace(replace(private_field_description, '{"', ''), '"}', '') AS private_field_description, -- Clean up description
-    parsed_data.private_field_content -- Extracted field content
+    replace(replace(field_description, '{"', ''), '"}', '') AS field_description, -- Clean up description
+    parsed_data.field_content -- Extracted field content
 FROM
     parsed_data
 WHERE
-    private_field_content IS NOT NULL -- Filter out rows with null field content
+    field_content IS NOT NULL -- Filter out rows with null field content
