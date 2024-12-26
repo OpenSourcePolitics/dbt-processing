@@ -1,0 +1,3 @@
+db_name_dev: BAGNEUX_DBNAME_DEV
+db_name_prod: BAGNEUX_DBNAME_PROD
+participation_host_name: BAGNEUX_PARTICIPATION_HOST_NAME
