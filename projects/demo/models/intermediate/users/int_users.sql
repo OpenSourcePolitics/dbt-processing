@@ -16,6 +16,7 @@ SELECT
         ELSE 'Plus de 10 fois'
         END
     ) AS sign_in_frequency,
+    decidim_users.current_sign_in_at,
     decidim_users.last_sign_in_at,
     decidim_users.created_at,
     decidim_users.updated_at,
