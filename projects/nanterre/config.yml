@@ -1,0 +1,3 @@
+db_name_dev: NANTERRE_DBNAME_DEV
+db_name_prod: NANTERRE_DBNAME_PROD
+participation_host_name: NANTERRE_PARTICIPATION_HOST_NAME
