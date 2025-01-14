@@ -95,6 +95,21 @@ models:
           column_name: id
           to: ref('int_users')
           field: id
+  - name: all_users
+    schema: "{{ env_var('TARGET_SCHEMA') }}"
+    columns:
+      - name: spam
+        description: "Indicates if the user has been reported or not"
+      - name: spam_probability
+        description: "When a user has been reported as spam, gives the coefficient of spam likelihood, comprised between 0 and 1"
+        data_tests: 
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1
+              config:
+                where: "spam IS NOT null"  
+      - name: spam_reported_at
+        description: "When a user has been reported as spam, gives the report date"
 
 unit_tests:
   - name: deleted_users_check
@@ -109,7 +124,7 @@ unit_tests:
     expect:
       format: dict
       rows:
-          - {id: 2}
+          - {id: 2} 
 #  - name: test_url_concatenation
 #    description: "Check URL concatenation logic"
 #    model: all_users
