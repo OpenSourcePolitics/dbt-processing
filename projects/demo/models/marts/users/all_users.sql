@@ -97,6 +97,9 @@ SELECT
     COALESCE(forms_answers.has_answered_survey, 0)::boolean AS has_answered_survey,
     decidim_users.confirmed,
     CONCAT('https://', decidim_organizations.host, '/profiles/', decidim_users.nickname, '/activity') AS url,
+    decidim_users.spam,
+    decidim_users.spam_probability,
+    decidim_users.spam_reported_at,
     decidim_users.extended_data
 FROM {{ ref("int_users") }} AS decidim_users
 LEFT JOIN followings ON followings.decidim_user_id = decidim_users.id
