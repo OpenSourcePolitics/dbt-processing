@@ -46,7 +46,7 @@ SELECT
     decidim_users.blocked,
     decidim_users.blocked_at,
     (CASE WHEN decidim_users.confirmed_at IS NULL THEN false ELSE true END) AS confirmed, 
-    (CASE WHEN decidim_users.spam_report_timestamp IS NULL THEN false ELSE true END) AS spam, 
+    (CASE WHEN decidim_users.spam_probability IS NULL THEN false ELSE true END) AS spam, 
     decidim_users.spam_probability,
     DATE(decidim_users.spam_report_timestamp) AS spam_reported_at,
     decidim_users.extended_data
