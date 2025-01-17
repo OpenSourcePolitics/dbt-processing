@@ -31,9 +31,4 @@ models:
   grand_nancy:
     +materialized: table
 
-tests:
-  demo:
-    staging:
-      decidim:
-        categories:
-          +enabled: false
+
