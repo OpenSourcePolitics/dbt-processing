@@ -35,7 +35,8 @@ models:
   demo:
     intermediate:
       users:
-        +enabled: false
+        int_users:
+          +enabled: false
     marts:
       users:
         +enabled: false
