@@ -35,8 +35,7 @@ models:
   demo:
     intermediate:
       users:
-        int_users:
-          +enabled: false
+        +enabled: false
     marts:
       users:
         +enabled: false
@@ -50,5 +49,7 @@ tests:
       decidim:
         categories:
           +enabled: false
+    
 
+        
 
