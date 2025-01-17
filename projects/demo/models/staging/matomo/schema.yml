@@ -88,5 +88,7 @@ sources:
       - name: device_type
       - name: page_titles
       - name : users_city
+      - name : downloads
+      - name : hourly_visits
 
 
