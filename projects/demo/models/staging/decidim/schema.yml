@@ -38,7 +38,7 @@ unit_tests:
     description: "Checking if the json in extended data is correctly extracted"
     model: stg_decidim_users
     given:
-      - input: ref('stg_decidim_users')
+      - input: source('decidim', 'decidim_users')
         format: dict
         rows:
           - {id: 1, extended_data: "{\"user_name\": \"Blocked user\", \"spam_detection\": {\"blocked_at\": \"2024-11-14T16:54:37.332+01:00\", \"reported_at\": \"2024-10-11T07:16:38.010+02:00\", \"spam_probability\": 0.99}}"}
