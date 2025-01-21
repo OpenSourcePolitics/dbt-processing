@@ -16,7 +16,18 @@ models:
         description: "The user's nickname"
         tests:
           - not_null
-
+      - name: spam
+        description: "Indicates if the user has been reported or not"
+      - name: spam_probability
+        description: "When a user has been reported as spam, gives the coefficient of spam likelihood, comprised between 0 and 1"
+        data_tests: 
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1
+              config:
+                where: "spam IS NOT null"  
+      - name: spam_reported_at
+        description: "When a user has been reported as spam, gives the report date"
 
 unit_tests:
   - name: type_check
@@ -70,3 +81,17 @@ unit_tests:
           - {sign_in_frequency: 'Plus de 10 fois'}
           - {sign_in_frequency: 'Plus de 10 fois'}
 
+  - name: spam_detection_check
+    description: "Checks if the presence of spam is correctly parsed or not"
+    model: int_users
+    given:
+      - input: ref('stg_decidim_users')
+        format: dict
+        rows:
+          - {id: 1, type: 'Decidim::User', spam_probability: 0.9994} 
+          - {id: 2, type: 'Decidim::User', spam_probability: null}        
+    expect:
+      format: dict
+      rows:
+          - {id: 1, spam: "true"}
+          - {id: 2, spam: "false"}
