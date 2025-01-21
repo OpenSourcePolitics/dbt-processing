@@ -40,6 +40,9 @@ SELECT
     decidim_users.blocked,
     decidim_users.blocked_at,
     (CASE WHEN decidim_users.confirmed_at IS NULL THEN false ELSE true END) AS confirmed,
+    (CASE WHEN decidim_users.spam_probability IS NULL THEN false ELSE true END) AS spam, 
+    decidim_users.spam_probability, 
+    DATE(decidim_users.spam_report_timestamp) AS spam_reported_at,
     decidim_users.extended_data,
     decidim_users.extended_data::jsonb->>'date_of_birth' as date_of_birth
 FROM {{ ref ("stg_decidim_users")}} as decidim_users
@@ -82,6 +85,9 @@ SELECT
     users_with_date_of_birth.blocked,
     users_with_date_of_birth.blocked_at,
     users_with_date_of_birth.confirmed,
+    users_with_date_of_birth.spam,
+    users_with_date_of_birth.spam_probability, 
+    users_with_date_of_birth.spam_reported_at,
     users_with_date_of_birth.extended_data,
     (CASE WHEN date_of_birth > '1900-01-01' THEN date_of_birth ELSE NULL END) AS date_of_birth
 FROM users_with_date_of_birth

@@ -50,5 +50,7 @@ tests:
       decidim:
         categories:
           +enabled: false
+    
 
+        
 
