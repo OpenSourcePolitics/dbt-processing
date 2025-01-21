@@ -88,13 +88,10 @@ unit_tests:
       - input: ref('stg_decidim_users')
         format: dict
         rows:
-          - {id: 1, extended_data: "{\"user_name\": \"Blocked user\", \"spam_detection\": {\"blocked_at\": \"2024-11-14T16:54:37.332+01:00\", \"reported_at\": \"2024-10-11T07:16:38.010+02:00\", \"spam_probability\": 0.99}}"} 
-          - {id: 2, extended_data: "{\"gender\": null, \"country\": null, \"location\": null, \"underage\": null, \"postal_code\": null, \"phone_number\": null, \"date_of_birth\": null, \"statutory_representative_email\": null}"}
-          - {id: 3, extended_data: "{}"}
-          
+          - {id: 1, type: 'Decidim::User', spam_probability: 0.9994} 
+          - {id: 2, type: 'Decidim::User', spam_probability: null}        
     expect:
       format: dict
       rows:
           - {id: 1, spam: "true"}
           - {id: 2, spam: "false"}
-          - {id: 3, spam: "false"}
