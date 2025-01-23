@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  DBNAME: ${{ secrets.nets4dem_DBNAME_PROD }}
+  DBNAME: ${{ secrets.NETS4DEM_DBNAME_PROD }}
   HOST: ${{ secrets.HOST }}
   PASSWORD: ${{ secrets.PASSWORD }}
   PORT: ${{ secrets.PORT }}
