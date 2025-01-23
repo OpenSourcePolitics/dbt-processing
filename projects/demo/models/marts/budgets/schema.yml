@@ -6,4 +6,11 @@ models:
     description: "Splits budgets orders (i.e. votes) on a per-project basis"
     columns:
       - name: order_id
-        description: "ID of the budget order through which the vote has been issued"    
+        description: "ID of the budget order through which the vote has been issued"  
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+        #description: "This test is assuming that no order can contains two votes for a same line item/project"
+          combination_of_columns:
+            - order_id
+            - project_id
+  
