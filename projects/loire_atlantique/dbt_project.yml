@@ -4,6 +4,7 @@
 # name or the intended use of these models
 name: 'loire_atlantique'
 version: '1.0.0'
+config-version: 2
 
 # This setting configures which "profile" dbt uses for this project.
 profile: 'loire_atlantique'
@@ -15,7 +16,7 @@ model-paths: ["models"]
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
 seed-paths: ["seeds"]
-macro-paths: ["macros"]
+macro-paths: ["../demo/macros"]
 snapshot-paths: ["snapshots"]
 
 clean-targets:         # directories to be removed by `dbt clean`
@@ -31,6 +32,4 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   loire_atlantique:
-    # Config indicated by + and applies to all files under models/example/
-    example:
-      +materialized: table
+    +materialized: table
