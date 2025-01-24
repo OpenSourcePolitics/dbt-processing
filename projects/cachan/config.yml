@@ -1,0 +1,3 @@
+db_name_dev: CACHAN_DBNAME_DEV
+db_name_prod: CACHAN_DBNAME_PROD
+participation_host_name: CACHAN_PARTICIPATION_HOST_NAME
