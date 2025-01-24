@@ -1,0 +1,3 @@
+db_name_dev: NETS4DEM_DBNAME_DEV
+db_name_prod: NETS4DEM_DBNAME_PROD
+participation_host_name: NETS4DEM_PARTICIPATION_HOST_NAME
