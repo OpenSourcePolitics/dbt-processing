@@ -18,6 +18,10 @@ SELECT
         WHEN decidim_proposals.state = 'evaluating' THEN 'En cours d''évaluation'
         WHEN decidim_proposals.state = 'rejected' THEN 'Rejetée'
         WHEN decidim_proposals.state = 'accepted' THEN 'Acceptée'
+        WHEN decidim_proposals.state = 'not_answered' THEN 'Non répondue'
+        WHEN decidim_proposals.state = 'published' THEN 'Publiée'
+        WHEN decidim_proposals.state = 'validating' THEN 'Validation technique'
+        WHEN decidim_proposals.state = 'withdrawn' THEN 'Retirée'
         WHEN decidim_proposals.state IS NULL THEN 'Pas d''état'
         ELSE decidim_proposals.state
         END
