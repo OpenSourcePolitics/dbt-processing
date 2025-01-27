@@ -35,7 +35,6 @@ renamed AS (
         admin_terms_accepted_at,
         blocked,
         blocked_at,
-        (CASE WHEN confirmed_at IS NULL THEN false ELSE true END) AS "confirmed",
         (extended_data::jsonb->'spam_detection'->>'spam_probability')::float as spam_probability,
 	    extended_data::jsonb->'spam_detection'->> 'reported_at' as spam_report_timestamp,	
         extended_data
