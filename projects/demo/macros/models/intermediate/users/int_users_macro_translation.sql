@@ -1,4 +1,4 @@
-{% macro translate_sign_in_count(sign_in_count) %}
+{% macro int_users_translate_sign_in_count(sign_in_count) %}
 {% set lang = env_var('LANG', 'fr') %} -- Default value is 'fr'
 
 (CASE

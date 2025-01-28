@@ -8,7 +8,7 @@ SELECT
     decidim_users.id,
     decidim_users.email,
     decidim_users.sign_in_count,
-    {{ translate_sign_in_count('decidim_users.sign_in_count') }} AS sign_in_frequency,
+    {{ int_users_translate_sign_in_count('decidim_users.sign_in_count') }} AS sign_in_frequency,
     decidim_users.current_sign_in_at,
     decidim_users.last_sign_in_at,
     decidim_users.created_at,
