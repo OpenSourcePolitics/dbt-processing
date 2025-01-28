@@ -1,3 +1,5 @@
+{% set lang = env_var('LANG', 'fr') %}
+
 WITH source AS (
       SELECT * FROM {{ source('decidim', 'decidim_participatory_processes') }}
 ),
@@ -5,8 +7,8 @@ renamed AS (
     SELECT 
         id, 
         published_at, 
-        title::jsonb->>'fr' AS title,
-        subtitle::jsonb->>'fr' as subtitle, 
+        title::jsonb->>'{{ lang }}' AS title,
+        subtitle::jsonb->>'{{ lang }}' as subtitle, 
         slug, 
         'Decidim::ParticipatoryProcess' as type,
         'processes' as space_type_slug,

@@ -1,3 +1,5 @@
+{% set lang = env_var('LANG', 'fr') %}
+
 WITH source AS (
       SELECT * FROM {{ source('decidim', 'decidim_scopes') }}
 ),
@@ -7,7 +9,7 @@ renamed AS (
         decidim_organization_id,
         created_at,
         updated_at,
-        name::jsonb->>'fr' AS name,
+        name::jsonb->>'{{ lang }}' AS name,
         scope_type_id,
         parent_id,
         code,

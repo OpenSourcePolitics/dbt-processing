@@ -1,3 +1,5 @@
+{% set lang = env_var('LANG', 'fr') %}
+
 WITH source AS (
       SELECT * FROM {{ source('decidim', 'decidim_forms_question_matrix_rows') }}
 ),
@@ -6,7 +8,7 @@ renamed AS (
         id,
         decidim_question_id,
         position,
-        TRIM(body::jsonb->>'fr') AS body
+        TRIM(body::jsonb->>'{{ lang }}') AS body
     FROM source
 )
 SELECT * FROM renamed

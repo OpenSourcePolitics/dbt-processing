@@ -4,6 +4,7 @@
     ]
 )}}
 
+{% set lang = env_var('LANG', 'fr') %}
 
 WITH source AS (
       SELECT * FROM {{ ref ("stg_decidim_organizations")}}
@@ -16,7 +17,7 @@ renamed AS (
         default_locale,
         available_locales,
         created_at,
-        regexp_replace(description::jsonb->>'fr', E'(<[^>]+>)|(&[a-z]+;)', '', 'gi') as description,
+        regexp_replace(description::jsonb->>'{{ lang }}', E'(<[^>]+>)|(&[a-z]+;)', '', 'gi') as description,
         secondary_hosts,
         available_authorizations,
         header_snippets,

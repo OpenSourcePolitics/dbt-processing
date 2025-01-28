@@ -1,11 +1,13 @@
+{% set lang = env_var('LANG', 'fr') %}
+
 WITH source AS (
       SELECT * FROM {{ source('decidim', 'decidim_blogs_posts') }}
 ),
 renamed AS (
     SELECT
         id,
-        title::jsonb->>'fr' AS title,
-        regexp_replace(body::jsonb->>'fr', E'(<[^>]+>)|(&[a-z]+;)', '', 'gi') AS body,
+        title::jsonb->>'{{ lang }}' AS title,
+        regexp_replace(body::jsonb->>'{{ lang }}', E'(<[^>]+>)|(&[a-z]+;)', '', 'gi') AS body,
         decidim_component_id,
         created_at,
         decidim_author_id,

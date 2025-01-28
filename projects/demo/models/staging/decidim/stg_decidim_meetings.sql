@@ -1,11 +1,13 @@
+{% set lang = env_var('LANG', 'fr') %}
+
 WITH source AS (
       SELECT * FROM {{ source('decidim', 'decidim_meetings_meetings') }}
 ),
 renamed AS (
     SELECT
         id,
-        title::jsonb->>'fr' AS title,
-        regexp_replace(description::jsonb->>'fr', E'(<[^>]+>)|(&[a-z]+;)', '', 'gi') AS description,
+        title::jsonb->>'{{ lang }}' AS title,
+        regexp_replace(description::jsonb->>'{{ lang }}', E'(<[^>]+>)|(&[a-z]+;)', '', 'gi') AS description,
         coalesce(nullif(address,''), 'Pas d''adresse') as address,
         coalesce(attendees_count, 0) as attendees_count,
         created_at,

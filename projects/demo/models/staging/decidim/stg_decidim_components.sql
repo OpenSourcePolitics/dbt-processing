@@ -1,3 +1,5 @@
+{% set lang = env_var('LANG', 'fr') %}
+
 WITH source AS (
       SELECT * FROM {{ source('decidim', 'decidim_components') }}
 ),
@@ -5,7 +7,7 @@ renamed AS (
     SELECT
         id,
         manifest_name,
-        name::jsonb->>'fr' AS name,
+        name::jsonb->>'{{ lang }}' AS name,
         participatory_space_id,
         participatory_space_type,
         settings,
