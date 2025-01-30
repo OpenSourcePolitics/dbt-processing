@@ -46,7 +46,7 @@ unit_tests:
           - {id: 1}
 
   - name: sign_in_frequency_check_multilingual
-    description: "Test that the sign-in frequency is properly calculated for French."
+    description: "Test that the sign-in frequency is properly calculated for Dutch."
     model: int_users
     overrides:
       env_vars:

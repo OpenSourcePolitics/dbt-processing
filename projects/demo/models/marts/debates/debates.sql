@@ -26,9 +26,8 @@ SELECT
     ) AS debate_url,
     decidim_debates_debates.resource_type,
     categorizations.categories,
-    coalesce(categorizations.categories[1], 'Sans catégorie') AS first_category,
     categorizations.sub_categories,
-    coalesce(categorizations.sub_categories[1], 'Sans sous-catégorie') AS first_sub_category
+    {{ translate_first_category_and_sub_category('categorizations.categories', 'categorizations.sub_categories') }} 
 FROM {{ ref("stg_decidim_debates")}} AS decidim_debates_debates
     JOIN {{ ref("components")}} decidim_components on decidim_components.id = decidim_component_id
     LEFT JOIN categorizations on categorizations.categorizable_id = decidim_debates_debates.id

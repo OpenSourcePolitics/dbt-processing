@@ -16,9 +16,8 @@ SELECT
     decidim_budgets_budgets.decidim_component_id,
     concat(decidim_components.component_url,'/', decidim_components.manifest_name,'/', decidim_budgets_budgets.id, '/projects/', decidim_budgets_projects.id) AS project_url,
     categorizations.categories,
-    coalesce(categorizations.categories[1], 'Sans catégorie') AS first_category,
     categorizations.sub_categories,
-    coalesce(categorizations.sub_categories[1], 'Sans sous-catégorie') AS first_sub_category
+    {{ translate_first_category_and_sub_category('categorizations.categories', 'categorizations.sub_categories') }}
 FROM {{ ref("int_budgets_projects")}} AS decidim_budgets_projects
 JOIN {{ ref("stg_decidim_budgets")}} AS decidim_budgets_budgets on decidim_budgets_budgets.id = decidim_budgets_projects.decidim_budgets_budget_id
 JOIN {{ ref("components")}} as decidim_components on decidim_components.id = decidim_budgets_budgets.decidim_component_id

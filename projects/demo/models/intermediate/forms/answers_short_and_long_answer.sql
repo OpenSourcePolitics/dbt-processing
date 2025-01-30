@@ -10,7 +10,7 @@ SELECT
     ip_hash,
     question_type,
     position,
-    COALESCE(NULLIF(decidim_forms_answers.body,''), 'Pas de réponse') AS "answer",
+    {{ int_forms_translate_short_and_long_answers('decidim_forms_answers.body') }} AS answer,
     '' AS sub_matrix_question,
     '' AS custom_body,
     -1 AS sorting_position,

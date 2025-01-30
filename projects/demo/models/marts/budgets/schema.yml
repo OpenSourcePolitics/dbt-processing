@@ -7,3 +7,21 @@ models:
     columns:
       - name: order_id
         description: "ID of the budget order through which the vote has been issued"    
+
+unit_tests:
+  - name: test_translate_first_category_and_sub_category_budget_projects
+    description: "Test translation of categories and sub_categories in budget_projects model"
+    model: budgets_projects
+    given:
+      - input: ref('stg_decidim_budgets')
+        format: dict
+        rows:
+          - {categories: ['Accountability', 'Some sub-category'], sub_categories: ['Sub-category 1', 'Sub-category 2']}
+          - {categories: ['Budgets'], sub_categories: ['Sub-category A']}
+          - {categories: ['Meetings'], sub_categories: []}  # Edge case with empty sub_categories
+    expect:
+      format: dict
+      rows:
+        - {first_category: "Accountability", first_sub_category: "Sub-category 1"}
+        - {first_category: "Budgets", first_sub_category: "Sub-category A"}
+        - {first_category: "Meetings", first_sub_category: "Sans sous-catégorie"}  # Fallback for empty sub_category

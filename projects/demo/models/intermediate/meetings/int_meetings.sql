@@ -11,13 +11,7 @@ SELECT
     decidim_meetings.end_time,
     decidim_meetings.registration_url,
     decidim_meetings.type_of_meeting, 
-    (CASE decidim_meetings.type_of_meeting
-        WHEN 'online' THEN 'En ligne'
-        WHEN 'in_person' THEN 'En présentiel'
-        WHEN 'hybrid' THEN 'Hybride'
-        ELSE  decidim_meetings.type_of_meeting
-        END
-    ) AS translated_type_of_meeting,
+    {{ int_meetings_translate_type_of_meeting('decidim_meetings.type_of_meeting') }} AS translated_type_of_meeting,
     decidim_meetings.private_meeting,
     decidim_meetings.decidim_author_id,
     decidim_meetings.resource_type

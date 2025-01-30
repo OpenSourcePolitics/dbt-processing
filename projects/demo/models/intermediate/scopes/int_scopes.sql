@@ -5,7 +5,7 @@ SELECT
     decidim_scopes.decidim_organization_id,
     decidim_scopes.created_at,
     decidim_scopes.updated_at,
-    coalesce(nullif(decidim_scopes.name, ''), 'Sans secteur') as name,
+    {{ int_scopes_default_name('decidim_scopes.name') }} AS name,
     decidim_scopes.scope_type_id,
     decidim_scopes.parent_id,
     decidim_scopes.code
