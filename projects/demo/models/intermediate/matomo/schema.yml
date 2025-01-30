@@ -31,20 +31,20 @@ unit_tests:
           - {renamed_label: 'Moteur de recherche'}
   - name: test_translate_renamed_label_nl
     description: "Check that the renamed_label is correctly translated to Dutch"
-    model: int_referrers
+    model: int_matomo_referrers
     overrides:
       env_vars:
         LANG: 'nl'  
-      given:
-        - input: ref('stg_matomo_referrers')
-          format: dict
-          rows:
-            - {label: 'Mot clef indéfini'}
-            - {label: 'Search engine'}
-            - {label: 'Other label'}
-      expect:
-          format: dict
-          rows:
-            - {renamed_label: 'Zoekmachine'}   
-            - {renamed_label: 'Search engine'} 
-            - {renamed_label: 'Other label'}  
+    given:
+      - input: ref('stg_matomo_referrers')
+        format: dict
+        rows:
+          - {label: 'Mot clef indéfini'}
+          - {label: 'Search engine'}
+          - {label: 'Other label'}
+    expect:
+      format: dict
+      rows:
+        - {renamed_label: 'Zoekmachine'}   
+        - {renamed_label: 'Search engine'} 
+        - {renamed_label: 'Other label'}  
