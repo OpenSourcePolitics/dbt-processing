@@ -12,7 +12,7 @@ SELECT
     decidim_questionnaire_id,
     decidim_question_id,
     created_at,
-    {{ int_forms_answers_translate_author_status(decidim_user_id) }} AS author_status,
+    {{ int_forms_answers_translate_author_status('decidim_user_id') }} AS author_status,
     updated_at,
     session_token,
     ip_hash
