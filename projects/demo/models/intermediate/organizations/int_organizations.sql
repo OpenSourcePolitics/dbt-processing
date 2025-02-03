@@ -17,7 +17,7 @@ renamed AS (
         default_locale,
         available_locales,
         created_at,
-        regexp_replace(description::jsonb->>'{{ lang }}', E'(<[^>]+>)|(&[a-z]+;)', '', 'gi') as description,
+        COALESCE(regexp_replace(description::jsonb->>'{{ lang }}', E'(<[^>]+>)|(&[a-z]+;)', '', 'gi'), '') as description,
         secondary_hosts,
         available_authorizations,
         header_snippets,

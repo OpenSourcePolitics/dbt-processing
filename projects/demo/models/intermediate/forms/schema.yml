@@ -1,7 +1,10 @@
 unit_tests:
   - name: int_forms_answers_author_status_check
     description: "Check that the author status is correctly detected"
-    model: int_forms_answers    
+    model: int_forms_answers
+    overrides:
+      env_vars:
+        LANG: 'fr'  
     given:
       - input: ref('stg_decidim_forms_answers')
         format: dict
