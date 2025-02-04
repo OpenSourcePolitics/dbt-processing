@@ -2,7 +2,7 @@ SELECT
     decidim_meetings.id,
     decidim_meetings.title,
     decidim_meetings.description,
-    decidim_meetings.address,
+    {{ int_meetings_translate_adress('decidim_meetings.address') }} AS adress,
     decidim_meetings.attendees_count,
     decidim_meetings.created_at,
     decidim_meetings.decidim_scope_id,
