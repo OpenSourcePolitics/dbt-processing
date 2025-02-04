@@ -33,7 +33,7 @@ unit_tests:
     description: "Check that the renamed_label is correctly translated to Dutch"
     model: int_matomo_referrers
     overrides:
-      env_vars:
+      vars:
         DBT_LANG: 'nl'  
     given:
       - input: ref('stg_matomo_referrers')

@@ -3,7 +3,7 @@ unit_tests:
     description: "Check that the author status is correctly detected"
     model: int_forms_answers
     overrides:
-      env_vars:
+      vars:
         DBT_LANG: 'fr'  
     given:
       - input: ref('stg_decidim_forms_answers')
@@ -20,7 +20,7 @@ unit_tests:
     description: "Check that the author status is correctly detected in Dutch"
     model: int_forms_answers
     overrides:
-      env_vars:
+      vars:
         DBT_LANG: 'nl'  
     given:
       - input: ref('stg_decidim_forms_answers')
@@ -37,7 +37,7 @@ unit_tests:
     description: "Check if option and sorting answers are correctly processed in the answers_short_and_long_answer CTE"
     model: answers_short_and_long_answer
     overrides:
-      env_vars:
+      vars:
         DBT_LANG: 'fr' 
     given:
       - input: ref('int_forms_answers')
@@ -63,7 +63,7 @@ unit_tests:
     description: "Check if option and sorting answers are correctly processed in German"
     model: answers_short_and_long_answer
     overrides:
-      env_vars:
+      vars:
         DBT_LANG: 'de'
     given:
       - input: ref('int_forms_answers')

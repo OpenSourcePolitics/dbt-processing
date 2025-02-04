@@ -34,7 +34,7 @@ unit_tests:
   - name: test_translated_manifest_name
     model: int_components
     overrides:
-      env_vars:
+      vars:
         DBT_LANG: 'fr' 
     given:
       - input: ref('stg_decidim_components')
@@ -61,7 +61,7 @@ unit_tests:
     description: "Check if manifest names are correctly translated to Dutch"
     model: int_components
     overrides:
-      env_vars:
+      vars:
         DBT_LANG: 'nl'  
     given:
       - input: ref('stg_decidim_components')

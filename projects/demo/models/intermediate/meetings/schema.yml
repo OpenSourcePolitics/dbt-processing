@@ -3,7 +3,7 @@ unit_tests:
    description: "Check if meeting types are correctly translated"
    model: int_meetings
    overrides:
-     env_vars:
+     vars:
        DBT_LANG: 'fr'
    given:
      - input: ref('stg_decidim_meetings')
@@ -22,7 +22,7 @@ unit_tests:
    description: "Check if meeting types are correctly translated to Dutch"
    model: int_meetings
    overrides:
-     env_vars:
+     vars:
        DBT_LANG: 'nl'
    given:
      - input: ref('stg_decidim_meetings')

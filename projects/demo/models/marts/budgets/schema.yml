@@ -13,7 +13,7 @@ models:
     description: "Check that the category is translated correctly to French"
     model: budgets_projects
     overrides:
-      env_vars:
+      vars:
         DBT_LANG: 'fr'  
     given:
       - input: ref('stg_decidim_budgets')
@@ -45,7 +45,7 @@ models:
     description: "Check that the category is translated correctly to Dutch"
     model: budgets_projects
     overrides:
-      env_vars:
+      vars:
         DBT_LANG: 'nl'  
     given:
       - input: ref('stg_decidim_budgets')

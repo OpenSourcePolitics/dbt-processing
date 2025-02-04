@@ -1,4 +1,4 @@
-{% set lang = env_var('DBT_LANG', 'fr') %}
+{% set lang = var('DBT_LANG', 'fr') %}
 
 WITH source AS (
       SELECT * FROM {{ source('decidim', 'decidim_meetings_meetings') }}

@@ -1,5 +1,5 @@
 {% macro int_scopes_default_name(scope_name) %}
-{% set lang = env_var('DBT_LANG', 'fr') %} -- Default value is 'fr'
+{% set lang = var('DBT_LANG', 'fr') %} -- Default value is 'fr'
 
 COALESCE(
     NULLIF({{ scope_name }}, ''),

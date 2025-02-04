@@ -1,5 +1,5 @@
 {% macro int_meetings_translate_type_of_meeting(meeting_type) %}
-{% set lang = env_var('DBT_LANG', 'fr') %} -- Default value is 'fr'
+{% set lang = var('DBT_LANG', 'fr') %} -- Default value is 'fr'
 
 (CASE {{ meeting_type }}
     WHEN 'online' THEN

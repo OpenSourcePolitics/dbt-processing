@@ -49,7 +49,7 @@ unit_tests:
     description: "Test that the sign-in frequency is properly calculated for Dutch."
     model: int_users
     overrides:
-      env_vars:
+      vars:
         DBT_LANG: 'nl'
     given:
       - input: ref('stg_decidim_users')

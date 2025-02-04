@@ -1,5 +1,5 @@
 {% macro int_forms_answers_translate_author_status(decidim_user_id) %}
-{% set lang = env_var('DBT_LANG', 'fr') %} -- Default value is 'fr'
+{% set lang = var('DBT_LANG', 'fr') %} -- Default value is 'fr'
 
 (CASE
     WHEN {{ decidim_user_id }} IS NULL THEN

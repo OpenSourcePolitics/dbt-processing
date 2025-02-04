@@ -36,7 +36,7 @@ unit_tests:
     description: "Test that the state column correctly defaults to 'Pas d'état' if null"
     model: int_proposals
     overrides:
-      env_vars:
+      vars:
         DBT_LANG: 'fr'
     given:
       - input: ref('stg_decidim_proposals')
@@ -53,7 +53,7 @@ unit_tests:
     description: "Test that the state column correctly defaults to a translated value (German) when null"
     model: int_proposals
     overrides:
-      env_vars:
+      vars:
         DBT_LANG: 'de'  
     given:
       - input: ref('stg_decidim_proposals')
@@ -70,7 +70,7 @@ unit_tests:
     description: "Test that the state column is correctly translated"
     model: int_proposals
     overrides:
-      env_vars:
+      vars:
         DBT_LANG: 'fr'
     given:
       - input: ref('stg_decidim_proposals')
@@ -91,7 +91,7 @@ unit_tests:
     description: "Test that the state column is correctly translated German"
     model: int_proposals
     overrides:
-      env_vars:
+      vars:
         DBT_LANG: 'de'
     given:
       - input: ref('stg_decidim_proposals')

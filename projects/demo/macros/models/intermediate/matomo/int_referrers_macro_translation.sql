@@ -1,5 +1,5 @@
 {% macro translate_renamed_label(label) %}
-    {% set lang = env_var('DBT_LANG', 'fr') %} -- Default value is 'fr'
+    {% set lang = var('DBT_LANG', 'fr') %} -- Default value is 'fr'
 
     -- Translation for different languages
     CASE 
@@ -13,7 +13,7 @@
             {% elif lang == 'nl' %}
                 'Zoekmachine'
             {% else %}
-                'Moteur de recherche'  -- default to French
+                'Unknown'
             {% endif %}
         ELSE {{ label }}
     END
