@@ -3,14 +3,7 @@ SELECT
     decidim_users.id,
     decidim_users.email,
     decidim_users.sign_in_count,
-    (CASE
-        WHEN decidim_users.sign_in_count = 0 THEN 'Jamais'
-        WHEN decidim_users.sign_in_count = 1 THEN 'Une seule fois'
-        WHEN decidim_users.sign_in_count = 2 THEN 'Deux fois'
-        WHEN decidim_users.sign_in_count BETWEEN 2 AND 10 THEN 'Entre 2 et 10 fois'
-        ELSE 'Plus de 10 fois'
-        END
-    ) AS sign_in_frequency,
+    {{ int_users_translate_sign_in_count('decidim_users.sign_in_count') }} AS sign_in_frequency,
     decidim_users.last_sign_in_at,
     decidim_users.created_at,
     decidim_users.updated_at,
