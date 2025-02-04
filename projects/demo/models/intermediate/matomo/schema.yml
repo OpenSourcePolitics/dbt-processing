@@ -34,7 +34,7 @@ unit_tests:
     model: int_matomo_referrers
     overrides:
       env_vars:
-        LANG: 'nl'  
+        DBT_LANG: 'nl'  
     given:
       - input: ref('stg_matomo_referrers')
         format: dict

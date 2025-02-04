@@ -4,7 +4,7 @@ unit_tests:
     model: int_forms_answers
     overrides:
       env_vars:
-        LANG: 'fr'  
+        DBT_LANG: 'fr'  
     given:
       - input: ref('stg_decidim_forms_answers')
         format: dict
@@ -21,7 +21,7 @@ unit_tests:
     model: int_forms_answers
     overrides:
       env_vars:
-        LANG: 'nl'  
+        DBT_LANG: 'nl'  
     given:
       - input: ref('stg_decidim_forms_answers')
         format: dict
@@ -38,7 +38,7 @@ unit_tests:
     model: answers_short_and_long_answer
     overrides:
       env_vars:
-        LANG: 'fr' 
+        DBT_LANG: 'fr' 
     given:
       - input: ref('int_forms_answers')
         format: dict
@@ -64,7 +64,7 @@ unit_tests:
     model: answers_short_and_long_answer
     overrides:
       env_vars:
-        LANG: 'de'  
+        DBT_LANG: 'de'
     given:
       - input: ref('int_forms_answers')
         format: dict

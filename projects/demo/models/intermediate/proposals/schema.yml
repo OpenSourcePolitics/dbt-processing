@@ -37,7 +37,7 @@ unit_tests:
     model: int_proposals
     overrides:
       env_vars:
-        LANG: 'fr'
+        DBT_LANG: 'fr'
     given:
       - input: ref('stg_decidim_proposals')
         format: dict
@@ -54,7 +54,7 @@ unit_tests:
     model: int_proposals
     overrides:
       env_vars:
-        LANG: 'de'  
+        DBT_LANG: 'de'  
     given:
       - input: ref('stg_decidim_proposals')
         format: dict
@@ -71,7 +71,7 @@ unit_tests:
     model: int_proposals
     overrides:
       env_vars:
-        LANG: 'fr'
+        DBT_LANG: 'fr'
     given:
       - input: ref('stg_decidim_proposals')
         format: dict
@@ -92,7 +92,7 @@ unit_tests:
     model: int_proposals
     overrides:
       env_vars:
-        LANG: 'de'
+        DBT_LANG: 'de'
     given:
       - input: ref('stg_decidim_proposals')
         format: dict
