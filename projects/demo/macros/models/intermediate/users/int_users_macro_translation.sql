@@ -1,5 +1,5 @@
 {% macro int_users_translate_sign_in_count(sign_in_count) %}
-{% set lang = env_var('LANG', 'fr') %} -- Default value is 'fr'
+{% set lang = env_var('DBT_LANG', 'fr') %} -- Default value is 'fr'
 
 (CASE
     WHEN {{ sign_in_count }} = 0 THEN

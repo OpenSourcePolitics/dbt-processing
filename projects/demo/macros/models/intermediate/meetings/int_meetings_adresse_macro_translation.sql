@@ -1,5 +1,5 @@
 {% macro int_meetings_translate_adress(address) %}
-    {% set lang = env_var('LANG', 'fr') %}  -- Default to French ('fr') if LANG is not set
+    {% set lang = env_var('DBT_LANG', 'fr') %}  -- Default to French ('fr') if LANG is not set
 
     (CASE
         WHEN {{ address }} IS NULL THEN

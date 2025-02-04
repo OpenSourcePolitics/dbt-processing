@@ -1,4 +1,4 @@
-{% set lang = env_var('LANG', 'fr') %}
+{% set lang = env_var('DBT_LANG', 'fr') %}
 
 SELECT
     id,

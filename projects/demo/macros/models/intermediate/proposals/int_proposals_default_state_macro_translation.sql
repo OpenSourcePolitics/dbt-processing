@@ -1,5 +1,5 @@
 {% macro int_proposals_translate_default_state(proposal_state) %}
-    {% set lang = env_var('LANG', 'fr') %}  -- Default to French ('fr') if LANG is not set
+    {% set lang = env_var('DBT_LANG', 'fr') %}  -- Default to French ('fr') if LANG is not set
 
     (CASE
         WHEN {{ proposal_state }} IS NULL THEN

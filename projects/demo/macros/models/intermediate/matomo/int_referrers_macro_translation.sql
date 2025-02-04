@@ -1,5 +1,5 @@
 {% macro translate_renamed_label(label) %}
-    {% set lang = env_var('LANG', 'fr') %} -- Default value is 'fr'
+    {% set lang = env_var('DBT_LANG', 'fr') %} -- Default value is 'fr'
 
     -- Translation for different languages
     CASE 

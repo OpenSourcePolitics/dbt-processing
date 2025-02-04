@@ -1,5 +1,5 @@
 {% macro int_component_translate_manifest_name(manifest_name) %}
-{% set lang = env_var('LANG', 'fr') %} -- Default value is 'fr'
+{% set lang = env_var('DBT_LANG', 'fr') %} -- Default value is 'fr'
 
 (CASE
     WHEN {{ manifest_name }} = 'accountability' THEN

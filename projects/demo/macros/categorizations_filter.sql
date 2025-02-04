@@ -1,5 +1,5 @@
 {% macro categorizations_filter(type) %}
-    {% set lang = env_var('LANG', 'fr') %}  -- Default language is 'fr'
+    {% set lang = env_var('DBT_LANG', 'fr') %}  -- Default language is 'fr'
 
     WITH categorizations AS (
         SELECT 
