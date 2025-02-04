@@ -38,11 +38,14 @@ SELECT
     decidim_users.admin_terms_accepted_at,
     decidim_users.blocked,
     decidim_users.blocked_at,
+    decidim_users.date_of_birth,
+    decidim_users.gender,
+    decidim_users.postal_code,
     (CASE WHEN decidim_users.confirmed_at IS NULL THEN false ELSE true END) AS confirmed, 
     (CASE WHEN decidim_users.spam_probability IS NULL THEN false ELSE true END) AS spam, 
     decidim_users.spam_probability,
     DATE(decidim_users.spam_report_timestamp) AS spam_reported_at,
+    (CASE WHEN decidim_users.half_signup IS NULL THEN false ELSE true END) AS half_signup,
     decidim_users.extended_data
-
 FROM {{ ref ("stg_decidim_users")}} as decidim_users
     WHERE type LIKE 'Decidim::User'
