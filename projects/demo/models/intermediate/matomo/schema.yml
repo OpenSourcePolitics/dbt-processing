@@ -20,6 +20,9 @@ unit_tests:
   - name: renamed_label_check
     description: "Check that the label is properly renamed"
     model: int_matomo_referrers
+    overrides:
+      vars:
+        DBT_LANG: 'fr'
     given:
       - input: ref('stg_matomo_referrers')
         format: dict
