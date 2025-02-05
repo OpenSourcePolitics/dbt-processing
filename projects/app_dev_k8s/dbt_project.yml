@@ -33,8 +33,6 @@ models:
   demo:
     staging:
       matomo:
-        stg_matomo_referrers:
-          +enabled: false
         stg_matomo_page_titles:
           +enabled: false
   app_dev_k8s:
