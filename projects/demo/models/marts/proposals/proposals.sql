@@ -43,9 +43,9 @@ proposals AS (
         COALESCE(coauthorships.authors_ids[1], -1) AS first_author_id,
         decidim_proposals.address,
         categorizations.categories,
-        COALESCE(categorizations.categories[1], 'Sans catégorie') AS first_category,
+        {{ categorization_first_category('categorizations.categories[1]') }},
         categorizations.sub_categories,
-        COALESCE(categorizations.sub_categories[1], 'Sans sous-catégorie') AS first_sub_category,
+        {{ categorization_first_sub_category('categorizations.sub_categories[1]') }},
         decidim_proposals.comments_count,
         decidim_proposals.endorsements_count,
         COALESCE(votes.votes_count,0) AS votes_count

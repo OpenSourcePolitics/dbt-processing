@@ -31,9 +31,9 @@ SELECT
         decidim_meetings_meetings.id
     ) AS meeting_url,
     categorizations.categories,
-    categorizations.first_category,  
+    {{ categorization_first_category('categorizations.categories[1]') }},
     categorizations.sub_categories,
-    categorizations.first_sub_category
+    {{ categorization_first_sub_category('categorizations.sub_categories[1]') }}
 FROM {{ ref("int_meetings")}} AS decidim_meetings_meetings
 JOIN {{ ref("components")}} decidim_components on decidim_components.id = decidim_component_id
 LEFT JOIN categorizations on categorizations.categorizable_id = decidim_meetings_meetings.id

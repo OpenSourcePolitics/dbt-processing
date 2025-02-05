@@ -8,24 +8,24 @@ models:
       - name: order_id
         description: "ID of the budget order through which the vote has been issued"    
 
-#unit_tests:
+unit_tests:
   - name: test_translate_category
     description: "Check that the category is translated correctly to French"
     model: budgets_projects
     overrides:
       vars:
-        DBT_LANG: 'fr'  
+        DBT_LANG: 'fr'
     given:
       - input: ref('stg_decidim_budgets')
         format: dict
         rows:
-          - {id: 1}
-          - {id: 2}
+          - {id: 42, decidim_component_id: 1}
+          - {id: 43, decidim_component_id: 2}
       - input: ref('int_budgets_projects')
         format: dict
         rows:
-          - {id: 1, project_amount: 1000, selected_at: '2022-01-01', is_selected: true}
-          - {id: 2, project_amount: 2000, selected_at: '2022-02-01', is_selected: false}
+          - {id: 1, decidim_budgets_budget_id: 42, project_amount: 1000, selected_at: '2022-01-01', is_selected: true}
+          - {id: 2, decidim_budgets_budget_id: 43, project_amount: 2000, selected_at: '2022-02-01', is_selected: false}
       - input: ref('components')
         format: dict
         rows:
@@ -34,30 +34,31 @@ models:
       - input: ref('categorizations')
         format: dict
         rows:
-          - {categorizable_id: 1, category_name: 'Environnement', child_name: 'Energie'}
-          - {categorizable_id: 2, category_name: '', child_name: ''}
+          - {categorizable_id: 1, categorizable_type: 'Decidim::Budgets::Project', category_name: 'Environnement', child_name: 'Energie'}
+          - {categorizable_id: 2, categorizable_type: 'Decidim::Budgets::Project', category_name: '', child_name: ''}
     expect:
       format: dict
       rows:
-        - {first_category: 'Environnement', first_sub_category: 'Energie'} 
-        - {first_category: 'Sans catégorie', first_sub_category: 'Sans sous-catégorie'} 
+        - {first_category: 'Environnement', first_sub_category: 'Energie'}
+        - {first_category: 'Sans catégorie', first_sub_category: 'Sans sous-catégorie'}
+
   - name: test_translate_category_multilingual
     description: "Check that the category is translated correctly to Dutch"
     model: budgets_projects
     overrides:
       vars:
-        DBT_LANG: 'nl'  
+        DBT_LANG: 'nl'
     given:
       - input: ref('stg_decidim_budgets')
         format: dict
         rows:
-          - {id: 1}
-          - {id: 2}
+          - {id: 42, decidim_component_id: 1}
+          - {id: 43, decidim_component_id: 2}
       - input: ref('int_budgets_projects')
         format: dict
         rows:
-          - {id: 1, project_amount: 1000, selected_at: '2022-01-01', is_selected: true}
-          - {id: 2, project_amount: 2000, selected_at: '2022-02-01', is_selected: false}
+          - {id: 1, decidim_budgets_budget_id: 42, project_amount: 1000, selected_at: '2022-01-01', is_selected: true}
+          - {id: 2, decidim_budgets_budget_id: 43, project_amount: 2000, selected_at: '2022-02-01', is_selected: false}
       - input: ref('components')
         format: dict
         rows:
@@ -66,13 +67,10 @@ models:
       - input: ref('categorizations')
         format: dict
         rows:
-          - {categorizable_id: 1, category_name: 'Gezondheid', child_name: 'Zorg'}
-          - {categorizable_id: 2, category_name: '', child_name: ''}
+          - {categorizable_id: 1, categorizable_type: 'Decidim::Budgets::Project', category_name: 'Gezondheid', child_name: 'Zorg'}
+          - {categorizable_id: 2, categorizable_type: 'Decidim::Budgets::Project', category_name: '', child_name: ''}
     expect:
       format: dict
       rows:
-        - {category: 'Gezondheid'}  
-        - {category: 'Geen categorie'}  
-
-
-  
+        - {first_category: 'Gezondheid', first_sub_category: 'Zorg'}
+        - {first_category: 'Geen categorie', first_sub_category: 'Geen subcategorie'}
