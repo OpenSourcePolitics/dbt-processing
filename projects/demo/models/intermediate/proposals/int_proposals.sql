@@ -17,6 +17,6 @@ SELECT
     {{ int_proposals_translate_proposal_state('decidim_proposals.state') }} AS translated_state,
     decidim_proposals.comments_count,
     decidim_proposals.endorsements_count,
-    COALESCE(NULLIF(decidim_proposals.address,''),'Pas d''adresse') AS address
+    {{ int_proposals_macro_address('decidim_proposals.address') }} AS address
 FROM {{ ref ("stg_decidim_proposals")}} AS decidim_proposals
 WHERE published_at IS NOT NULL

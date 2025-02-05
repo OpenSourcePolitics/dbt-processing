@@ -120,6 +120,9 @@ unit_tests:
   - name: test_default_address
     description: "Test that the address column correctly defaults to 'Pas d'adresse' if empty"
     model: int_proposals
+    overrides:
+      vars:
+        DBT_LANG: 'fr'
     given:
       - input: ref('stg_decidim_proposals')
         format: dict

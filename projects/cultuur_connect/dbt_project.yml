@@ -24,6 +24,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 vars:
   DBT_LANG: 'nl'
+
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 
