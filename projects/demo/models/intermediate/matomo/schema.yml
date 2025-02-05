@@ -51,3 +51,65 @@ unit_tests:
         - {renamed_label: 'Zoekmachine'}   
         - {renamed_label: 'Search engine'} 
         - {renamed_label: 'Other label'}  
+
+  - name: test_translate_sub_type_en
+    description: "Check that the sub_type is correctly translated to English"
+    model: int_matomo_referrers
+    overrides:
+      vars:
+        DBT_LANG: 'en'
+    given:
+      - input: ref('stg_matomo_referrers')
+        format: dict
+        rows:
+          - {sub_type: 'Campagnes'}
+          - {sub_type: 'Sites web'}
+          - {sub_type: 'Moteurs de recherche'}
+          - {sub_type: 'Réseaux sociaux'}
+    expect:
+      format: dict
+      rows:
+        - {sub_type: 'Campaigns'}
+        - {sub_type: 'Websites'}
+        - {sub_type: 'Search engines'}
+        - {sub_type: 'Social networks'}
+
+  - name: test_translate_sub_type_de
+    description: "Check that the sub_type is correctly translated to German"
+    model: int_matomo_referrers
+    overrides:
+      vars:
+        DBT_LANG: 'de'
+    given:
+      - input: ref('stg_matomo_referrers')
+        format: dict
+        rows:
+          - {sub_type: 'Campagnes'}
+          - {sub_type: 'Sites web'}
+          - {sub_type: 'Moteurs de recherche'}
+          - {sub_type: 'Réseaux sociaux'}
+    expect:
+      format: dict
+      rows:
+        - {sub_type: 'Kampagnen'}
+        - {sub_type: 'Websites'}
+        - {sub_type: 'Suchmaschinen'}
+        - {sub_type: 'Soziale Netzwerke'}
+
+  - name: test_translate_sub_type_unknown
+    description: "Check that unknown sub_type values return 'Unknown'"
+    model: int_matomo_referrers
+    overrides:
+      vars:
+        DBT_LANG: 'fr'
+    given:
+      - input: ref('stg_matomo_referrers')
+        format: dict
+        rows:
+          - {sub_type: 'Autre valeur'}
+          - {sub_type: NULL}
+    expect:
+      format: dict
+      rows:
+        - {sub_type: 'Inconnu'}
+        - {sub_type: 'Unknown'}
