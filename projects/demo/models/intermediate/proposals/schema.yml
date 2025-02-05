@@ -35,6 +35,9 @@ unit_tests:
   - name: test_default_state
     description: "Test that the state column correctly defaults to 'Pas d'état' if null"
     model: int_proposals
+    overrides:
+      vars:
+        DBT_LANG: 'fr'
     given:
       - input: ref('stg_decidim_proposals')
         format: dict
@@ -46,9 +49,29 @@ unit_tests:
       rows:
         - {id: 1, state: 'Pas d''état'}
         - {id: 2, state: 'rejected'}
+  - name: test_default_state_multilingual
+    description: "Test that the state column correctly defaults to a translated value (German) when null"
+    model: int_proposals
+    overrides:
+      vars:
+        DBT_LANG: 'de'  
+    given:
+      - input: ref('stg_decidim_proposals')
+        format: dict
+        rows:
+          - {id: 1, published_at: '2024-08-12', state: NULL}
+          - {id: 2, published_at: '2024-08-12', state: 'rejected'}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, state: 'Kein Zustand'}  
+        - {id: 2, state: 'rejected'}
   - name: test_translated_state
     description: "Test that the state column is correctly translated"
     model: int_proposals
+    overrides:
+      vars:
+        DBT_LANG: 'fr'
     given:
       - input: ref('stg_decidim_proposals')
         format: dict
@@ -64,6 +87,36 @@ unit_tests:
         - {id: 2, translated_state: 'Rejetée'}
         - {id: 3, translated_state: 'Acceptée'}
         - {id: 4, translated_state: 'Pas d''état'}
+  - name: test_translated_state_check_multilingual
+    description: "Test that the state column is correctly translated German"
+    model: int_proposals
+    overrides:
+      vars:
+        DBT_LANG: 'de'
+    given:
+      - input: ref('stg_decidim_proposals')
+        format: dict
+        rows:
+          - {id: 1, published_at: '2024-08-12', state: 'evaluating'}
+          - {id: 2, published_at: '2024-08-12', state: 'rejected'}
+          - {id: 3, published_at: '2024-08-12', state: 'accepted'}
+          - {id: 4, published_at: '2024-08-12', state: 'not_answered'}
+          - {id: 5, published_at: '2024-08-12', state: 'published'}
+          - {id: 6, published_at: '2024-08-12', state: 'validating'}
+          - {id: 7, published_at: '2024-08-12', state: 'withdrawn'}
+          - {id: 8, published_at: '2024-08-12', state:  NULL}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, translated_state: 'In Bewertung'}
+        - {id: 2, translated_state: 'Abgelehnt'}
+        - {id: 3, translated_state: 'Akzeptiert'}
+        - {id: 4, translated_state: 'Nicht beantwortet'}
+        - {id: 5, translated_state: 'Veröffentlicht'}
+        - {id: 6, translated_state: 'Technische Validierung'}
+        - {id: 7, translated_state: 'Zurückgezogen'}
+        - {id: 8, translated_state: 'Kein Zustand'}
+
   - name: test_default_address
     description: "Test that the address column correctly defaults to 'Pas d'adresse' if empty"
     model: int_proposals

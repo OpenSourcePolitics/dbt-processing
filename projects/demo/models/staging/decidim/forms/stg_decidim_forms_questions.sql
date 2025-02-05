@@ -6,6 +6,8 @@
     ]
 )}}
 
+{% set lang = var('DBT_LANG', 'fr') %}
+
 WITH source AS (
       SELECT * FROM {{ source('decidim', 'decidim_forms_questions') }}
 ),
@@ -16,7 +18,7 @@ renamed AS (
         position,
         question_type,
         mandatory,
-        body::jsonb->>'fr' AS body,
+        body::jsonb->>'{{ lang }}' AS body,
         description,
         max_choices,
         created_at,

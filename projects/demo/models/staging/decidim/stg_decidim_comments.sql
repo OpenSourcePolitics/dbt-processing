@@ -1,3 +1,5 @@
+{% set lang = var('DBT_LANG', 'fr') %}
+
 WITH source AS (
       SELECT * FROM {{ source('decidim', 'decidim_comments_comments') }}
 ),
@@ -15,7 +17,7 @@ renamed as (
         decidim_root_commentable_type,
         decidim_root_commentable_id,
         decidim_author_type,
-        body::jsonb->>'fr' as body,
+        body::jsonb->>'{{ lang }}' as body,
         comments_count
     FROM source
 )

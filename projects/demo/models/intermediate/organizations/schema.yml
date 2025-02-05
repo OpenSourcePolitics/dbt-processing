@@ -60,6 +60,8 @@ unit_tests:
     overrides:
       env_vars:
         PARTICIPATION_HOST_NAME: "host1.com"
+      vars:
+        DBT_LANG: "fr"
     given:
       - input: ref('stg_decidim_organizations')
         format: dict

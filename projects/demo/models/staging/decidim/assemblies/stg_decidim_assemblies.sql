@@ -1,3 +1,5 @@
+{% set lang = var('DBT_LANG', 'fr') %}
+
 WITH source AS (
       SELECT * FROM {{ source('decidim', 'decidim_assemblies') }}
 ),
@@ -9,8 +11,8 @@ renamed AS (
         decidim_organization_id,
         created_at,
         updated_at,
-        title::jsonb->>'fr' AS title,
-        subtitle::jsonb->>'fr' AS subtitle,
+        title::jsonb->>'{{ lang }}' AS title,
+        subtitle::jsonb->>'{{ lang }}' AS subtitle,
         short_description,
         description,
         hero_image,

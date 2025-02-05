@@ -33,6 +33,9 @@ models:
 unit_tests:
   - name: test_translated_manifest_name
     model: int_components
+    overrides:
+      vars:
+        DBT_LANG: 'fr' 
     given:
       - input: ref('stg_decidim_components')
         format: dict
@@ -48,9 +51,36 @@ unit_tests:
       format: dict
       rows:
         - {id: 1, translated_manifest_name: 'Suivi'}
-        - {id: 2, translated_manifest_name: 'Page'}
+        - {id: 2, translated_manifest_name: 'Pages'}
         - {id: 3, translated_manifest_name: 'Budgets'}
         - {id: 4, translated_manifest_name: 'Rencontres'}
         - {id: 5, translated_manifest_name: 'Propositions'}
+        - {id: 6, translated_manifest_name: 'Enquêtes'}
+        - {id: 7, translated_manifest_name: 'Blogs'}
+  - name: test_translated_manifest_name_multilingual
+    description: "Check if manifest names are correctly translated to Dutch"
+    model: int_components
+    overrides:
+      vars:
+        DBT_LANG: 'nl'  
+    given:
+      - input: ref('stg_decidim_components')
+        format: dict
+        rows:
+          - {id: 1, manifest_name: 'accountability'}
+          - {id: 2, manifest_name: 'pages'}
+          - {id: 3, manifest_name: 'budgets'}
+          - {id: 4, manifest_name: 'meetings'}
+          - {id: 5, manifest_name: 'proposals'}
+          - {id: 6, manifest_name: 'surveys'}
+          - {id: 7, manifest_name: 'blogs'}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, translated_manifest_name: 'Verantwoording'}
+        - {id: 2, translated_manifest_name: 'Pagina'}
+        - {id: 3, translated_manifest_name: 'Budgetten'}
+        - {id: 4, translated_manifest_name: 'Vergaderingen'}
+        - {id: 5, translated_manifest_name: 'Voorstellen'}
         - {id: 6, translated_manifest_name: 'Enquêtes'}
         - {id: 7, translated_manifest_name: 'Blogs'}

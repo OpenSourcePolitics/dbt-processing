@@ -1,11 +1,13 @@
+{% set lang = var('DBT_LANG', 'fr') %}
+
 WITH source AS (
       SELECT * FROM {{ source('decidim', 'decidim_participatory_process_steps') }}
 ),
 renamed AS (
     select
         id,
-        title::jsonb->>'fr' as title,
-        title::jsonb->>'fr' as description,
+        title::jsonb->>'{{ lang }}' as title,
+        title::jsonb->>'{{ lang }}' as description,
         start_date,
         end_date,
         decidim_participatory_process_id,

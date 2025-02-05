@@ -1,0 +1,41 @@
+unit_tests:
+ - name: test_translated_type_of_meeting
+   description: "Check if meeting types are correctly translated"
+   model: int_meetings
+   overrides:
+     vars:
+       DBT_LANG: 'fr'
+   given:
+     - input: ref('stg_decidim_meetings')
+       format: dict
+       rows:
+         - {id: 1, type_of_meeting: 'online'}
+         - {id: 2, type_of_meeting: 'in_person'}
+         - {id: 3, type_of_meeting: 'hybrid'}
+   expect:
+     format: dict
+     rows:
+       - {id: 1, translated_type_of_meeting: 'En ligne'}
+       - {id: 2, translated_type_of_meeting: 'En présentiel'}
+       - {id: 3, translated_type_of_meeting: 'Hybride'}
+ - name: test_translated_type_of_meeting_multilingual
+   description: "Check if meeting types are correctly translated to Dutch"
+   model: int_meetings
+   overrides:
+     vars:
+       DBT_LANG: 'nl'
+   given:
+     - input: ref('stg_decidim_meetings')
+       format: dict
+       rows:
+         - {id: 1, type_of_meeting: 'online'}
+         - {id: 2, type_of_meeting: 'in_person'}
+         - {id: 3, type_of_meeting: 'hybrid'}
+   expect:
+     format: dict
+     rows:
+       - {id: 1, translated_type_of_meeting: 'Online'}
+       - {id: 2, translated_type_of_meeting: 'Fysiek'}
+       - {id: 3, translated_type_of_meeting: 'Hybride'}
+
+ 

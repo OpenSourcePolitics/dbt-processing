@@ -31,9 +31,9 @@ SELECT
         decidim_meetings_meetings.id
     ) AS meeting_url,
     categorizations.categories,
-    coalesce(categorizations.categories[1], 'Sans catégorie') AS first_category,
+    categorizations.first_category,  
     categorizations.sub_categories,
-    coalesce(categorizations.sub_categories[1], 'Sans sous-catégorie') AS first_sub_category
+    categorizations.first_sub_category
 FROM {{ ref("int_meetings")}} AS decidim_meetings_meetings
 JOIN {{ ref("components")}} decidim_components on decidim_components.id = decidim_component_id
 LEFT JOIN categorizations on categorizations.categorizable_id = decidim_meetings_meetings.id

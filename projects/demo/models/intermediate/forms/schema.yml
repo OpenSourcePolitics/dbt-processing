@@ -2,6 +2,9 @@ unit_tests:
   - name: int_forms_answers_author_status_check
     description: "Check that the author status is correctly detected"
     model: int_forms_answers
+    overrides:
+      vars:
+        DBT_LANG: 'fr'  
     given:
       - input: ref('stg_decidim_forms_answers')
         format: dict
@@ -13,10 +16,29 @@ unit_tests:
       rows:
         - {author_status: "Inscrit et connecté"}
         - {author_status: "Non connecté"}
-
+  - name: int_forms_answers_author_status_check_multilingual
+    description: "Check that the author status is correctly detected in Dutch"
+    model: int_forms_answers
+    overrides:
+      vars:
+        DBT_LANG: 'nl'  
+    given:
+      - input: ref('stg_decidim_forms_answers')
+        format: dict
+        rows:
+          - {decidim_user_id: 1}
+          - {decidim_user_id: NULL}
+    expect:
+      format: dict  
+      rows:
+        - {author_status: "Geregistreerd en ingelogd"}  
+        - {author_status: "Uitgelogd"}  
   - name: answers_short_and_long_answer_check
     description: "Check if option and sorting answers are correctly processed in the answers_short_and_long_answer CTE"
     model: answers_short_and_long_answer
+    overrides:
+      vars:
+        DBT_LANG: 'fr' 
     given:
       - input: ref('int_forms_answers')
         format: dict
@@ -37,7 +59,32 @@ unit_tests:
       rows:
         - {answer: 'Answer 1', sub_matrix_question: '', custom_body: '', sorting_position: -1, decidim_questionnaire_id: 101, position: 1}
         - {answer: 'Pas de réponse', sub_matrix_question: '', custom_body: '', sorting_position: -1, decidim_questionnaire_id: 101, position: 2}
-
+  - name: answers_short_and_long_answer_check_multilingual
+    description: "Check if option and sorting answers are correctly processed in German"
+    model: answers_short_and_long_answer
+    overrides:
+      vars:
+        DBT_LANG: 'de'
+    given:
+      - input: ref('int_forms_answers')
+        format: dict
+        rows:
+          - {id: 1, decidim_question_id: 41, body: 'Answer 1'}
+          - {id: 2, decidim_question_id: 42, body: NULL}
+      - input: ref('stg_decidim_forms_questions')
+        format: dict
+        rows:
+          - {id: 41, decidim_questionnaire_id: 101, body: '{"de": "Frage 1"}', position: 1, question_type: 'short_answer'}
+          - {id: 42, decidim_questionnaire_id: 101, body: '{"de": "Frage 2"}', position: 2, question_type: 'long_answer'}
+      - input: ref('forms')
+        format: dict
+        rows:
+          - {id: 101}
+    expect:
+      format: dict
+      rows:
+        - {answer: 'Answer 1', sub_matrix_question: '', custom_body: '', sorting_position: -1, decidim_questionnaire_id: 101, position: 1}
+        - {answer: 'Keine Antwort', sub_matrix_question: '', custom_body: '', sorting_position: -1, decidim_questionnaire_id: 101, position: 2}
   - name: answers_matrix_check
     description: "Check if matrix answers are correctly processed"
     model: answers_matrix
@@ -159,3 +206,5 @@ unit_tests:
       rows:
           - {question_type: 'matrix_multiple'}
           - {question_type: 'matrix_single'}
+  
+  
