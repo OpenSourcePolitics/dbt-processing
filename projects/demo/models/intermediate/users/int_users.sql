@@ -39,7 +39,7 @@ SELECT
     decidim_users.blocked,
     decidim_users.blocked_at,
     decidim_users.date_of_birth,
-    decidim_users.gender,
+    {{ translate_gender('decidim_users.gender') }} AS gender,
     decidim_users.postal_code,
     (CASE WHEN decidim_users.confirmed_at IS NULL THEN false ELSE true END) AS confirmed, 
     (CASE WHEN decidim_users.spam_probability IS NULL THEN false ELSE true END) AS spam, 

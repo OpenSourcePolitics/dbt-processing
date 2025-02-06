@@ -28,6 +28,12 @@ models:
                 where: "spam IS NOT null"  
       - name: spam_reported_at
         description: "When a user has been reported as spam, gives the report date"
+      - name: gender
+        description: "The gender of the user"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['male', 'female', 'other']
 
 unit_tests:
   - name: type_check
@@ -84,3 +90,24 @@ unit_tests:
       rows:
           - {id: 1, spam: "true"}
           - {id: 2, spam: "false"}
+  - name: gender_translation_fr
+    description: "Test that the gender is translated correctly to French."
+    model: int_users
+    overrides:
+      vars:
+        DBT_LANG: 'fr'  
+    given:
+      - input: ref('stg_decidim_users')
+        format: dict
+        rows:
+          - {id: 1,type: 'Decidim::User', gender: 'male'}
+          - {id: 2,type: 'Decidim::User', gender: 'female'}
+          - {id: 3,type: 'Decidim::User', gender: 'other'}
+          - {id: 4,type: 'Decidim::User', gender: null}  
+    expect:
+        format: dict
+        rows:
+          - {id: 1, gender: 'Homme'}
+          - {id: 2, gender: 'Femme'}
+          - {id: 3, gender: 'Autre'}
+          - {id: 4, gender: 'Inconnu'}  
