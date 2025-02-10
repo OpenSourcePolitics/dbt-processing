@@ -100,7 +100,12 @@ SELECT
     decidim_users.spam,
     decidim_users.spam_probability,
     decidim_users.spam_reported_at,
-    decidim_users.extended_data
+    decidim_users.extended_data,
+    decidim_users.date_of_birth,
+    decidim_users.age_category,
+    decidim_users.gender,
+    decidim_users.postal_code,
+    decidim_users.half_signup
 FROM {{ ref("int_users") }} AS decidim_users
 LEFT JOIN followings ON followings.decidim_user_id = decidim_users.id
 LEFT JOIN endorsements ON endorsements.decidim_author_id = decidim_users.id

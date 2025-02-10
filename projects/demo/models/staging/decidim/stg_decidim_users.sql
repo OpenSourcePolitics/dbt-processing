@@ -36,9 +36,12 @@ renamed AS (
         blocked,
         blocked_at,
         (extended_data::jsonb->'spam_detection'->>'spam_probability')::float as spam_probability,
-	    extended_data::jsonb->'spam_detection'->> 'reported_at' as spam_report_timestamp,	
+	    extended_data::jsonb->'spam_detection'->> 'reported_at' as spam_report_timestamp,
+        NULLIF(extended_data::jsonb->>'date_of_birth', '') AS date_of_birth,
+        NULLIF(extended_data::jsonb->>'gender', '') AS gender,
+        NULLIF(extended_data::jsonb->>'postal_code', '') AS postal_code,
+        NULLIF(extended_data::jsonb->>'half_signup', '') AS half_signup,
         extended_data
-        
     FROM source
 )
 SELECT * FROM renamed

@@ -33,7 +33,12 @@ SELECT
     decidim_users.blocked,
     decidim_users.blocked_at,
     decidim_users.confirmed,
-    decidim_users.extended_data
+    decidim_users.extended_data,
+    decidim_users.date_of_birth,
+    decidim_users.age_category,
+    decidim_users.gender,
+    decidim_users.postal_code,
+    decidim_users.half_signup
     FROM {{ ref('all_users') }} AS decidim_users
 WHERE deleted_at IS NULL
 AND decidim_users.blocked != true

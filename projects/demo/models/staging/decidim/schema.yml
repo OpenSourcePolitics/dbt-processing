@@ -47,6 +47,19 @@ unit_tests:
       format: dict
       rows:
           - {id: 1, spam_probability: 0.99, spam_report_timestamp: "2024-10-11T07:16:38.010+02:00"}
+  
+  - name: testing_date_out_of_range
+    description: "Checks that age is undefined if field value out of range"
+    model: int_users
+    given:
+      - input: ref('stg_decidim_users')
+        format: dict
+        rows:
+          - {id: 1, extended_data: '{"date_of_birth": "0000-11-06"}', type: 'Decidim::User'}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, date_of_birth: null, age: null, age_category: "Âge non défini"}
 
 
 
