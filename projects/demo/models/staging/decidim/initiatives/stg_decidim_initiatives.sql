@@ -63,5 +63,5 @@
         CAST(NULL AS INTEGER) AS decidim_area_id,
         CAST(NULL AS INTEGER) AS comments_count,
         CAST(NULL AS INTEGER) AS follows_count
-    LIMIT 0;
+    LIMIT 0
 {% endif %}
