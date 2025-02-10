@@ -35,6 +35,7 @@ SELECT
     decidim_users.confirmed,
     decidim_users.extended_data,
     decidim_users.date_of_birth,
+    decidim_users.age_category,
     decidim_users.gender,
     decidim_users.postal_code,
     decidim_users.half_signup

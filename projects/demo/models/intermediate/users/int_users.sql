@@ -48,7 +48,7 @@ WITH users_with_age AS (
         DATE(decidim_users.spam_report_timestamp) AS spam_reported_at,
         (CASE WHEN decidim_users.half_signup IS NULL THEN false ELSE true END) AS half_signup,
         decidim_users.extended_data,
-        EXTRACT(YEAR FROM AGE({{ dbt_date.today() }}, DATE(decidim_users.date_of_birth))) AS age
+        (CASE WHEN date_of_birth > '1900-01-01' THEN EXTRACT(YEAR FROM AGE({{ dbt_date.today() }}, DATE(decidim_users.date_of_birth))) ELSE NULL END) AS age
     FROM {{ ref("stg_decidim_users") }} as decidim_users
     WHERE type LIKE 'Decidim::User'
 )
