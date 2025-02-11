@@ -5,20 +5,14 @@
 ) %}
 
 {% if relation is not none %}
-    WITH source AS (
-        SELECT * FROM {{ source('decidim', 'decidim_initiatives_type_scopes') }}
-    ),
-    renamed AS (
-        SELECT
-            id,
-            decidim_initiatives_types_id,
-            decidim_scopes_id,
-            supports_required,
-            created_at,
-            updated_at
-        FROM source
-    )
-    SELECT * FROM renamed
+    SELECT
+        id,
+        decidim_initiatives_types_id,
+        decidim_scopes_id,
+        supports_required,
+        created_at,
+        updated_at
+    FROM {{ source('decidim', 'decidim_initiatives_type_scopes') }}
 {% else %}
     SELECT
         CAST(NULL AS INTEGER) AS id,
