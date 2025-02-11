@@ -58,8 +58,8 @@
         CAST(NULL AS TIMESTAMP) AS second_progress_notification_at,
         CAST(NULL AS TEXT) AS decidim_author_type,
         CAST(NULL AS TEXT) AS reference,
-        CAST(NULL AS INTEGER) AS online_votes,
-        CAST(NULL AS INTEGER) AS offline_votes,
+        CAST(NULL AS TEXT) AS online_votes,
+        CAST(NULL AS TEXT) AS offline_votes,
         CAST(NULL AS INTEGER) AS decidim_area_id,
         CAST(NULL AS INTEGER) AS comments_count,
         CAST(NULL AS INTEGER) AS follows_count
