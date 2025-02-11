@@ -42,7 +42,7 @@
         CAST(NULL AS INTEGER) AS decidim_organization_id,
         CAST(NULL AS INTEGER) AS decidim_author_id,
         CAST(NULL AS TIMESTAMP) AS published_at,
-        CAST(NULL AS TEXT) AS state,
+        CAST(NULL AS INTEGER) AS state,
         CAST(NULL AS TEXT) AS signature_type,
         CAST(NULL AS TIMESTAMP) AS signature_start_date,
         CAST(NULL AS TIMESTAMP) AS signature_end_date,
