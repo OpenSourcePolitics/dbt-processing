@@ -35,3 +35,5 @@
         CAST(NULL AS INTEGER) AS decidim_scope_id
     LIMIT 0
 {% endif %}
+
+  
