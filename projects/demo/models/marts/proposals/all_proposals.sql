@@ -38,7 +38,7 @@ proposals AS (
         decidim_proposals.created_at,
         decidim_proposals.published_at,
         decidim_proposals.state,
-        decidim_proposals.translated_state,
+        COALESCE(decidim_proposals_proposal_states.title, decidim_proposals.translated_state) AS translated_state,
         coauthorships.authors_ids,
         COALESCE(coauthorships.authors_ids[1], -1) AS first_author_id,
         decidim_proposals.address,
