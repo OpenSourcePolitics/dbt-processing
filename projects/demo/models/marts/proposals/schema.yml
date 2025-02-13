@@ -85,6 +85,10 @@ unit_tests:
         format: dict
         rows:
           - {}
+      - input: ref('stg_decidim_proposals_custom_states')
+        format: dict
+        rows:
+          - {}
       - input: ref('int_proposals')
         format: dict
         rows:
@@ -123,6 +127,10 @@ unit_tests:
         rows:
           - {}
       - input: ref('stg_decidim_proposals_votes')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_proposals_custom_states')
         format: dict
         rows:
           - {}
@@ -167,6 +175,10 @@ unit_tests:
         format: dict
         rows:
           - {}
+      - input: ref('stg_decidim_proposals_custom_states')
+        format: dict
+        rows:
+          - {}
       - input: ref('int_proposals')
         format: dict
         rows:
@@ -205,6 +217,10 @@ unit_tests:
         rows:
           - {}
       - input: ref('stg_decidim_proposals_votes')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_proposals_custom_states')
         format: dict
         rows:
           - {}
