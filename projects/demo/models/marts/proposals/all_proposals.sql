@@ -1,4 +1,3 @@
-
 {{ config(
     indexes=[
       {'columns': ['id'], 'type': 'btree'},
@@ -49,7 +48,11 @@ proposals AS (
         {{ categorization_first_sub_category('categorizations.sub_categories[1]') }},
         decidim_proposals.comments_count,
         decidim_proposals.endorsements_count,
-        COALESCE(votes.votes_count,0) AS votes_count
+        COALESCE(votes.votes_count,0) AS votes_count,
+        decidim_proposals_proposal_states.id AS custom_state_id, 
+        decidim_proposals_proposal_states.title AS custom_state,
+        decidim_proposals_proposal_states.description,
+        decidim_proposals_proposal_states.proposals_count
     FROM {{ ref("int_proposals")}} AS decidim_proposals
     JOIN {{ ref("components")}} AS decidim_components ON decidim_components.id = decidim_component_id
     LEFT JOIN coauthorships ON decidim_proposals.id = coauthorships.coauthorable_id
@@ -59,6 +62,7 @@ proposals AS (
     LEFT JOIN {{ ref("int_scopes")}} AS decidim_scopes ON decidim_scopes.id = decidim_proposals.decidim_scope_id
     LEFT JOIN votes ON decidim_proposals.id = votes.decidim_proposal_id
     LEFT JOIN categorizations ON categorizations.categorizable_id = decidim_proposals.id
+    LEFT JOIN {{ ref("stg_decidim_proposals_custom_states")}} AS decidim_proposals_proposal_states ON decidim_proposals_proposal_states.id = decidim_proposals.decidim_proposals_proposal_state_id
     WHERE decidim_moderations.hidden_at IS NULL
     AND decidim_proposals.published_at IS NOT NULL
     -- AND (decidim_proposals.state NOT LIKE '%withdrawn' OR decidim_proposals.state IS NULL)

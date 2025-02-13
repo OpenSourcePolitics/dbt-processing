@@ -33,6 +33,8 @@ sources:
       - name: decidim_meetings_registrations
       - name: decidim_user_moderations
       - name: decidim_user_reports
+      - name: decidim_proposals_proposal_states
+
 
 unit_tests:
   - name: extended_data_parsing_check
