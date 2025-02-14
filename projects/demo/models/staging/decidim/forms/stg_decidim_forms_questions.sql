@@ -8,23 +8,20 @@
 
 {% set lang = var('DBT_LANG', 'fr') %}
 
-WITH source AS (
-      SELECT * FROM {{ source('decidim', 'decidim_forms_questions') }}
-),
-renamed AS (
-    SELECT
-        id,
-        decidim_questionnaire_id,
-        position,
-        question_type,
-        mandatory,
-        body::jsonb->>'{{ lang }}' AS body,
-        description,
-        max_choices,
-        created_at,
-        updated_at,
-        max_characters
-    FROM source
-)
-SELECT * FROM renamed
-  
+SELECT
+    id,
+    decidim_questionnaire_id,
+    position,
+    question_type,
+    mandatory,
+    body::jsonb->>'{{ lang }}' AS body,
+    description,
+    max_choices,
+    created_at,
+    updated_at,
+    max_characters,
+    {{ get_column_if_exists(source('decidim', 'decidim_forms_questions'), 'answer_options_count', 'INTEGER') }},
+    {{ get_column_if_exists(source('decidim', 'decidim_forms_questions'), 'matrix_rows_count', 'INTEGER') }},
+    {{ get_column_if_exists(source('decidim', 'decidim_forms_questions'), 'display_conditions_count', 'INTEGER') }},
+    {{ get_column_if_exists(source('decidim', 'decidim_forms_questions'), 'display_conditions_for_other_questions_count', 'INTEGER') }}
+FROM {{ source('decidim', 'decidim_forms_questions') }}  
