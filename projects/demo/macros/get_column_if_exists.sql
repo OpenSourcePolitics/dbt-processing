@@ -5,8 +5,6 @@
   {% else %}
     {% if cast_type %}
       CAST({{ default_value }} AS {{ cast_type }}) AS {{ column_name }}
-    {% else %}
-      {{ default_value }} AS {{ column_name }}
     {% endif %}
   {% endif %}
 {% endmacro %}
