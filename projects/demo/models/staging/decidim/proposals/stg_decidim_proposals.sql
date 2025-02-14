@@ -12,6 +12,7 @@ SELECT
     {{ get_column_if_exists(source('decidim', 'decidim_proposals_proposals'), 'withdrawn_at', 'TIMESTAMP') }},
     {{ get_column_if_exists(source('decidim', 'decidim_proposals_proposals'), 'valuation_assignments_count', 'INTEGER') }},
     state,
+    {{ get_column_if_exists(source('decidim', 'decidim_proposals_proposals'), 'decidim_proposals_proposal_state_id', 'INTEGER') }},
     comments_count,
     endorsements_count,
     address
