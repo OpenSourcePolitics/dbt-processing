@@ -12,6 +12,6 @@ SELECT
     state,
     comments_count,
     endorsements_count,
-    address
+    address,
+    {{ get_column_if_exists(source('decidim', 'decidim_proposals_proposals'), 'decidim_proposals_proposal_state_id', 'INTEGER') }}
 FROM {{ source('decidim', 'decidim_proposals_proposals') }}
-

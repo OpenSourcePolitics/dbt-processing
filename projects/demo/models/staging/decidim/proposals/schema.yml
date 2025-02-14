@@ -11,3 +11,17 @@ unit_tests:
       format: dict
       rows:
           - {resource_type: 'Decidim::Proposals::Proposal'}
+  
+  - name: custom_state_id_presence 
+    description: "Checks that the custom state proposal id is returned properly"
+    model: stg_decidim_proposals
+    given:
+      - input: source('decidim', 'decidim_proposals_proposals')
+        format: dict
+        rows:
+          - {id: 1}
+    expect:
+      format: dict
+      rows:
+          - {id: 1, decidim_proposals_proposal_state_id : NULL}
+         
