@@ -8,6 +8,5 @@ SELECT
     created_at,
     decidim_author_id,
     {{ get_column_if_exists(source('decidim', 'decidim_blogs_posts'), 'published_at', 'TIMESTAMP') }},
-    {{ get_column_if_exists(source('decidim', 'decidim_blogs_posts'), 'datetime', 'TIMESTAMP') }},
     'Decidim::Blogs::Post' AS resource_type
 FROM {{ source('decidim', 'decidim_blogs_posts') }} 
