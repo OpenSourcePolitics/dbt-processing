@@ -159,6 +159,52 @@ unit_tests:
       format: dict
       rows:
         - {id: 44}
+  - name: custom_state_retrieval
+    description: "Check if the translated state is set to the custom state if the latter exists"
+    model: proposals
+    given:
+      - input: ref('int_users')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_coauthorships')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_proposals_votes')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_proposals_custom_states')
+        format: dict
+        rows:
+          - {id: 423, title: "Illicite"}
+      - input: ref('int_proposals')
+        format: dict
+        rows:
+          - {id: 43, decidim_proposals_proposal_state_id: 423, translated_state: "Publiée", published_at: '2023-01-03', decidim_component_id: 100}
+          - {id: 44, decidim_proposals_proposal_state_id: NULL, translated_state: "Publiée", published_at: '2023-01-03', decidim_component_id: 100}
+      - input: ref('components')
+        format: dict
+        rows:
+          - {id: 100}
+      - input: ref('stg_decidim_moderations')
+        format: dict
+        rows:
+          - {}
+      - input: ref('int_scopes')
+        format: dict
+        rows:
+          - {}
+      - input: ref('categorizations')
+        format: dict
+        rows:
+          - {}
+    expect:
+      format: dict
+      rows:
+        - {id: 43, translated_state: "Illicite"}
+        - {id: 44, translated_state: "Publiée"}
   - name: conflict_on_decidim_reportable_type_check
     description: "Check if there is no conflict in moderation table on id if there is a decidim_reportable_type that is not a proposal and has the same id"
     model: proposals
