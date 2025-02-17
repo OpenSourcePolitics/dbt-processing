@@ -6,7 +6,7 @@
                 decidim_proposals_proposals.created_at AS participation_date
             FROM {{ ref("proposals")}} AS decidim_proposals_proposals
                 JOIN decidim_coauthorships on decidim_coauthorships.coauthorable_id = decidim_proposals_proposals.id
-                JOIN decidim_users on decidim_users.id = decidim_coauthorships.decidim_author_id
+                JOIN {{ ref("users")}} AS decidim_users on decidim_users.id = decidim_coauthorships.decidim_author_id
             where coauthorable_type = 'Decidim::Proposals::Proposal'
     ), participations_endorsements as (
             SELECT decidim_users.id,
@@ -15,7 +15,7 @@
                 decidim_endorsements.id::text as "participation_id", 
                 decidim_endorsements.created_at as participation_date
             FROM {{ ref("endorsements")}} as decidim_endorsements
-                JOIN decidim_users on decidim_users.id = decidim_endorsements.decidim_author_id
+                JOIN {{ ref("users")}} AS decidim_users on decidim_users.id = decidim_endorsements.decidim_author_id
     ), participations_comments as (
             SELECT decidim_users.id,
                 decidim_component_id,
@@ -23,7 +23,7 @@
                 decidim_comments_comments.id::text as "participation_id",
                 decidim_comments_comments.created_at as contribution_date
             FROM {{ ref("comments")}} decidim_comments_comments
-                JOIN decidim_users on decidim_users.id = decidim_comments_comments.decidim_author_id
+                JOIN {{ ref("users")}} AS decidim_users on decidim_users.id = decidim_comments_comments.decidim_author_id
     ), participations_proposal_votes as (
             SELECT decidim_users.id,
                 decidim_proposals_proposals.decidim_component_id,
@@ -31,7 +31,7 @@
                 decidim_proposals_proposal_votes.id::text as "participation_id",
                 decidim_proposals_proposal_votes.created_at as participation_date
             FROM {{ ref("proposals_votes")}} as decidim_proposals_proposal_votes
-                JOIN decidim_users on decidim_users.id = decidim_author_id
+                JOIN {{ ref("users")}} AS decidim_users on decidim_users.id = decidim_author_id
                 JOIN {{ ref("proposals")}} as decidim_proposals_proposals on decidim_proposals_proposal_votes.decidim_proposal_id = decidim_proposals_proposals.id
     ), participations_answers as (
             SELECT distinct
