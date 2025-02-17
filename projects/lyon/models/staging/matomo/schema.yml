@@ -6,4 +6,3 @@ sources:
     schema: matomo
     tables:
       - name : downloads
-      - name : hourly_visits

@@ -8,7 +8,7 @@ SELECT
     sum_visit_length,
     bounce_count,
     nb_visits_converted,
-    VisitTime_LocalTime,
+    visittime_localtime,
     segment,
     date
 FROM {{ source('matomo', 'hourly_visits') }}
