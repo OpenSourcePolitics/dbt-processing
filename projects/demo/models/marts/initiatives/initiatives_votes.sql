@@ -1,7 +1,7 @@
     SELECT
         decidim_initiatives_votes.id,
         decidim_initiative_id,
-        decidim_initiatives_votes.decidim_author_id,
+        decidim_initiatives_votes.user_id,
         decidim_initiatives_votes.created_at,
         hash_id, 
         decidim_scope_id,
