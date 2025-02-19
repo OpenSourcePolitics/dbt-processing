@@ -89,5 +89,10 @@ sources:
       - name: page_titles
       - name : users_city
       - name : hourly_visits
+      - name : campaign_mediums
+      - name : campaign_names
+      - name : campaign_source_medium
+      - name : campaign_sources
+
 
 
