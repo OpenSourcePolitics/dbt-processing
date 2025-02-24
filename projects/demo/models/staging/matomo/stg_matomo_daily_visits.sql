@@ -32,7 +32,7 @@ FROM {{ source('matomo', 'daily_visits') }}
 		CAST(NULL AS INTEGER) AS sum_visit_length,
 		CAST(NULL AS INTEGER) AS bounce_count,
 		CAST(NULL AS INTEGER) AS nb_visits_converted,
-		CAST(NULL AS TIMESTAMP) AS date,
+		CAST(NULL AS TIMESTAMP) AS date
     LIMIT 0
 {% endif %}
 
