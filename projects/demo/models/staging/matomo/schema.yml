@@ -82,13 +82,14 @@ sources:
     database: "{{ env_var('DBNAME') }}"
     schema: matomo
     tables:
-      - name: pages
-      - name: visits
-      - name: referrers
-      - name: device_type
-      - name: page_titles
+      - name : pages
+      - name : visits
+      - name : referrers
+      - name : device_type
+      - name : page_titles
       - name : users_city
       - name : hourly_visits
+      - name : daily_visits
       - name : campaign_mediums
       - name : campaign_names
       - name : campaign_source_medium

@@ -1,5 +1,3 @@
-{% set lang = var('DBT_LANG', 'fr') %}
-
 {% set relation = adapter.get_relation(
     database=target.database,
     schema='matomo',
@@ -7,19 +5,19 @@
 ) %}
 
 {% if relation is not none %}
-SELECT
-    label,
-    nb_uniq_visitors,
-    nb_visits,
-    day_of_week,
-    visittime_dayoftheweek,
-    nb_actions,
-    nb_users,
-    sum_visit_length,
-    bounce_count,
-    nb_visits_converted,
-    date
-FROM {{ source('matomo', 'daily_visits') }}
+    SELECT
+        label,
+        nb_uniq_visitors,
+        nb_visits,
+        day_of_week,
+        visittime_dayoftheweek,
+        nb_actions,
+        nb_users,
+        sum_visit_length,
+        bounce_count,
+        nb_visits_converted,
+        date
+    FROM {{ source('matomo', 'daily_visits') }}
 {% else %}
     SELECT
     	CAST(NULL AS TEXT) AS label,
