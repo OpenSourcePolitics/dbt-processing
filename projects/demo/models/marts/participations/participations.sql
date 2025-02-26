@@ -5,7 +5,7 @@
                 decidim_proposals_proposals.id::text AS "participation_id",
                 decidim_proposals_proposals.created_at AS participation_date
             FROM {{ ref("proposals")}} AS decidim_proposals_proposals
-                JOIN {{ ref("users")}} AS decidim_users on decidim_users.id = decidim_proposals_proposals.first_author_id
+                JOIN {{ ref("users")}} AS decidim_users ON decidim_users.id = decidim_proposals_proposals.first_author_id
     ), participations_endorsements as (
             SELECT decidim_users.id,
                 decidim_endorsements.decidim_component_id,
