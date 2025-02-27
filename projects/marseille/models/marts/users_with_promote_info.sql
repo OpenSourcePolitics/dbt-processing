@@ -5,7 +5,7 @@ WITH promote_actions AS (
         decidim_action_logs.id AS log_id,
         action
     FROM {{ ref('stg_decidim_action_logs') }} AS decidim_action_logs
-    LEFT JOIN {{ ref('all_users') }} AS users ON users.id = decidim_action_logs.resource_id
+    LEFT JOIN {{ ref('users') }} AS users ON users.id = decidim_action_logs.resource_id
         WHERE resource_type = 'Decidim::User'
         AND action = 'promote'
 )
@@ -18,5 +18,5 @@ SELECT
         WHEN promote_actions.action IS NULL AND users.managed = false THEN 'Utilisateur non représenté'
         ELSE 'Non proposée'
     END) AS promotion_status
-FROM {{ ref('all_users') }} AS users
+FROM {{ ref('users') }} AS users
 LEFT JOIN promote_actions ON users.id = promote_actions.user_id

@@ -124,7 +124,23 @@ unit_tests:
     expect:
       format: dict
       rows:
-          - {id: 2} 
+          - {id: 2}
+  - name: managed_and_confirmed_users_check
+    description: "Check that only managed users are retrieved among unconfirmed users"
+    model: users
+    given:
+      - input: ref('all_users')
+        format: dict
+        rows:
+          - {id: 1, deleted_at: NULL, blocked: false, admin: false, managed: false, confirmed: true}
+          - {id: 2, deleted_at: NULL, blocked: false, admin: false, managed: true, confirmed: false}
+          - {id: 3, deleted_at: NULL, blocked: false, admin: false, managed: false, confirmed: false}
+    expect:
+      format: dict
+      rows:
+          - {id: 1} 
+          - {id: 2}
+
 #  - name: test_url_concatenation
 #    description: "Check URL concatenation logic"
 #    model: all_users
