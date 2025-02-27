@@ -51,4 +51,4 @@ SELECT
 WHERE deleted_at IS NULL
 AND decidim_users.blocked != true
 AND decidim_users.admin != true
-AND decidim_users.confirmed = true
+AND (decidim_users.confirmed = true OR decidim_users.managed = true)
