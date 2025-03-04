@@ -1,3 +1,33 @@
+version: 2
+
+models:
+  - name: categorizations
+    schema: "{{ env_var('TARGET_SCHEMA') }}"
+    description: "Categories and subcategories related to categorizations on the platform"
+    columns:
+      - name: id
+        description: "The unique identifier for a categorization"
+        constraints:
+          - type: not_null
+          - type: unique
+          - type: primary_key
+      - name: category_name
+        description: "The name of the category"
+      - name: child_id
+        description: "The ID of the child category (if applicable)"
+      - name: child_name
+        description: "The name of the child category (if applicable)"
+      - name: categorizable_id
+        description: "The ID of the resource being categorized (could be proposal or budget)"
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            expression: "{{ target.schema }}.decidim_proposals (id)"
+          - type: not_null
+          - type: foreign_key
+            expression: "{{ target.schema }}.decidim_budgets (id)"
+      - name: categorizable_type
+        description: "The type of resource being categorized (could be proposal or budget)"
 unit_tests:
   - name: testing_that_main_categories_are_properly_processed
     description: "Checks that main categories has the correct infos "

@@ -3,12 +3,26 @@ version: 2
 models:
   - name: components
     description: "Model representing the components associated with participatory spaces in Decidim."
+
+    # model-level constraints
+    constraints:
+      - type: primary_key
+        columns: [ id ]
+      - type: foreign_key # multi_column
+        columns: [ decidim_organization_id ]
+        to: ref('organizations')
+        to_columns: [ id ]
+
     columns:
       - name: id
         description: "Unique identifier for the component."
         data_tests:
           - not_null
           - unique
+        constraints:
+          - type: not_null
+          - type: unique
+          - type: primary_key
       - name: manifest_name
         description: "Name of the component's manifest file. The manifest defines the component's configuration and metadata."
         data_tests:
@@ -25,6 +39,11 @@ models:
         description: "URL for accessing the component."
       - name: ps_id
         description: "Identifier of the associated participatory space."
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_participatory_processes')
+            to_columns: [ id ]
       - name: ps_published_at
         description: "Publication date of the participatory space."
       - name: ps_title
@@ -41,8 +60,11 @@ models:
         description: "URL of the participatory space."
       - name: decidim_organization_id
         description: "Identifier of the Decidim organization."
-        data_tests:
-          - not_null
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('organizations')
+            to_columns: [ id ]
       - name: organization_host
         description: "Host of the Decidim organization."
 
