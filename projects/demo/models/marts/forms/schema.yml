@@ -3,16 +3,6 @@ version: 2
 models:
   - name: form_answers
     description: "Table gathering all types of answers (short, long, optional, sorting, matrix, and file answers) submitted to forms."
-    # Model-level constraints
-    constraints:
-      - type: primary_key
-        columns: [decidim_user_id]
-      - type: foreign_key
-        columns: [decidim_questionnaire_id]
-        expression: "{{ target.schema }}.forms (id)"
-      - type: foreign_key
-        columns: [decidim_component_id]
-        expression: "{{ target.schema }}.components (id)"
     columns:
       - name: decidim_user_id
         description: "The ID of the user who submitted the answer"

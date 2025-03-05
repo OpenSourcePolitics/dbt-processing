@@ -3,16 +3,6 @@ version: 2
 models:
   - name: components
     description: "Model representing the components associated with participatory spaces in Decidim."
-    # model-level constraints
-    constraints:
-      - type: primary_key
-        columns: [id]
-      - type: foreign_key
-        columns: [ps_id]
-        expression: "{{ target.schema }}.participatory_spaces (id)"
-      - type: foreign_key
-        columns: [decidim_organization_id]
-        expression: "{{ target.schema }}.decidim_organizations (id)"
     columns:
       - name: id
         description: "Unique identifier for the component."

@@ -2,19 +2,6 @@ models:
   - name: meetings
     schema: "{{ env_var('TARGET_SCHEMA') }}"
     description: "Every meeting published on the platform"
-    # model-level constraints
-    constraints:
-      - type: primary_key
-        columns: [id]
-      - type: foreign_key
-        columns: [decidim_component_id]
-        expression: "{{ target.schema }}.components (id)"
-      - type: foreign_key
-        columns: [decidim_scope_id]
-        expression: "{{ target.schema }}.decidim_scopes (id)"
-      - type: foreign_key
-        columns: [decidim_author_id]
-        expression: "{{ target.schema }}.decidim_users (id)"
     columns:
       - name: id
         description: "The unique identifier for a meeting"
