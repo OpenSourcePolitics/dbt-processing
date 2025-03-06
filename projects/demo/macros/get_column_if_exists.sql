@@ -3,9 +3,7 @@
   {% if column_name in columns | map(attribute="name") %}
     {{ column_name }}
   {% else %}
-    {% if cast_type %}
-      CAST({{ default_value }} AS {{ cast_type }}) AS {{ column_name }}
-    {% endif %}
+    CAST({{ default_value }} AS {{ cast_type }}) AS {{ column_name }}
   {% endif %}
 {% endmacro %}
 
