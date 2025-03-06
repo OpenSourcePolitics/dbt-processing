@@ -6,19 +6,18 @@
 
 {% if relation is not none %}
     SELECT
-        label,     
-        nb_uniq_visitors,
+        label,
+        nb_users,
         nb_visits,
         nb_actions,
-        nb_users,
         max_actions,
-        sum_visit_length,
         bounce_count,
-        nb_visits_converted,
-        campaign_name,
-        date,
+        campaign_medium,
         campaign_source,
-        campaign_medium
+        nb_uniq_visitors,
+        sum_visit_length,
+        nb_visits_converted,
+        date
     FROM {{ source('matomo', 'campaign_source_medium') }}
 {% else %}
     SELECT
@@ -31,7 +30,6 @@
         CAST(NULL AS INTEGER) AS sum_visit_length,
         CAST(NULL AS INTEGER) AS bounce_count,
         CAST(NULL AS INTEGER) AS nb_visits_converted,
-        CAST(NULL AS TEXT) AS campaign_name,
         CAST(NULL AS TIMESTAMP) AS date,
         CAST(NULL AS TEXT) AS campaign_source,
         CAST(NULL AS TEXT) AS campaign_medium
