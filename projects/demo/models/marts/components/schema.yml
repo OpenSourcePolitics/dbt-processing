@@ -9,6 +9,10 @@ models:
         data_tests:
           - not_null
           - unique
+        constraints:
+          - type: not_null
+          - type: unique
+          - type: primary_key
       - name: manifest_name
         description: "Name of the component's manifest file. The manifest defines the component's configuration and metadata."
         data_tests:
@@ -25,6 +29,10 @@ models:
         description: "URL for accessing the component."
       - name: ps_id
         description: "Identifier of the associated participatory space."
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            expression: "{{ target.schema }}.participatory_spaces (id)"
       - name: ps_published_at
         description: "Publication date of the participatory space."
       - name: ps_title
@@ -43,6 +51,11 @@ models:
         description: "Identifier of the Decidim organization."
         data_tests:
           - not_null
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            expression: "{{ target.schema }}.decidim_organizations (id)"
+
       - name: organization_host
         description: "Host of the Decidim organization."
 

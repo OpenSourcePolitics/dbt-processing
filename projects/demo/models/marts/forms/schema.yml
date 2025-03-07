@@ -1,8 +1,44 @@
 version: 2
 
 models:
-  - name: forms_answers
-    description: "Table gathering all types of answers (long, short, optional, sorting and matrix). "
+  - name: form_answers
+    description: "Table gathering all types of answers (short, long, optional, sorting, matrix, and file answers) submitted to forms."
     columns:
+      - name: decidim_user_id
+        description: "The ID of the user who submitted the answer"
+        constraints:
+          - type: not_null
+          - type: unique
+          - type: primary_key
+      - name: session_token
+        description: "Session token for tracking the user's session"
+      - name: position
+        description: "The position of the answer in the form"
+      - name: decidim_questionnaire_id
+        description: "The ID of the form/questionnaire to which this answer belongs"
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            expression: "{{ target.schema }}.forms (id)"
+      - name: ip_hash
+        description: "IP hash for tracking the user's IP address"
+      - name: question_type
+        description: "The type of the question (e.g., short, long, matrix)"
+      - name: question_title
+        description: "The title of the question being answered"
+      - name: answer
+        description: "The answer given by the user"
+      - name: sub_matrix_question
+        description: "The question for a sub-matrix (if applicable)"
+      - name: custom_body
+        description: "Custom text associated with the answer (if applicable)"
+      - name: sorting_position
+        description: "The sorting position of the answer (sorting-type questions only)"
+      - name: form_title
+        description: "The title of the form/questionnaire"
       - name: sorting_points
-        description: "In order to evaluate the weight of the sorting answers, points are given to the answer according to its sorting position."
+        description: "Calculated sorting points based on the sorting position"
+      - name: created_at
+        description: "Timestamp of when the answer was created"
+      - name: author_status
+        description: "Status of the author "

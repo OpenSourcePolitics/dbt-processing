@@ -10,8 +10,15 @@ models:
         tests:
           - unique
           - not_null
+        constraints:
+          - type: unique
+          - type: not_null
       - name: decidim_participatory_space_id
         description: "Identifier for the participatory space where the proposal was created"
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            expression: "{{ target.schema }}.participatory_spaces (id)"  # Foreign key reference to participatory_spaces table
       - name: decidim_participatory_space_slug
         description: "Slug for the participatory space where the proposal was created"
       - name: decidim_scope_name
@@ -26,6 +33,10 @@ models:
         description: "URL link to the proposal on the Decidim platform"
       - name: decidim_component_id
         description: "Identifier for the component within which the proposal was created"
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            expression: "{{ target.schema }}.components (id)"  # Foreign key reference to components table
       - name: created_at
         description: "Timestamp when the proposal was created"
       - name: published_at
@@ -38,6 +49,10 @@ models:
         description: "Array of IDs of the authors of the proposal"
       - name: first_author_id
         description: "ID of the first author of the proposal"
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            expression: "{{ target.schema }}.users (id)"  # Foreign key reference to users table
       - name: address
         description: "Address related to the proposal, if any"
       - name: categories
