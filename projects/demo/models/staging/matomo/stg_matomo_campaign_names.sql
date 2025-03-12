@@ -16,7 +16,6 @@
         bounce_count,
         nb_visits_converted,
         campaign_name,
-        campaign_content,
         segment,
         date
     FROM {{ source('matomo', 'campaign_names') }}
