@@ -61,7 +61,6 @@ models:
       - name: decidim_organization_id
         description: "Identifier of the Decidim organization."
         constraints:
-          - type: not_null
           - type: foreign_key
             to: ref('organizations')
             to_columns: [ id ]
