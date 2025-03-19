@@ -113,3 +113,46 @@ unit_tests:
       rows:
         - {sub_type: 'Inconnu'}
         - {sub_type: 'Unknown'}
+
+  - name: test_translate_label_en
+    description: "Check that the device label is correctly translated to English"
+    model: int_matomo_device_type
+    overrides:
+      vars:
+        DBT_LANG: 'en'
+    given:
+      - input: ref('stg_matomo_device_type')
+        format: dict
+        rows:
+          - {label: 'Téléphone intelligent (smartphone)'}
+          - {label: 'Bureau'}
+          - {label: 'Phablette'}
+          - {label: 'Tablette'}
+          - {label: 'Lecteur de medias portable'}
+          - {label: 'TV'}
+          - {label: 'Affichage intelligent'}
+          - {label: 'Caméra'}
+          - {label: 'Console'}
+          - {label: 'Fonctionnalité téléphone'}
+          - {label: 'Haut-parleur intelligent'}
+          - {label: 'Navigateur de voiture'}
+          - {label: 'Périphérique'}
+          - {label: 'Portable'}
+    expect:
+      format: dict
+      rows:
+          - {label: 'Smartphone'}
+          - {label: 'Desktop'}
+          - {label: 'Phablet'}
+          - {label: 'Tablet'}
+          - {label: 'Portable media player'}
+          - {label: 'Tv'}
+          - {label: 'Smart display'}
+          - {label: 'Camera'}
+          - {label: 'Console'}
+          - {label: 'Feature phone'}
+          - {label: 'Smart speaker'}
+          - {label: 'Car browser'}
+          - {label: 'Peripheral'}
+          - {label: 'Wearable'}
+
