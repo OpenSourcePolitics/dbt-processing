@@ -1,13 +1,57 @@
-
 version: 2
 
 models:
   - name: projects_votes
     description: "Splits budgets orders (i.e. votes) on a per-project basis"
+    config:
+      contract: {enforced: true}
     columns:
       - name: order_id
+        data_type: BIGINT
         description: "ID of the budget order through which the vote has been issued"    
-
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('int_budget_orders')
+            to_columns: id
+      - name: decidim_user_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('users')
+            to_columns: id
+      - name: project_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('budgets_projects')
+            to_columns: id
+      - name: project_title
+        data_type: STRING
+      - name: decidim_component_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('components')
+            to_columns: id
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: checked_out_at
+        data_type: TIMESTAMP
+      - name: project_url
+        data_type: STRING
+      - name: vote_finished
+        data_type: BOOL
+      - name: decidim_budgets_budget_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('budgets')
+            to_columns: id
 unit_tests:
   - name: test_translate_category
     description: "Check that the category is translated correctly to French"
