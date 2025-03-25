@@ -4,21 +4,97 @@ models:
   - name: int_users
     schema: "{{ env_var('TARGET_SCHEMA') }}"
     description: ""
+    config:
+      contract: {enforced: true}
     columns:
       - name: id
+        data_type: BIGINT
         description: "The unique identifier for a user"
-        tests:
-          - unique
-          - not_null
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
       - name: email
+        data_type: STRING
         description: "The user's email address"
+      - name: sign_in_count
+        data_type: BIGINT
+      - name: sign_in_frequency
+        data_type: STRING
+      - name: current_sign_in_at
+        data_type: TIMESTAMP
+      - name: last_sign_in_at
+        data_type: TIMESTAMP
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: updated_at
+        data_type: TIMESTAMP
+      - name: invitation_created_at
+        data_type: TIMESTAMP
+      - name: invitation_sent_at
+        data_type: TIMESTAMP
+      - name: invitation_accepted_at
+        data_type: TIMESTAMP
+      - name: invited_by_id
+        data_type: BIGINT
+      - name: invited_by_type
+        data_type: STRING
+      - name: decidim_organization_id
+        data_type: BIGINT
+      - name: confirmed_at
+        data_type: TIMESTAMP
+      - name: confirmation_token
+        data_type: STRING
+      - name: unconfirmed_email
+        data_type: STRING
+      - name: name
+        data_type: STRING
+      - name: locale
+        data_type: STRING
+      - name: deleted_at
+        data_type: TIMESTAMP
+      - name: admin
+        data_type: BOOL
+      - name: managed
+        data_type: BOOL
+      - name: roles
+        data_type: STRING
       - name: nickname
+        data_type: STRING
         description: "The user's nickname"
         tests:
           - not_null
+      - name: accepted_tos_version
+        data_type: TIMESTAMP
+      - name: type
+        data_type: STRING
+      - name: following_count
+        data_type: BIGINT
+      - name: followers_count
+        data_type: BIGINT
+      - name: failed_attempts
+        data_type: BIGINT
+      - name: locked_at
+        data_type: TIMESTAMP
+      - name: admin_terms_accepted_at
+        data_type: TIMESTAMP
+      - name: blocked
+        data_type: BOOL
+      - name: blocked_at
+        data_type: TIMESTAMP
+      - name: date_of_birth
+        data_type: STRING
+      - name: gender
+        data_type: STRING
+      - name: postal_code
+        data_type: STRING
+      - name: confirmed
+        data_type: BOOL
       - name: spam
+        data_type: BOOL
         description: "Indicates if the user has been reported or not"
       - name: spam_probability
+        data_type: FLOAT
         description: "When a user has been reported as spam, gives the coefficient of spam likelihood, comprised between 0 and 1"
         data_tests: 
           - dbt_utils.accepted_range:
@@ -27,7 +103,16 @@ models:
               config:
                 where: "spam IS NOT null"  
       - name: spam_reported_at
+        data_type: DATE
         description: "When a user has been reported as spam, gives the report date"
+      - name: half_signup
+        data_type: BOOL
+      - name: extended_data
+        data_type: STRING
+      - name: age
+        data_type: DECIMAL
+      - name: age_category
+        data_type: STRING
 
 unit_tests:
   - name: type_check

@@ -1,6 +1,49 @@
 version: 2
 
 models:
+  - name: budgets_projects
+    config:
+      contract: {enforced: true}
+    columns:
+      - name: id
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: title
+        data_type: STRING
+      - name: description
+        data_type: STRING
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: decidim_scope_id
+        data_type: BIGINT
+      - name: project_amount
+        data_type: BIGINT
+      - name: selected_at
+        data_type: DATE
+      - name: is_selected
+        data_type: BOOL
+      - name: budget_id
+        data_type: BIGINT
+      - name: budget_title
+        data_type: STRING
+      - name: resource_type
+        data_type: STRING
+      - name: decidim_component_id
+        data_type: BIGINT
+      - name: project_url
+        data_type: STRING
+      - name: categories
+        data_type: ARRAY
+      - name: first_category
+        data_type: STRING
+      - name: sub_categories
+        data_type: ARRAY
+      - name: first_sub_category
+        data_type: STRING
+
   - name: projects_votes
     description: "Splits budgets orders (i.e. votes) on a per-project basis"
     config:
@@ -12,14 +55,14 @@ models:
         constraints:
           - type: not_null
           - type: foreign_key
-            to: ref('int_budget_orders')
+            to: ref('int_budgets_orders')
             to_columns: [id]
       - name: decidim_user_id
         data_type: BIGINT
         constraints:
           - type: not_null
           - type: foreign_key
-            to: ref('users')
+            to: ref('int_users')
             to_columns: [id]
       - name: project_id
         data_type: BIGINT
@@ -27,7 +70,7 @@ models:
           - type: not_null
           - type: foreign_key
             to: ref('budgets_projects')
-            to_columns: id
+            to_columns: [id]
       - name: project_title
         data_type: STRING
       - name: decidim_component_id
@@ -52,6 +95,7 @@ models:
           - type: foreign_key
             to: ref('budgets')
             to_columns: [id]
+
 unit_tests:
   - name: test_translate_category
     description: "Check that the category is translated correctly to French"
