@@ -13,14 +13,14 @@ models:
           - type: not_null
           - type: foreign_key
             to: ref('int_budget_orders')
-            to_columns: id
+            to_columns: [id]
       - name: decidim_user_id
         data_type: BIGINT
         constraints:
           - type: not_null
           - type: foreign_key
             to: ref('users')
-            to_columns: id
+            to_columns: [id]
       - name: project_id
         data_type: BIGINT
         constraints:
@@ -36,7 +36,7 @@ models:
           - type: not_null
           - type: foreign_key
             to: ref('components')
-            to_columns: id
+            to_columns: [id]
       - name: created_at
         data_type: TIMESTAMP
       - name: checked_out_at
@@ -51,7 +51,7 @@ models:
           - type: not_null
           - type: foreign_key
             to: ref('budgets')
-            to_columns: id
+            to_columns: [id]
 unit_tests:
   - name: test_translate_category
     description: "Check that the category is translated correctly to French"
