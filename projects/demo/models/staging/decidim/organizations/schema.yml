@@ -3,7 +3,7 @@ version: 2
 models:
   - name: stg_decidim_organizations
     config:
-      contract: {enforced: false}
+      contract: {enforced: true}
     description: "A staging model for Decidim organizations"
     columns:
       - name: id
