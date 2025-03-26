@@ -15,12 +15,12 @@ models:
           - type: not_null
           - type: primary_key
       - name: email
-        data_type: STRING
+        data_type: TEXT
         description: "The user's email address"
       - name: sign_in_count
         data_type: BIGINT
       - name: sign_in_frequency
-        data_type: STRING
+        data_type: TEXT
       - name: current_sign_in_at
         data_type: TIMESTAMP
       - name: last_sign_in_at
@@ -38,19 +38,19 @@ models:
       - name: invited_by_id
         data_type: BIGINT
       - name: invited_by_type
-        data_type: STRING
+        data_type: TEXT
       - name: decidim_organization_id
         data_type: BIGINT
       - name: confirmed_at
         data_type: TIMESTAMP
       - name: confirmation_token
-        data_type: STRING
+        data_type: TEXT
       - name: unconfirmed_email
-        data_type: STRING
+        data_type: TEXT
       - name: name
-        data_type: STRING
+        data_type: TEXT
       - name: locale
-        data_type: STRING
+        data_type: TEXT
       - name: deleted_at
         data_type: TIMESTAMP
       - name: admin
@@ -58,16 +58,16 @@ models:
       - name: managed
         data_type: BOOL
       - name: roles
-        data_type: STRING
+        data_type: TEXT
       - name: nickname
-        data_type: STRING
+        data_type: TEXT
         description: "The user's nickname"
         tests:
           - not_null
       - name: accepted_tos_version
         data_type: TIMESTAMP
       - name: type
-        data_type: STRING
+        data_type: TEXT
       - name: following_count
         data_type: BIGINT
       - name: followers_count
@@ -83,11 +83,11 @@ models:
       - name: blocked_at
         data_type: TIMESTAMP
       - name: date_of_birth
-        data_type: STRING
+        data_type: TEXT
       - name: gender
-        data_type: STRING
+        data_type: TEXT
       - name: postal_code
-        data_type: STRING
+        data_type: TEXT
       - name: confirmed
         data_type: BOOL
       - name: spam
@@ -108,11 +108,11 @@ models:
       - name: half_signup
         data_type: BOOL
       - name: extended_data
-        data_type: STRING
+        data_type: TEXT
       - name: age
         data_type: DECIMAL
       - name: age_category
-        data_type: STRING
+        data_type: TEXT
 
 unit_tests:
   - name: type_check

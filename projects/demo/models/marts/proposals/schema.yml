@@ -3,57 +3,96 @@ version: 2
 
 models:
   - name: proposals
+    config:
+      contract: {enforced: true}
     description: "Every proposal that has been created on your Decidim instance, including accepted, pending, rejected and withdrawn proposals. Does not include hidden (moderation) and unpublished proposals (i.e. linked to either an unpublished participatory process or an unpublished component)."
     columns:
       - name: id
+        data_type: bigint
         description: "Unique identifier for the proposal"
-        tests:
-          - unique
-          - not_null
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
       - name: decidim_participatory_space_id
+        data_type: bigint
         description: "Identifier for the participatory space where the proposal was created"
       - name: decidim_participatory_space_slug
+        data_type: text
         description: "Slug for the participatory space where the proposal was created"
       - name: decidim_scope_name
+        data_type: text
         description: "Name of the scope for the proposal"
       - name: title
+        data_type: text
         description: "Title of the proposal"
       - name: body
+        data_type: text
         description: "Body text of the proposal"
       - name: resource_type
+        data_type: text
         description: "Type of the resource, typically 'Decidim::Proposals::Proposal'"
       - name: url
+        data_type: text
         description: "URL link to the proposal on the Decidim platform"
       - name: decidim_component_id
+        data_type: bigint
         description: "Identifier for the component within which the proposal was created"
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('components')
+            to_columns: [id]
       - name: created_at
+        data_type: timestamp
         description: "Timestamp when the proposal was created"
       - name: published_at
+        data_type: timestamp
         description: "Timestamp when the proposal was published"
       - name: state
+        data_type: text
         description: "Current state of the proposal (e.g., evaluating, rejected, accepted)"
       - name: translated_state
+        data_type: text
         description: "Human-readable translated state of the proposal"
       - name: authors_ids
+        data_type: text #array
         description: "Array of IDs of the authors of the proposal"
       - name: first_author_id
+        data_type: bigint
         description: "ID of the first author of the proposal"
       - name: address
+        data_type: text
         description: "Address related to the proposal, if any"
       - name: categories
+        data_type: text #array
         description: "Array of categories associated with the proposal"
       - name: first_category
+        data_type: text
         description: "First category associated with the proposal"
       - name: sub_categories
+        data_type: text #array
         description: "Array of sub-categories associated with the proposal"
       - name: first_sub_category
+        data_type: text
         description: "First sub-category associated with the proposal"
       - name: comments_count
+        data_type: bigint
         description: "Number of comments on the proposal"
       - name: endorsements_count
+        data_type: bigint
         description: "Number of endorsements on the proposal"
       - name: votes_count
+        data_type: bigint
         description: "Number of votes the proposal has received"
+      - name: custom_state_id
+        data_type: bigint
+      - name: custom_state
+        data_type: text
+      - name: description
+        data_type: text
+      - name: proposals_count
+        data_type: bigint
   - name: proposals_votes
     description : "Every vote made on propositions"
     columns:

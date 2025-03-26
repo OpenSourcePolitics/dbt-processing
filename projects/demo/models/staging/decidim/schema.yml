@@ -35,6 +35,38 @@ sources:
       - name: decidim_user_reports
       - name: decidim_proposals_proposal_states
 
+models:
+  - name: stg_decidim_participatory_processes
+    config:
+      contract: {enforced: true}
+    description: "Every participatory space on the Decidim instance."
+    columns:
+      - name: id
+        data_type: BIGINT
+        description: "Unique identifier for the participatory process."
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: published_at
+        data_type: TIMESTAMP
+      - name: title
+        data_type: TEXT
+      - name: subtitle
+        data_type: TEXT
+      - name: slug
+        data_type: TEXT
+      - name: type
+        data_type: TEXT
+      - name: space_type_slug
+        data_type: TEXT
+      - name: decidim_organization_id
+        data_type: BIGINT
+        constraints:
+          - type: foreign_key
+            to: ref('stg_decidim_organizations')
+            to_columns: [id]
+
 
 unit_tests:
   - name: extended_data_parsing_check

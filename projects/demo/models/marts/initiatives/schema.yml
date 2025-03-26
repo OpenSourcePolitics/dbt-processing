@@ -1,3 +1,139 @@
+models:
+  - name: initiatives
+    config:
+      contract: {enforced: true}
+    columns:
+      - name: id
+        data_type: bigint
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: title
+        data_type: text
+      - name: description
+        data_type: text
+      - name: decidim_author_id
+        data_type: bigint
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('int_users')
+            to_columns: [id]
+      - name: published_at
+        data_type: timestamp
+      - name: parsed_state
+        data_type: text
+      - name: state
+        data_type: bigint
+      - name: signature_type
+        data_type: bigint
+      - name: signature_start_date
+        data_type: date
+      - name: signature_end_date
+        data_type: date
+      - name: answer
+        data_type: text
+      - name: answered_at
+        data_type: timestamp
+      - name: answer_url
+        data_type: text
+      - name: created_at
+        data_type: timestamp
+      - name: decidim_user_group_id
+        data_type: bigint
+      - name: hashtag
+        data_type: text
+      - name: scoped_type_id
+        data_type: bigint
+      - name: decidim_author_type
+        data_type: text
+      - name: parsed_online_votes
+        data_type: integer
+      - name: parsed_offline_votes
+        data_type: integer
+      - name: sum_votes
+        data_type: integer
+      - name: comments_count
+        data_type: bigint
+      - name: follows_count
+        data_type: bigint
+      - name: url
+        data_type: text
+      - name: supports_required
+        data_type: bigint
+      - name: area_id
+        data_type: bigint
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_areas')
+            to_columns: [id]
+      - name: area_name
+        data_type: text
+      - name: area_type_name
+        data_type: text
+      - name: resource_type
+        data_type: text
+      - name: id_as_text
+        data_type: text
+  - name: initiatives_votes
+    config:
+      contract: {enforced: true}
+    columns:
+      - name: id
+        data_type: bigint
+      - name: decidim_initiative_id
+        data_type: bigint
+      - name: user_id
+        data_type: bigint
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('int_users')
+            to_columns: [id]
+      - name: created_at
+        data_type: timestamp
+      - name: hash_id
+        data_type: text
+      - name: decidim_scope_id
+        data_type: bigint
+      - name: initiative_url
+        data_type: text
+  - name: initiatives_comments
+    config:
+      contract: {enforced: true}
+    columns:
+      - name: id
+        data_type: bigint
+      - name: decidim_commentable_id
+        data_type: bigint
+      - name: decidim_commentable_type
+        data_type: character varying
+      - name: decidim_author_id
+        data_type: bigint
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('int_users')
+            to_columns: [id]
+      - name: created_at
+        data_type: timestamp
+      - name: depth
+        data_type: bigint
+      - name: alignment
+        data_type: bigint
+      - name: decidim_root_commentable_id
+        data_type: bigint
+      - name: decidim_root_commentable_type
+        data_type: character varying
+      - name: decidim_author_type
+        data_type: character varying
+      - name: body
+        data_type: text
+      - name: comment_url
+        data_type: text
+
 unit_tests:
   - name: test_url_creation
     model: initiatives
@@ -5,61 +141,57 @@ unit_tests:
       - input: ref('stg_decidim_initiatives_type_scopes')
         format: dict
         rows:
-          - {id: 77}
+          - { id: 77 }
       - input: ref('stg_decidim_areas')
         format: dict
         rows:
-          - {id: 55, area_type_id: 66}
+          - { id: 55, area_type_id: 66 }
       - input: ref('stg_decidim_area_types')
         format: dict
         rows:
-          - {id: 66, name: 'Catégorie1'}
+          - { id: 66, name: 'Catégorie1' }
       - input: ref('int_initiatives')
         format: dict
         rows:
-          - {id: 42, decidim_organization_id: 101, scoped_type_id: 77, decidim_area_id: 55}
-          - {id: 43, decidim_organization_id: 101, scoped_type_id: 77, decidim_area_id: 55}
-          - {id: 44, decidim_organization_id: 102, scoped_type_id: 77, decidim_area_id: 55}
+          - { id: 42, decidim_organization_id: 101, scoped_type_id: 77, decidim_area_id: 55 }
+          - { id: 43, decidim_organization_id: 101, scoped_type_id: 77, decidim_area_id: 55 }
+          - { id: 44, decidim_organization_id: 102, scoped_type_id: 77, decidim_area_id: 55 }
 
       - input: ref('int_organizations')
         format: dict
         rows:
-          - {id: 101, host: 'organization1'}
+          - { id: 101, host: 'organization1' }
     expect:
       format: dict
       rows:
-        - {id: 42, url: 'https://organization1/initiatives/i-42'}
-        - {id: 43, url: 'https://organization1/initiatives/i-43'}
+        - { id: 42, url: 'https://organization1/initiatives/i-42' }
+        - { id: 43, url: 'https://organization1/initiatives/i-43' }
   - name: null_category_name
     model: initiatives
-    given: 
+    given:
       - input: ref('stg_decidim_initiatives_type_scopes')
         format: dict
         rows:
-          - {id: 77}
+          - { id: 77 }
       - input: ref('stg_decidim_areas')
         format: dict
         rows:
-          - {id: 55, area_type_id: 66, name: '{"fr": "Environnement"}'}
+          - { id: 55, area_type_id: 66, name: '{"fr": "Environnement"}' }
       - input: ref('stg_decidim_area_types')
         format: dict
         rows:
-          - {id: 66, name: '{"fr": "Education"}'}
+          - { id: 66, name: '{"fr": "Education"}' }
       - input: ref('int_initiatives')
         format: dict
         rows:
-          - {id: 42, decidim_organization_id: 101, scoped_type_id: 77, decidim_area_id: 55}
-          - {id: 43, decidim_organization_id: 101, scoped_type_id: 77, decidim_area_id: null}
+          - { id: 42, decidim_organization_id: 101, scoped_type_id: 77, decidim_area_id: 55 }
+          - { id: 43, decidim_organization_id: 101, scoped_type_id: 77, decidim_area_id: null }
       - input: ref('int_organizations')
         format: dict
         rows:
-          - {id: 101, host: 'organization1'}
+          - { id: 101, host: 'organization1' }
     expect:
       format: dict
       rows:
-        - {id: 42,  area_id: 55, area_name: 'Environnement', area_type_name: 'Education'}
-        - {id: 43,  area_id: null, area_name: 'Pas de sous catégorie', area_type_name: 'Pas de catégorie'}
-
-
-
-
+        - { id: 42, area_id: 55, area_name: 'Environnement', area_type_name: 'Education' }
+        - { id: 43, area_id: null, area_name: 'Pas de sous catégorie', area_type_name: 'Pas de catégorie' }

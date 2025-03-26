@@ -1,3 +1,39 @@
+models:
+  - name: blogs_posts
+    config:
+      contract: {enforced: true}
+    columns:
+      - name: id
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: title
+        data_type: TEXT
+      - name: body
+        data_type: TEXT
+      - name: decidim_component_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('components')
+            to_columns: [id]
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: decidim_author_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('int_users')
+            to_columns: [id]
+      - name: resource_type
+        data_type: TEXT
+      - name: post_url
+        data_type: TEXT
+
 unit_tests:
   - name: test_url_concatenation
     description: "Check URL concatenation logic"

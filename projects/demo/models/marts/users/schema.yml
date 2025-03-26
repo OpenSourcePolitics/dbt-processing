@@ -3,93 +3,157 @@ version: 2
 models:
   - name: users
     schema: "{{ env_var('TARGET_SCHEMA') }}"
+    config:
+      contract: {enforced: true}
     description: "All created users on your platform (includes admins, invited, managed, reported, blocked and deleted users)"
     columns:
       - name: id
-        data_tests:
-          - unique
-          - not_null
+        data_type: BIGINT
         description: "ID of the user"
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
       - name: email
+        data_type: TEXT
         description: "Email of the user"
       - name: sign_in_count
+        data_type: BIGINT
         description: "Number of times the user signed in on the platform"
       - name: sign_in_frequency
+        data_type: TEXT
         description: "Classification of sign-in counts in human-readable categories"
+      - name: current_sign_in_at
+        data_type: TIMESTAMP
       - name: last_sign_in_at
+        data_type: TIMESTAMP
         description: "Last time the user signed in on the platform"
       - name: created_at
+        data_type: TIMESTAMP
         description: "Date of creation"
       - name: updated_at
+        data_type: TIMESTAMP
         description: "Date of update"
       - name: invitation_created_at
+        data_type: TIMESTAMP
         description: "Users can either register on the platform by themselves or by being invited. If empty, it means the user self-registered. Else it'll give the time the invitation of the user was created"
       - name: invitation_sent_at
+        data_type: TIMESTAMP
         description: "Users can either register on the platform by themselves or by being invited. If empty, it means the user self-registered. Else it'll give the time the invitation of the user was sent"
       - name: invitation_accepted_at
+        data_type: TIMESTAMP
         description: "Users can either register on the platform by themselves or by being invited. If empty, it means the user self-registered. Else it'll give the time the invitation of the user was accepted"
       - name: invited_by_id
+        data_type: BIGINT
         description: "ID of the user that invited that user"
       - name: invited_by_type
+        data_type: TEXT
         description: "Users can either register on the platform by themselves or by being invited. If empty, it means the user self-registered. Else it'll give the type of the inviter (whether an organization, a single user etc.)"
       - name: decidim_organization_id
+        data_type: BIGINT
         description: "ID of organization to which belong the user"
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('int_organizations')
+            to_columns: [id]
       - name: confirmed_at
+        data_type: TIMESTAMP
         description: "Date at which the user confirmed its account. Empty if the account was not confirmed"
       - name: confirmation_token
+        data_type: TEXT
         description: "Token of account confirmation"
       - name: unconfirmed_email
-        description: "Whether or not the user has confirmed its email."
+        data_type: TEXT
+        description: "Email given by the user before confirmation"
       - name: name
+        data_type: TEXT
         description: "Name of the user"
       - name: locale
+        data_type: TEXT
         description: "Language used by the user"
       - name: deleted_at
+        data_type: TIMESTAMP
         description: "A user can choose to delete its account. If empty, it means the user still has an account. If not, it gives the time at which the user deleted it."
       - name: admin
+        data_type: BOOL
         description: "Whether or not the user is administrator of the platform"
       - name: managed
+        data_type: BOOL
         description: "A user can be managed. It means that someone else can participate in its name. This field indicate whether or not the user is managed"
       - name: roles
+        data_type: TEXT
         description: "A user can have different roles inside a Decidim platform. This field list all roles that the user have"
       - name: nickname
+        data_type: TEXT
         description: "Nickname of the user"
       - name: accepted_tos_version
+        data_type: TIMESTAMP
         description: "When registering on the platform, a user must accept the Terms of Services. These terms can be versionized. This field give the version of the Terms of Services that was accepted"
       - name: type
+        data_type: TEXT
         description: "Type of user can be a group, a single person, etc."
       - name: following_count
+        data_type: BIGINT
         description: "Number of resources followed by the user"
       - name: followers_count
+        data_type: BIGINT
         description: "Number of people that follows the user"
       - name: failed_attempts
+        data_type: BIGINT
         description: "Number of time the user failed to sign in"
       - name: locked_at
+        data_type: TIMESTAMP
         description: "Datetime at which the user was blocked"
       - name: admin_terms_accepted_at
+        data_type: TIMESTAMP
         description: "If the user is an admin, gives the datetime at which he/she accepted the terms of use"
       - name: blocked
+        data_type: BOOL
         description: "Whether or not the user was blocked"
       - name: blocked_at
+        data_type: TIMESTAMP
         description: "Datetime at which the user was blocked. Empty if not blocked"
       - name: confirmed
+        data_type: BOOL
         description: "Whether or not the account of the registration of the user was confirmed"
       - name: url
+        data_type: TEXT
         description: "URL of the user profile"
-      - name: extended_data
-        description: "Decidim stores in this field all data related to the user that doesn't fit into a specific column. Used in multiple Decidim modules to describe the user more precisely. Informations regarding what happens on a page and its associated metrics like visits, time spent, exits, date, url, label."
       - name: is_endorsing
+        data_type: BOOL
         description: "Indicates if the user ....."
       - name: is_following
+        data_type: BOOL
         description: "Indicates if the user ....."
       - name: has_authored_comment
+        data_type: BOOL
         description: "Indicates if the user has authored a comment"
-      - name: has_voted
-        description: "Indicates if the user has voted"
+      - name: has_voted_on_proposal
+        data_type: BOOL
+        description: "Indicates if the user has voted for a proposal"
+      - name: has_voted_on_project
+        data_type: BOOL
+        description: "Indicates if the user has voted for a project"
       - name: has_authored_proposal
+        data_type: BOOL
         description: "Indicates if the user has authored a proposal"
       - name: has_answered_survey
+        data_type: BOOL
         description: "Indicates if the user has answered a survey"
+      - name: extended_data
+        data_type: TEXT
+        description: "Decidim stores in this field all data related to the user that doesn't fit into a specific column. Used in multiple Decidim modules to describe the user more precisely. Informations regarding what happens on a page and its associated metrics like visits, time spent, exits, date, url, label."
+      - name: date_of_birth
+        data_type: TEXT
+      - name: age_category
+        data_type: TEXT
+      - name: gender
+        data_type: TEXT
+      - name: postal_code
+        data_type: TEXT
+      - name: half_signup
+        data_type: BOOL
     data_tests:
       - relationships:
           column_name: id

@@ -1,10 +1,69 @@
 models:
   - name: meetings
-    schema: "{{ env_var('TARGET_SCHEMA') }}"
-    description: "Every meeting published on the platform"
+    config:
+      contract: {enforced: true}
     columns:
       - name: id
-        description: "The unique identifier for a meeting"
+        data_type: bigint
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: title
+        data_type: text
+      - name: description
+        data_type: text
+      - name: address
+        data_type: text
+      - name: attendees_count
+        data_type: bigint
+      - name: created_at
+        data_type: timestamp
+      - name: decidim_scope_id
+        data_type: bigint
+        constraints:
+          - type: foreign_key
+            to: ref('int_scopes')
+            to_columns: [id]
+      - name: decidim_component_id
+        data_type: bigint
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('components')
+            to_columns: [id]
+      - name: start_time
+        data_type: timestamp
+      - name: end_time
+        data_type: timestamp
+      - name: registration_url
+        data_type: text
+      - name: type_of_meeting
+        data_type: text
+      - name: translated_type_of_meeting
+        data_type: text
+      - name: private_meeting
+        data_type: boolean
+      - name: decidim_author_id
+        data_type: bigint
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('int_users')
+            to_columns: [id]
+      - name: resource_type
+        data_type: text
+      - name: meeting_url
+        data_type: text
+      - name: categories
+        data_type: text #array
+      - name: first_category
+        data_type: text
+      - name: sub_categories
+        data_type: text #array
+      - name: first_sub_category
+        data_type: text
+
 unit_tests:
   - name: test_url_concatenation
     description: "Check URL concatenation logic"
@@ -13,19 +72,19 @@ unit_tests:
       - input: ref('int_meetings')
         format: dict
         rows:
-          - {decidim_component_id: 1, id : 100}       
+          - { decidim_component_id: 1, id: 100 }
       - input: ref('components')
         format: dict
         rows:
-          - {organization_host: 'host1', ps_space_type_slug: 'space_type_slug1', ps_slug: 'ps_slug1', id: 1, manifest_name: 'meetings'}
+          - { organization_host: 'host1', ps_space_type_slug: 'space_type_slug1', ps_slug: 'ps_slug1', id: 1, manifest_name: 'meetings' }
       - input: ref("categorizations")
         format: dict
         rows:
-          - {categorizable_id : 100}   
+          - { categorizable_id: 100 }
     expect:
       format: dict
-      rows: 
-        - {meeting_url: "https://host1/space_type_slug1/ps_slug1/f/1/meetings/100"}
+      rows:
+        - { meeting_url: "https://host1/space_type_slug1/ps_slug1/f/1/meetings/100" }
   - name: test_manifest_name_is_meetings
     description: "Check that manifest name filters on meetings"
     model: meetings
@@ -33,19 +92,18 @@ unit_tests:
       - input: ref('int_meetings')
         format: dict
         rows:
-          - {decidim_component_id: 1, id : 100} 
-          - {decidim_component_id: 2, id : 200}      
+          - { decidim_component_id: 1, id: 100 }
+          - { decidim_component_id: 2, id: 200 }
       - input: ref('components')
         format: dict
-        rows: 
-          - {id : 1, manifest_name: 'meetings'} 
-          - {id : 2, manifest_name: 'foo'}   
+        rows:
+          - { id: 1, manifest_name: 'meetings' }
+          - { id: 2, manifest_name: 'foo' }
       - input: ref("categorizations")
         format: dict
         rows:
-          - {}  
+          - {}
     expect:
       format: dict
-      rows: 
-        - {id : 100}
-  
+      rows:
+        - { id: 100 }

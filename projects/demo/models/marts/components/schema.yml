@@ -2,48 +2,68 @@ version: 2
 
 models:
   - name: components
+    config:
+      contract: {enforced: true}
     description: "Model representing the components associated with participatory spaces in Decidim."
     columns:
       - name: id
+        data_type: BIGINT
         description: "Unique identifier for the component."
-        data_tests:
-          - not_null
-          - unique
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
       - name: manifest_name
+        data_type: TEXT
         description: "Name of the component's manifest file. The manifest defines the component's configuration and metadata."
         data_tests:
           - not_null
       - name: translated_manifest_name
+        data_type: TEXT
         description: "Translated name of the component's manifest."
       - name: component_name
+        data_type: TEXT
         description: "Full name of the component, including its translated name."
       - name: published_at
+        data_type: TIMESTAMP
         description: "Date when the component was published."
       - name: created_at
+        data_type: TIMESTAMP
         description: "Date when the component was created."
       - name: component_url
+        data_type: TEXT
         description: "URL for accessing the component."
       - name: ps_id
-        description: "Identifier of the associated participatory space."
+        data_type: BIGINT
+        description: "Identifier of the associated participatory space (which can be either a Decidim::ParticipatoryProcess or Decidim::Assembly)."
       - name: ps_published_at
+        data_type: TIMESTAMP
         description: "Publication date of the participatory space."
       - name: ps_title
+        data_type: TEXT
         description: "Title of the participatory space."
       - name: ps_subtitle
+        data_type: TEXT
         description: "Subtitle of the participatory space."
       - name: ps_slug
+        data_type: TEXT
         description: "Slug of the participatory space."
       - name: ps_type
+        data_type: TEXT
         description: "Type of the participatory space."
       - name: ps_space_type_slug
+        data_type: TEXT
         description: "Slug for the type of participatory space."
       - name: ps_url
+        data_type: TEXT
         description: "URL of the participatory space."
       - name: decidim_organization_id
+        data_type: BIGINT
         description: "Identifier of the Decidim organization."
         data_tests:
           - not_null
       - name: organization_host
+        data_type: TEXT
         description: "Host of the Decidim organization."
 
 unit_tests:

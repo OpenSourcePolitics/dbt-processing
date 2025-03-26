@@ -1,6 +1,31 @@
 version: 2
 
 models:
+  - name: budgets
+    config:
+      contract: {enforced: true}
+    columns:
+      - name: id
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: title
+        data_type: TEXT
+      - name: decidim_component_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('components')
+            to_columns: [id]
+      - name: url
+        data_type: TEXT
+      - name: ps_slug
+        data_type: TEXT
+      - name: ps_title
+        data_type: TEXT
   - name: budgets_projects
     config:
       contract: {enforced: true}
@@ -12,9 +37,9 @@ models:
           - type: not_null
           - type: primary_key
       - name: title
-        data_type: STRING
+        data_type: TEXT
       - name: description
-        data_type: STRING
+        data_type: TEXT
       - name: created_at
         data_type: TIMESTAMP
       - name: decidim_scope_id
@@ -28,21 +53,26 @@ models:
       - name: budget_id
         data_type: BIGINT
       - name: budget_title
-        data_type: STRING
+        data_type: TEXT
       - name: resource_type
-        data_type: STRING
+        data_type: TEXT
       - name: decidim_component_id
         data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('components')
+            to_columns: [id]
       - name: project_url
-        data_type: STRING
+        data_type: TEXT
       - name: categories
-        data_type: ARRAY
+        data_type: TEXT #ARRAY
       - name: first_category
-        data_type: STRING
+        data_type: TEXT
       - name: sub_categories
-        data_type: ARRAY
+        data_type: TEXT #ARRAY
       - name: first_sub_category
-        data_type: STRING
+        data_type: TEXT
 
   - name: projects_votes
     description: "Splits budgets orders (i.e. votes) on a per-project basis"
@@ -72,7 +102,7 @@ models:
             to: ref('budgets_projects')
             to_columns: [id]
       - name: project_title
-        data_type: STRING
+        data_type: TEXT
       - name: decidim_component_id
         data_type: BIGINT
         constraints:
@@ -85,7 +115,7 @@ models:
       - name: checked_out_at
         data_type: TIMESTAMP
       - name: project_url
-        data_type: STRING
+        data_type: TEXT
       - name: vote_finished
         data_type: BOOL
       - name: decidim_budgets_budget_id
