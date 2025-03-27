@@ -18,7 +18,7 @@ models:
         constraints:
           - type: not_null
           - type: foreign_key
-            to: ref('int_users')
+            to: ref('users')
             to_columns: [id]
       - name: published_at
         data_type: TIMESTAMP
@@ -90,7 +90,7 @@ models:
         constraints:
           - type: not_null
           - type: foreign_key
-            to: ref('int_users')
+            to: ref('users')
             to_columns: [id]
       - name: created_at
         data_type: TIMESTAMP
@@ -115,7 +115,7 @@ models:
         constraints:
           - type: not_null
           - type: foreign_key
-            to: ref('int_users')
+            to: ref('users')
             to_columns: [id]
       - name: created_at
         data_type: TIMESTAMP

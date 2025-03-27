@@ -12,6 +12,11 @@ models:
         data_type: BIGINT
       - name: decidim_user_id
         data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('users')
+            to_columns: [id]
       - name: root_decidim_followable_id
         data_type: BIGINT
       - name: root_decidim_followable_type

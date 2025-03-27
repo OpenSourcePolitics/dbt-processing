@@ -2,25 +2,30 @@ models:
   - name: endorsements
     columns:
       - name: id
-        data_type: bigint
+        data_type: BIGINT
         constraints:
           - type: unique
           - type: not_null
           - type: primary_key
       - name: resource_type
-        data_type: bigint
+        data_type: BIGINT
       - name: resource_id
-        data_type: bigint
+        data_type: BIGINT
       - name: decidim_author_type
-        data_type: text
+        data_type: TEXT
       - name: decidim_author_id
-        data_type: bigint
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('users')
+            to_columns: [id]
       - name: created_at
-        data_type: timestamp
+        data_type: TIMESTAMP
       - name: updated_at
-        data_type: timestamp
+        data_type: TIMESTAMP
       - name: decidim_component_id
-        data_type: bigint
+        data_type: BIGINT
         constraints:
           - type: not_null
           - type: foreign_key

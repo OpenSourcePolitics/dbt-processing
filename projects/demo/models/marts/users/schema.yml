@@ -154,11 +154,6 @@ models:
         data_type: TEXT
       - name: half_signup
         data_type: BOOL
-    data_tests:
-      - relationships:
-          column_name: id
-          to: ref('int_users')
-          field: id
   - name: all_users
     schema: "{{ env_var('TARGET_SCHEMA') }}"
     columns:
