@@ -20,7 +20,7 @@ models:
         constraints:
           - type: not_null
           - type: foreign_key
-            to: ref('int_organizations')
+            to: ref('stg_decidim_organizations')
             to_columns: [id]
       - name: created_at
         data_type: timestamp
