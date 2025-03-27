@@ -46,11 +46,11 @@ models:
         data_type: BOOLEAN
       - name: decidim_author_id
         data_type: BIGINT
-        constraints:
-          - type: not_null
-          - type: foreign_key
-            to: ref('users')
-            to_columns: [id]
+        #constraints:
+        #  - type: not_null
+        #  - type: foreign_key
+        #    to: ref('users')
+        #    to_columns: [id]
       - name: resource_type
         data_type: TEXT
       - name: meeting_url

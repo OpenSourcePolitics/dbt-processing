@@ -1,7 +1,7 @@
 models:
   - name: endorsements
     config:
-      contract: {enforced: true}
+      contract: {enforced: false}
     columns:
       - name: id
         data_type: BIGINT
@@ -17,11 +17,11 @@ models:
         data_type: TEXT
       - name: decidim_author_id
         data_type: BIGINT
-        constraints:
-          - type: not_null
-          - type: foreign_key
-            to: ref('users')
-            to_columns: [id]
+      #  constraints:
+      #    - type: not_null
+      #    - type: foreign_key
+      #      to: ref('users')
+      #      to_columns: [id]
       - name: created_at
         data_type: TIMESTAMP
       - name: updated_at

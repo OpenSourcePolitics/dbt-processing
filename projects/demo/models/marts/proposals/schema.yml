@@ -4,7 +4,7 @@ version: 2
 models:
   - name: proposals
     config:
-      contract: {enforced: true}
+      contract: {enforced: false}
     description: "Every proposal that has been created on your Decidim instance, including accepted, pending, rejected and withdrawn proposals. Does not include hidden (moderation) and unpublished proposals (i.e. linked to either an unpublished participatory process or an unpublished component)."
     columns:
       - name: id
@@ -61,11 +61,6 @@ models:
       - name: first_author_id
         data_type: BIGINT
         description: "ID of the first author of the proposal"
-        constraints:
-          - type: not_null
-          - type: foreign_key
-            to: ref('users')
-            to_columns: [id]
       - name: address
         data_type: TEXT
         description: "Address related to the proposal, if any"

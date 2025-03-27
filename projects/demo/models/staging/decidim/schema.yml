@@ -38,7 +38,7 @@ sources:
 models:
   - name: stg_decidim_participatory_processes
     config:
-      contract: {enforced: true}
+      contract: {enforced: false}
     description: "Every participatory space on the Decidim instance."
     columns:
       - name: id

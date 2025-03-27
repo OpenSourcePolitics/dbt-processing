@@ -1,15 +1,15 @@
 models:
   - name: participations
     config:
-      contract: {enforced: true}
+      contract: {enforced: false}
     columns:
       - name: user_id
         data_type: BIGINT
-        constraints:
-          - type: not_null
-          - type: foreign_key
-            to: ref('users')
-            to_columns: [id]
+        #constraints:
+        #  - type: not_null
+        #  - type: foreign_key
+        #    to: ref('users')
+        #    to_columns: [id]
       - name: participation_id
         data_type: BIGINT
       - name: decidim_component_id

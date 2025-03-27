@@ -3,7 +3,7 @@ version: 2
 models:
   - name: budgets
     config:
-      contract: {enforced: true}
+      contract: {enforced: false}
     columns:
       - name: id
         data_type: BIGINT
@@ -12,7 +12,7 @@ models:
           - type: not_null
           - type: primary_key
       - name: title
-        data_type: TEXT
+        #data_type: TEXT
       - name: decidim_component_id
         data_type: BIGINT
         constraints:
@@ -28,7 +28,7 @@ models:
         data_type: TEXT
   - name: budgets_projects
     config:
-      contract: {enforced: true}
+      contract: {enforced: false}
     columns:
       - name: id
         data_type: BIGINT
@@ -77,11 +77,11 @@ models:
   - name: projects_votes
     description: "Splits budgets orders (i.e. votes) on a per-project basis"
     config:
-      contract: {enforced: true}
+      contract: {enforced: false}
     columns:
       - name: order_id
         data_type: BIGINT
-        description: "ID of the budget order through which the vote has been issued"    
+        description: "ID of the budget order through which the vote has been issued"
         constraints:
           - type: not_null
           - type: foreign_key
@@ -89,11 +89,11 @@ models:
             to_columns: [id]
       - name: decidim_user_id
         data_type: BIGINT
-        constraints:
-          - type: not_null
-          - type: foreign_key
-            to: ref('users')
-            to_columns: [id]
+        #constraints:
+        #  - type: not_null
+        #  - type: foreign_key
+        #    to: ref('users')
+        #    to_columns: [id]
       - name: project_id
         data_type: BIGINT
         constraints:

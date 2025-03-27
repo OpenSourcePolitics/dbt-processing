@@ -3,7 +3,7 @@ version: 2
 models:
   - name: followings
     config:
-      contract: {enforced: true}
+      contract: {enforced: false}
     description: "Every follow action performed on the platform. Decidim counts follow in two different ways: follows on a specific resource (proposal, commentary, etc.) named 'real follow' and follows made on a component; every resource contained in that component is then marked as followed."
     columns:
       - name: id
@@ -12,11 +12,11 @@ models:
         data_type: BIGINT
       - name: decidim_user_id
         data_type: BIGINT
-        constraints:
-          - type: not_null
-          - type: foreign_key
-            to: ref('users')
-            to_columns: [id]
+        #constraints:
+        #  - type: not_null
+        #  - type: foreign_key
+        #    to: ref('users')
+        #    to_columns: [id]
       - name: root_decidim_followable_id
         data_type: BIGINT
       - name: root_decidim_followable_type

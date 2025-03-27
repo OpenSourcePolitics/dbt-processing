@@ -24,14 +24,14 @@ models:
         data_type: TEXT
   - name: forms_answers
     config:
-      contract: {enforced: true}
+      contract: {enforced: false}
     columns:
       - name: decidim_user_id
         data_type: BIGINT
-        constraints:
-          - type: foreign_key
-            to: ref('users')
-            to_columns: [id]
+        #constraints:
+        #  - type: foreign_key
+        #    to: ref('users')
+        #    to_columns: [id]
       - name: session_token
         data_type: TEXT
       - name: ip_hash

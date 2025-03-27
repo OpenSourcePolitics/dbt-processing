@@ -76,10 +76,10 @@ models:
         data_type: TIMESTAMP
         description: "A user can choose to delete its account. If empty, it means the user still has an account. If not, it gives the time at which the user deleted it."
       - name: admin
-        data_type: BOOL
+        data_type: BOOLEAN
         description: "Whether or not the user is administrator of the platform"
       - name: managed
-        data_type: BOOL
+        data_type: BOOLEAN
         description: "A user can be managed. It means that someone else can participate in its name. This field indicate whether or not the user is managed"
       - name: roles
         data_type: TEXT
@@ -109,37 +109,37 @@ models:
         data_type: TIMESTAMP
         description: "If the user is an admin, gives the datetime at which he/she accepted the terms of use"
       - name: blocked
-        data_type: BOOL
+        data_type: BOOLEAN
         description: "Whether or not the user was blocked"
       - name: blocked_at
         data_type: TIMESTAMP
         description: "Datetime at which the user was blocked. Empty if not blocked"
       - name: confirmed
-        data_type: BOOL
+        data_type: BOOLEAN
         description: "Whether or not the account of the registration of the user was confirmed"
       - name: url
         data_type: TEXT
         description: "URL of the user profile"
       - name: is_endorsing
-        data_type: BOOL
+        data_type: BOOLEAN
         description: "Indicates if the user ....."
       - name: is_following
-        data_type: BOOL
+        data_type: BOOLEAN
         description: "Indicates if the user ....."
       - name: has_authored_comment
-        data_type: BOOL
+        data_type: BOOLEAN
         description: "Indicates if the user has authored a comment"
       - name: has_voted_on_proposal
-        data_type: BOOL
+        data_type: BOOLEAN
         description: "Indicates if the user has voted for a proposal"
       - name: has_voted_on_project
-        data_type: BOOL
+        data_type: BOOLEAN
         description: "Indicates if the user has voted for a project"
       - name: has_authored_proposal
-        data_type: BOOL
+        data_type: BOOLEAN
         description: "Indicates if the user has authored a proposal"
       - name: has_answered_survey
-        data_type: BOOL
+        data_type: BOOLEAN
         description: "Indicates if the user has answered a survey"
       - name: extended_data
         data_type: TEXT
@@ -153,7 +153,7 @@ models:
       - name: postal_code
         data_type: TEXT
       - name: half_signup
-        data_type: BOOL
+        data_type: BOOLEAN
   - name: all_users
     schema: "{{ env_var('TARGET_SCHEMA') }}"
     columns:
