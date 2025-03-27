@@ -1,0 +1,18 @@
+models:
+  - name: participations
+    columns:
+      - name: user_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('users')
+            to_columns: [id]
+      - name: participation_id
+        data_type: BIGINT
+      - name: decidim_component_id
+        data_type: BIGINT
+      - name: participation_type
+        data_type: TEXT
+      - name: participation_date
+        data_type: TIMESTAMP

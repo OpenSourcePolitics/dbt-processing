@@ -61,6 +61,11 @@ models:
       - name: first_author_id
         data_type: BIGINT
         description: "ID of the first author of the proposal"
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('users')
+            to_columns: [id]
       - name: address
         data_type: TEXT
         description: "Address related to the proposal, if any"
