@@ -82,57 +82,57 @@ models:
       contract: {enforced: true}
     columns:
       - name: id
-        data_type: bigint
+        data_type: INTEGER
       - name: decidim_initiative_id
-        data_type: bigint
+        data_type: INTEGER
       - name: user_id
-        data_type: bigint
+        data_type: INTEGER
         constraints:
           - type: not_null
           - type: foreign_key
             to: ref('int_users')
             to_columns: [id]
       - name: created_at
-        data_type: timestamp
+        data_type: TIMESTAMP
       - name: hash_id
-        data_type: text
+        data_type: TEXT
       - name: decidim_scope_id
-        data_type: bigint
+        data_type: INTEGER
       - name: initiative_url
-        data_type: text
+        data_type: TEXT
   - name: initiatives_comments
     config:
       contract: {enforced: true}
     columns:
       - name: id
-        data_type: bigint
+        data_type: BIGINT
       - name: decidim_commentable_id
-        data_type: bigint
+        data_type: BIGINT
       - name: decidim_commentable_type
-        data_type: character varying
+        data_type: TEXT
       - name: decidim_author_id
-        data_type: bigint
+        data_type: BIGINT
         constraints:
           - type: not_null
           - type: foreign_key
             to: ref('int_users')
             to_columns: [id]
       - name: created_at
-        data_type: timestamp
+        data_type: TIMESTAMP
       - name: depth
-        data_type: bigint
+        data_type: BIGINT
       - name: alignment
-        data_type: bigint
+        data_type: BIGINT
       - name: decidim_root_commentable_id
-        data_type: bigint
+        data_type: BIGINT
       - name: decidim_root_commentable_type
-        data_type: character varying
+        data_type: TEXT
       - name: decidim_author_type
-        data_type: character varying
+        data_type: TEXT
       - name: body
-        data_type: text
+        data_type: TEXT
       - name: comment_url
-        data_type: text
+        data_type: TEXT
 
 unit_tests:
   - name: test_url_creation
