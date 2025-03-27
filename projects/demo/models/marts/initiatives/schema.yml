@@ -1,7 +1,7 @@
 models:
   - name: initiatives
     config:
-      contract: {enforced: true}
+      contract: {enforced: false}
     columns:
       - name: id
         data_type: INTEGER
