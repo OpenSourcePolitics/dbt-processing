@@ -92,7 +92,7 @@ models:
         constraints:
           - type: not_null
           - type: foreign_key
-            to: ref('int_users')
+            to: ref('users')
             to_columns: [id]
       - name: project_id
         data_type: BIGINT

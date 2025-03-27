@@ -4,65 +4,65 @@ models:
       contract: {enforced: true}
     columns:
       - name: id
-        data_type: bigint
+        data_type: BIGINT
         constraints:
           - type: unique
           - type: not_null
           - type: primary_key
       - name: title
-        data_type: text
+        data_type: TEXT
       - name: description
-        data_type: text
+        data_type: TEXT
       - name: address
-        data_type: text
+        data_type: TEXT
       - name: attendees_count
-        data_type: bigint
+        data_type: BIGINT
       - name: created_at
-        data_type: timestamp
+        data_type: TIMESTAMP
       - name: decidim_scope_id
-        data_type: bigint
+        data_type: BIGINT
         constraints:
           - type: foreign_key
             to: ref('int_scopes')
             to_columns: [id]
       - name: decidim_component_id
-        data_type: bigint
+        data_type: BIGINT
         constraints:
           - type: not_null
           - type: foreign_key
             to: ref('components')
             to_columns: [id]
       - name: start_time
-        data_type: timestamp
+        data_type: TIMESTAMP
       - name: end_time
-        data_type: timestamp
+        data_type: TIMESTAMP
       - name: registration_url
-        data_type: text
+        data_type: TEXT
       - name: type_of_meeting
-        data_type: text
+        data_type: TEXT
       - name: translated_type_of_meeting
-        data_type: text
+        data_type: TEXT
       - name: private_meeting
-        data_type: boolean
+        data_type: BOOLEAN
       - name: decidim_author_id
-        data_type: bigint
+        data_type: BIGINT
         constraints:
           - type: not_null
           - type: foreign_key
-            to: ref('int_users')
+            to: ref('users')
             to_columns: [id]
       - name: resource_type
-        data_type: text
+        data_type: TEXT
       - name: meeting_url
-        data_type: text
+        data_type: TEXT
       - name: categories
-        data_type: text #array
+        data_type: TEXT #ARRAY
       - name: first_category
-        data_type: text
+        data_type: TEXT
       - name: sub_categories
-        data_type: text #array
+        data_type: TEXT #ARRAY
       - name: first_sub_category
-        data_type: text
+        data_type: TEXT
 
 unit_tests:
   - name: test_url_concatenation

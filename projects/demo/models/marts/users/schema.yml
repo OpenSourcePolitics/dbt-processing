@@ -55,7 +55,7 @@ models:
         constraints:
           - type: not_null
           - type: foreign_key
-            to: ref('int_organizations')
+            to: ref('organizations')
             to_columns: [id]
       - name: confirmed_at
         data_type: TIMESTAMP

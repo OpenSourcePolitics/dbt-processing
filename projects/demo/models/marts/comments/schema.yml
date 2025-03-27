@@ -1,3 +1,42 @@
+models:
+  - name: comments
+    config:
+      contract: {enforced: true}
+    columns:
+      - name: id
+        data_type: BIGINT
+      - name: decidim_commentable_id
+        data_type: BIGINT
+      - name: decidim_commentable_type
+        data_type: TEXT
+      - name: decidim_author_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('users')
+            to_columns: [id]
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: depth
+        data_type: BIGINT
+      - name: alignment
+        data_type: BIGINT
+      - name: decidim_root_commentable_id
+        data_type: BIGINT
+      - name: decidim_root_commentable_type
+        data_type: TEXT
+      - name: decidim_author_type
+        data_type: TEXT
+      - name: body
+        data_type: TEXT
+      - name: decidim_component_id
+        data_type: BIGINT
+      - name: ps_slug
+        data_type: TEXT
+      - name: comment_url
+        data_type: TEXT
+
 #unit_tests:
 #  - name: moderations_check
 #    description: "Check if comments are properly ignored due to 'hidden_at' date"
