@@ -30,9 +30,9 @@ SELECT
         '/meetings/',
         decidim_meetings_meetings.id
     ) AS meeting_url,
-    categorizations.categories,
+    categorizations.categories::text,
     {{ categorization_first_category('categorizations.categories[1]') }},
-    categorizations.sub_categories,
+    categorizations.sub_categories::text,
     {{ categorization_first_sub_category('categorizations.sub_categories[1]') }}
 FROM {{ ref("int_meetings")}} AS decidim_meetings_meetings
 JOIN {{ ref("components")}} decidim_components on decidim_components.id = decidim_component_id

@@ -1,3 +1,27 @@
+models:
+  - name: int_budgets_orders
+    config:
+      contract: {enforced: true}
+    columns:
+      - name: id
+        data_type: BIGINT
+        description: "ID of the budget order"    
+        constraints:
+          - type: unique
+          - type: primary_key
+      - name: decidim_user_id
+        data_type: BIGINT
+      - name: checked_out_at
+        data_type: TIMESTAMP
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: updated_at
+        data_type: TIMESTAMP
+      - name: decidim_budgets_budget_id
+        data_type: BIGINT
+      - name: vote_finished
+        data_type: BOOL
+
 unit_tests:
   - name: vote_finished_test
     description: "Checks that the boolean is properly set to True only if there is a checked_out_at timestamp"

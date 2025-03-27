@@ -2,6 +2,44 @@
 version: 2
 
 models:
+  - name: organizations
+    config:
+      contract: {enforced: true}
+    columns:
+      - name: id
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: name
+        data_type: TEXT
+      - name: host
+        data_type: TEXT
+      - name: default_locale
+        data_type: TEXT
+      - name: available_locales
+        data_type: TEXT
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: description
+        data_type: TEXT
+      - name: secondary_hosts
+        data_type: TEXT
+      - name: available_authorizations
+        data_type: TEXT
+      - name: header_snippets
+        data_type: TEXT
+      - name: tos_version
+        data_type: TIMESTAMP
+      - name: badges_enabled
+        data_type: BOOLEAN
+      - name: send_welcome_notification
+        data_type: BOOLEAN
+      - name: users_registration_mode
+        data_type: BIGINT
+      - name: time_zone
+        data_type: TEXT
   - name: matomo_pages
     schema: "{{ env_var('TARGET_SCHEMA') }}"
     description: "Info related to a page and its associated settings: visits, time spent, exits, date, url, tag"

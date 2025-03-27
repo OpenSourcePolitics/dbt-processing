@@ -39,20 +39,20 @@ proposals AS (
         decidim_proposals.published_at,
         decidim_proposals.state,
         COALESCE(decidim_proposals_proposal_states.title, decidim_proposals.translated_state) AS translated_state,
-        coauthorships.authors_ids,
+        coauthorships.authors_ids::text,
         COALESCE(coauthorships.authors_ids[1], -1) AS first_author_id,
         decidim_proposals.address,
-        categorizations.categories,
+        categorizations.categories::text,
         {{ categorization_first_category('categorizations.categories[1]') }},
-        categorizations.sub_categories,
+        categorizations.sub_categories::text,
         {{ categorization_first_sub_category('categorizations.sub_categories[1]') }},
         decidim_proposals.comments_count,
         decidim_proposals.endorsements_count,
         COALESCE(votes.votes_count,0) AS votes_count,
-        decidim_proposals_proposal_states.id AS custom_state_id, 
+        decidim_proposals_proposal_states.id::int AS custom_state_id, 
         decidim_proposals_proposal_states.title AS custom_state,
         decidim_proposals_proposal_states.description,
-        decidim_proposals_proposal_states.proposals_count
+        decidim_proposals_proposal_states.proposals_count::int
     FROM {{ ref("int_proposals")}} AS decidim_proposals
     JOIN {{ ref("components")}} AS decidim_components ON decidim_components.id = decidim_proposals.decidim_component_id
     LEFT JOIN coauthorships ON decidim_proposals.id = coauthorships.coauthorable_id
