@@ -50,7 +50,6 @@ models:
       - name: area_type_id
         data_type: bigint
         constraints:
-          - type: not_null
           - type: foreign_key
             to: ref('stg_decidim_area_types')
             to_columns: [id]

@@ -49,10 +49,10 @@ proposals AS (
         decidim_proposals.comments_count,
         decidim_proposals.endorsements_count,
         COALESCE(votes.votes_count,0) AS votes_count,
-        decidim_proposals_proposal_states.id AS custom_state_id, 
+        decidim_proposals_proposal_states.id::int AS custom_state_id, 
         decidim_proposals_proposal_states.title AS custom_state,
         decidim_proposals_proposal_states.description,
-        decidim_proposals_proposal_states.proposals_count
+        decidim_proposals_proposal_states.proposals_count::int
     FROM {{ ref("int_proposals")}} AS decidim_proposals
     JOIN {{ ref("components")}} AS decidim_components ON decidim_components.id = decidim_proposals.decidim_component_id
     LEFT JOIN coauthorships ON decidim_proposals.id = coauthorships.coauthorable_id
