@@ -1,8 +1,75 @@
 version: 2
 
 models:
-  - name: forms_answers
-    description: "Table gathering all types of answers (long, short, optional, sorting and matrix). "
+  - name: forms
+    config:
+      contract: {enforced: true}
     columns:
+      - name: id
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: title
+        data_type: TEXT
+      - name: decidim_component_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('components')
+            to_columns: [id]
+      - name: questionnaire_url
+        data_type: TEXT
+  - name: forms_answers
+    config:
+      contract: {enforced: false}
+    columns:
+      - name: decidim_user_id
+        data_type: BIGINT
+        #constraints:
+        #  - type: foreign_key
+        #    to: ref('users')
+        #    to_columns: [id]
+      - name: session_token
+        data_type: TEXT
+      - name: ip_hash
+        data_type: TEXT
+      - name: question_type
+        data_type: TEXT
+      - name: question_title
+        data_type: TEXT
+      - name: answer
+        data_type: TEXT
+      - name: sub_matrix_question
+        data_type: TEXT
+      - name: custom_body
+        data_type: TEXT
+      - name: sorting_position
+        data_type: BIGINT
+      - name: decidim_questionnaire_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('forms')
+            to_columns: [id]
+      - name: form_title
+        data_type: TEXT
+      - name: decidim_component_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('components')
+            to_columns: [id]
       - name: sorting_points
+        data_type: INTEGER
         description: "In order to evaluate the weight of the sorting answers, points are given to the answer according to its sorting position."
+      - name: position
+        data_type: BIGINT
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: author_status
+        data_type: TEXT

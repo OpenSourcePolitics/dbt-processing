@@ -1,0 +1,51 @@
+models:
+  - name: debates
+    config:
+      contract: {enforced: false}
+    columns:
+      - name: id
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: title
+        data_type: TEXT
+      - name: description
+        data_type: TEXT
+      - name: start_time
+        data_type: TIMESTAMP
+      - name: end_time
+        data_type: TIMESTAMP
+      - name: decidim_component_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('components')
+            to_columns: [id]
+      - name: decidim_author_id
+        data_type: BIGINT
+        #constraints:
+        #  - type: not_null
+        #  - type: foreign_key
+        #    to: ref('users')
+        #    to_columns: [id]
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: closed_at
+        data_type: TIMESTAMP
+      - name: ps_slug
+        data_type: TEXT
+      - name: debate_url
+        data_type: TEXT
+      - name: resource_type
+        data_type: TEXT
+      - name: categories
+        data_type: TEXT #ARRAY
+      - name: first_category
+        data_type: TEXT
+      - name: sub_categories
+        data_type: TEXT #ARRAY
+      - name: first_sub_category
+        data_type: TEXT

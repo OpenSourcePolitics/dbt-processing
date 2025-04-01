@@ -18,14 +18,14 @@
     FROM {{ source('decidim', 'decidim_initiatives_votes') }}
 {% else %}
     SELECT
-        CAST(NULL AS INTEGER) AS id,
-        CAST(NULL AS INTEGER) AS decidim_initiative_id,
-        CAST(NULL AS INTEGER) AS user_id,
+        CAST(NULL AS BIGINT) AS id,
+        CAST(NULL AS BIGINT) AS decidim_initiative_id,
+        CAST(NULL AS BIGINT) AS user_id,
         CAST(NULL AS TIMESTAMP) AS created_at,
         CAST(NULL AS TIMESTAMP) AS updated_at,
         CAST(NULL AS TEXT) AS encrypted_metadata,
         CAST(NULL AS TIMESTAMP) AS timestamp,
         CAST(NULL AS TEXT) AS hash_id,
-        CAST(NULL AS INTEGER) AS decidim_scope_id
+        CAST(NULL AS BIGINT) AS decidim_scope_id
     LIMIT 0
 {% endif %}

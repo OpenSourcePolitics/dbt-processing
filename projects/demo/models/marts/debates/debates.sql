@@ -25,9 +25,9 @@ SELECT
         decidim_debates_debates.id
     ) AS debate_url,
     decidim_debates_debates.resource_type,
-    categorizations.categories,
+    categorizations.categories::text,
     {{ categorization_first_category('categorizations.categories[1]') }},
-    categorizations.sub_categories,
+    categorizations.sub_categories::text,
     {{ categorization_first_sub_category('categorizations.sub_categories[1]') }}
 FROM {{ ref("stg_decidim_debates")}} AS decidim_debates_debates
     JOIN {{ ref("components")}} decidim_components on decidim_components.id = decidim_component_id
