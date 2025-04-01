@@ -72,7 +72,7 @@ unit_tests:
       - input: ref('int_meetings')
         format: dict
         rows:
-          - { decidim_component_id: 1, id: 100 }
+          - { decidim_component_id: 1, id: 100, decidim_scope_id: 10 }
       - input: ref('components')
         format: dict
         rows:
@@ -81,6 +81,10 @@ unit_tests:
         format: dict
         rows:
           - { categorizable_id: 100 }
+      - input: ref("int_scopes")
+        format: dict
+        rows:
+          - { id: 10 }
     expect:
       format: dict
       rows:
@@ -92,8 +96,8 @@ unit_tests:
       - input: ref('int_meetings')
         format: dict
         rows:
-          - { decidim_component_id: 1, id: 100 }
-          - { decidim_component_id: 2, id: 200 }
+          - { decidim_component_id: 1, id: 100, decidim_scope_id: 10  }
+          - { decidim_component_id: 2, id: 200, decidim_scope_id: 10  }
       - input: ref('components')
         format: dict
         rows:
@@ -103,6 +107,10 @@ unit_tests:
         format: dict
         rows:
           - {}
+      - input: ref("int_scopes")
+        format: dict
+        rows:
+          - { id: 10 }
     expect:
       format: dict
       rows:
