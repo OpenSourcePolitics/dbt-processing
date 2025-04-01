@@ -77,16 +77,17 @@ models:
         data_type: TEXT
       - name: id_as_text
         data_type: TEXT
+
   - name: initiatives_votes
     config:
       contract: {enforced: true}
     columns:
       - name: id
-        data_type: INTEGER
+        data_type: BIGINT
       - name: decidim_initiative_id
-        data_type: INTEGER
+        data_type: BIGINT
       - name: user_id
-        data_type: INTEGER
+        data_type: BIGINT
         constraints:
           - type: not_null
           - type: foreign_key
@@ -97,7 +98,7 @@ models:
       - name: hash_id
         data_type: TEXT
       - name: decidim_scope_id
-        data_type: INTEGER
+        data_type: BIGINT
       - name: initiative_url
         data_type: TEXT
   - name: initiatives_comments
