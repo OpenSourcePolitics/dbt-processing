@@ -22,7 +22,13 @@ WITH answers_short_and_long_answer AS (
     SELECT * FROM answers_file
 )
 
-SELECT
+SELECT DISTINCT ON (
+    answers.session_token,
+    answers.body,
+    btrim(answers.answer, '"'),
+    answers.custom_body,
+    answers.position
+)
     answers.decidim_user_id,
     answers.session_token,
     answers.ip_hash,
@@ -53,4 +59,10 @@ SELECT
     answers.author_status
 FROM answers
 JOIN {{ ref('forms') }} AS decidim_forms_questionnaires ON decidim_forms_questionnaires.id = answers.decidim_questionnaire_id
-ORDER BY session_token, position
+ORDER BY
+    answers.session_token,
+    answers.body,
+    btrim(answers.answer, '"'),
+    answers.custom_body,
+    answers.position,
+    answers.created_at DESC
