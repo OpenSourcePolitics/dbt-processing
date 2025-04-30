@@ -6,6 +6,7 @@ sources:
     schema: public
     tables:
       - name: decidim_forms_answer_choices
+      - name: decidim_forms_answer_options
       - name: decidim_forms_answers
       - name: decidim_forms_question_matrix_rows
       - name: decidim_forms_questionnaires
@@ -36,6 +37,17 @@ models:
         description: "Custom body for the answer choice when the answer is of type free text."
       - name: decidim_question_matrix_row_id
         description: "Foreign key to the question matrix row when the question is of type matrix. It matches the matrix rows."
+
+models:
+  - name: stg_decidim_forms_answer_options
+    description: "Table for forms answer options when the question is a single or multiple question type"
+    columns:
+      - name: id
+        description: "Primary key."
+        data_tests:
+          - not_null
+          - unique
+      - name: decidim_question_id
 
   - name: stg_decidim_forms_answers
     description: "Table for forms answer when the answer is not in a matrix or optional and sorting question. (i.e long_answer and short_answer)"
