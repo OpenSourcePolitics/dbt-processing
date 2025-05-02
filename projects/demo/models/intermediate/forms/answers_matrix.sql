@@ -12,7 +12,7 @@ SELECT DISTINCT
     decidim_forms_questions.position AS "position",
     decidim_forms_answer_choices.body::text AS "answer",
     decidim_forms_question_matrix_rows.body AS sub_matrix_question,
-    '' AS custom_body,
+    COALESCE(decidim_forms_answer_choices.custom_body, '') AS custom_body,
     -1 AS sorting_position,
     decidim_forms_questions.decidim_questionnaire_id,
     decidim_forms_questions.body,
