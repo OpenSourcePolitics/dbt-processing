@@ -3,23 +3,48 @@ version: 2
 
 models:
   - name: stg_decidim_scopes
+    config:
+      contract: {enforced: true}
     description: "Scopes are the set of territories or subjects that an Organization has. A scope may have child scopes."
     columns:
       - name: id
+        data_type: bigint
         description: "Unique identifier for the scope."
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
       - name: decidim_organization_id
+        data_type: bigint
         description: "Identifier for the Decidim organization to which the scope belongs."
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_organizations')
+            to_columns: [id]
       - name: created_at
+        data_type: timestamp
         description: "Timestamp when the scope was created."
       - name: updated_at
+        data_type: timestamp
         description: "Timestamp when the scope was last updated."
       - name: name
+        data_type: text
         description: "Name of the scope."
       - name: scope_type_id
+        data_type: bigint
         description: "Identifier for the type of scope."
       - name: parent_id
+        data_type: bigint
         description: "Identifier for the parent scope, if applicable."
+        #constraints:
+        #  - type: not_null
+        #  - type: foreign_key
+        #    to: ref('stg_decidim_scopes')
+        #    to_columns: [id]
       - name: code
+        data_type: text
         description: "Code associated with the scope."
       - name: part_of
+        data_type: jsonb
         description: "IDs of the parent-child scope relationship"

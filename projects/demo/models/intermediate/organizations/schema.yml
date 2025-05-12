@@ -2,37 +2,58 @@ version: 2
 
 models:
   - name: int_organizations
+    config:
+      contract: {enforced: true}
     description: "A staging model for Decidim organizations"
     columns:
       - name: id
+        data_type: BIGINT
         description: "Unique identifier for the organization"
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
       - name: name
+        data_type: TEXT
         description: "Name of the organization"
       - name: host
+        data_type: TEXT
         description: "Host URL for the organization"
       - name: default_locale
+        data_type: TEXT
         description: "Default locale for the organization"
       - name: available_locales
+        data_type: TEXT
         description: "List of available locales for the organization"
       - name: created_at
+        data_type: TIMESTAMP
         description: "Timestamp when the organization was created"
       - name: description
+        data_type: TEXT
         description: "Description of the organization"
       - name: secondary_hosts
+        data_type: TEXT
         description: "Secondary hosts for the organization"
       - name: available_authorizations
+        data_type: TEXT
         description: "List of available authorizations for the organization"
       - name: header_snippets
+        data_type: TEXT
         description: "Header snippets for the organization"
       - name: tos_version
+        data_type: TIMESTAMP
         description: "Version of the terms of service"
       - name: badges_enabled
+        data_type: BOOL
         description: "Indicates if badges are enabled. Badges in Decidim recognize participant actions and progress, enhancing engagement through gamification."
       - name: send_welcome_notification
+        data_type: BOOL
         description: "Flag indicating if welcome notifications are sent"
       - name: users_registration_mode
+        data_type: BIGINT
         description: "Mode of user registration"
       - name: time_zone
+        data_type: TEXT
         description: "Time zone of the organization"
 
 

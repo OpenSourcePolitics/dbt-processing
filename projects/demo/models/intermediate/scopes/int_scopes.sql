@@ -10,3 +10,4 @@ SELECT
     decidim_scopes.parent_id,
     decidim_scopes.code
 FROM {{ ref ("stg_decidim_scopes") }}  as decidim_scopes
+JOIN {{ ref ("int_organizations")}}  AS decidim_organizations ON decidim_organization_id = decidim_organizations.id

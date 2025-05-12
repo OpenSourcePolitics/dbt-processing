@@ -30,3 +30,4 @@ WITH budgets_projects AS (
         decidim_budgets_orders.decidim_budgets_budget_id
     from {{ ref("int_budgets_orders")}} AS decidim_budgets_orders
         LEFT JOIN budgets_projects on decidim_order_id = decidim_budgets_orders.id
+        WHERE project_id IS NOT NULL

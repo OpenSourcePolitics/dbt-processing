@@ -1,12 +1,130 @@
-
 version: 2
 
 models:
+  - name: budgets
+    config:
+      contract: {enforced: false}
+    columns:
+      - name: id
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: title
+        #data_type: TEXT
+      - name: decidim_component_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('components')
+            to_columns: [id]
+      - name: url
+        data_type: TEXT
+      - name: ps_slug
+        data_type: TEXT
+      - name: ps_title
+        data_type: TEXT
+  - name: budgets_projects
+    config:
+      contract: {enforced: false}
+    columns:
+      - name: id
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: title
+        data_type: TEXT
+      - name: description
+        data_type: TEXT
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: decidim_scope_id
+        data_type: BIGINT
+      - name: project_amount
+        data_type: BIGINT
+      - name: selected_at
+        data_type: DATE
+      - name: is_selected
+        data_type: BOOL
+      - name: budget_id
+        data_type: BIGINT
+      - name: budget_title
+        data_type: TEXT
+      - name: resource_type
+        data_type: TEXT
+      - name: decidim_component_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('components')
+            to_columns: [id]
+      - name: project_url
+        data_type: TEXT
+      - name: categories
+        data_type: TEXT #ARRAY
+      - name: first_category
+        data_type: TEXT
+      - name: sub_categories
+        data_type: TEXT #ARRAY
+      - name: first_sub_category
+        data_type: TEXT
+
   - name: projects_votes
     description: "Splits budgets orders (i.e. votes) on a per-project basis"
+    config:
+      contract: {enforced: false}
     columns:
       - name: order_id
-        description: "ID of the budget order through which the vote has been issued"    
+        data_type: BIGINT
+        description: "ID of the budget order through which the vote has been issued"
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('int_budgets_orders')
+            to_columns: [id]
+      - name: decidim_user_id
+        data_type: BIGINT
+        #constraints:
+        #  - type: not_null
+        #  - type: foreign_key
+        #    to: ref('users')
+        #    to_columns: [id]
+      - name: project_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('budgets_projects')
+            to_columns: [id]
+      - name: project_title
+        data_type: TEXT
+      - name: decidim_component_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('components')
+            to_columns: [id]
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: checked_out_at
+        data_type: TIMESTAMP
+      - name: project_url
+        data_type: TEXT
+      - name: vote_finished
+        data_type: BOOL
+      - name: decidim_budgets_budget_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('budgets')
+            to_columns: [id]
 
 unit_tests:
   - name: test_translate_category

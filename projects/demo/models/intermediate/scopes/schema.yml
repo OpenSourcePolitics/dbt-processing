@@ -1,24 +1,46 @@
 version: 2
-
 models:
   - name: int_scopes
     description: "Intermediate model for Decidim scopes, excluding the 'part_of' column due to ARRAY bug in tests."
+    config:
+      contract: {enforced: true}
     columns:
       - name: id
+        data_type: bigint
         description: "Unique identifier for the scope."
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
       - name: decidim_organization_id
+        data_type: bigint
         description: "Identifier for the Decidim organization to which the scope belongs."
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('int_organizations')
+            to_columns: [id]
       - name: created_at
+        data_type: timestamp
         description: "Timestamp when the scope was created."
       - name: updated_at
+        data_type: timestamp
         description: "Timestamp when the scope was last updated."
       - name: name
+        data_type: text
         description: "Name of the scope in French, with a default value 'Sans secteur' if the name is empty."
       - name: scope_type_id
+        data_type: bigint
         description: "Identifier for the type of scope."
       - name: parent_id
+        data_type: bigint
         description: "Identifier for the parent scope, if applicable."
+        constraints:
+          - type: foreign_key
+            to: ref('stg_decidim_scopes')
+            to_columns: [id]
       - name: code
+        data_type: text
         description: "Code associated with the scope."
 
 #unit_tests:

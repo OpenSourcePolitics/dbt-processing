@@ -12,15 +12,55 @@ sources:
         
 models:
   - name: stg_decidim_area_types
+    config:
+      contract: {enforced: true}
     description: "Table for (deprecated) area types. Area types are used mainly as categories and super categories for decidim area."
     columns:
       - name: id
-        description: "Primary key."
+        data_type: bigint
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: decidim_organization_id
+        data_type: bigint
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_organizations')
+            to_columns: [id]
+      - name: name
+        data_type: text
+      - name: plural
+        data_type: text
 
   - name: stg_decidim_areas
+    config:
+      contract: {enforced: true}
     description: "Table for (deprecated) areas. Areas are sub categories for area types."
     columns:
       - name: id
-        description: "Primary key."
+        data_type: bigint
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: name
+        data_type: text
       - name: area_type_id
-        description: "Id of the area type, the area is linked to."
+        data_type: bigint
+        constraints:
+          - type: foreign_key
+            to: ref('stg_decidim_area_types')
+            to_columns: [id]
+      - name: decidim_organization_id
+        data_type: bigint
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_organizations')
+            to_columns: [id]
+      - name: created_at
+        data_type: timestamp
+      - name: updated_at
+        data_type: timestamp
