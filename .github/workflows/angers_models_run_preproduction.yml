@@ -18,14 +18,11 @@ jobs:
   angers_models_run_preproduction:
     name: angers_models_run_preproduction
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ env.WORKING_DIRECTORY }}
 
     steps:
       - name: Check out
         uses: actions/checkout@master
-      
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -34,13 +31,18 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install --no-cache-dir -r requirements.txt
-          dbt deps --target preprod
-      
+          pip install -r requirements.txt
+
+      - name: Run dbt deps
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: dbt deps --target preprod
+
       - name: Run dbt models
+        working-directory: ${{ env.WORKING_DIRECTORY }}
         run: dbt run --target preprod
 
       - name: Test dbt models
+        working-directory: ${{ env.WORKING_DIRECTORY }}
         run: dbt test --target preprod
 
 

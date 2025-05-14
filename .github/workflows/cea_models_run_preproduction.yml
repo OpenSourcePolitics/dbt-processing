@@ -18,29 +18,30 @@ jobs:
   cea_models_run_preproduction:
     name: cea_models_run_preproduction
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ env.WORKING_DIRECTORY }}
 
     steps:
       - name: Check out
         uses: actions/checkout@master
-      
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12.x"
           cache: 'pip'
-        
+
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          dbt deps --target preprod
-      
+
+      - name: Run dbt deps
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: dbt deps --target preprod
+
       - name: Run dbt models
+        working-directory: ${{ env.WORKING_DIRECTORY }}
         run: dbt run --target preprod
 
       - name: Test dbt models
+        working-directory: ${{ env.WORKING_DIRECTORY }}
         run: dbt test --target preprod
-
 
