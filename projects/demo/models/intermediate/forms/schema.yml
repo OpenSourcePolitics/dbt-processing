@@ -224,9 +224,9 @@ unit_tests:
           - {question_type: 'matrix_multiple'}
           - {question_type: 'matrix_single'}
 
-  - name: answers_short_and_long_answer_custom_body_check
+  - name: answers_matrix_custom_body_check
     description: "Check if custom bodies are correctly retrieved from short and long answers"
-    model: answers_short_and_long_answer
+    model: answers_matrix
     given:
       - input: ref('int_forms_answers')
         format: dict
@@ -238,22 +238,27 @@ unit_tests:
       - input: ref('stg_decidim_forms_questions')
         format: dict
         rows:
-          - {id: 41, question_type: 'short_answer', body: "Équipe de foot préférée ?"}
-          - {id: 42, question_type: 'long_answer', body: "Équipe de basket préférée ?"}
+          - {id: 41, question_type: 'matrix_single', body: "Qu'en avez-vous pensé ?"}
+          - {id: 42, question_type: 'matrix_multiple', body: "Quel rôle avez-vous joué ?"}
       - input: ref('stg_decidim_forms_answer_choices')
         format: dict
         rows:
-          - {decidim_answer_id: 901, custom_body: 'Le PSG'}
-          - {decidim_answer_id: 902, custom_body: NULL}
-          - {decidim_answer_id: 903, custom_body: 'Le CSP Limoges'}
-          - {decidim_answer_id: 904, custom_body: NULL}
+          - {decidim_answer_id: 901, decidim_question_matrix_row_id: 1, body: "Rien (précisez pourquoi)", custom_body: "Pas joué"}
+          - {decidim_answer_id: 902, decidim_question_matrix_row_id: 1, body: "Bon match", custom_body: NULL}
+          - {decidim_answer_id: 903, decidim_question_matrix_row_id: 8, body: "Autre (précisez lequel)", custom_body: "Arbitre"}
+          - {decidim_answer_id: 904, decidim_question_matrix_row_id: 8, body: "Attaquant", custom_body: NULL}
+      - input: ref('stg_decidim_forms_question_matrix_rows')
+        format: dict
+        rows:
+          - {id: 1}
+          - {id: 8}
     expect:
       format: dict
       rows:
-        - {session_token: 555555, body: "Équipe de foot préférée ?", custom_body: 'Le PSG'}
-        - {session_token: 666666, body: "Équipe de foot préférée ?", custom_body: ''}
-        - {session_token: 555555, body: "Équipe de basket préférée ?", custom_body: 'Le CSP Limoges'}
-        - {session_token: 666666, body: "Équipe de basket préférée ?", custom_body: ''}
+        - {session_token: 555555, body: "Qu'en avez-vous pensé ?", answer: "Rien (précisez pourquoi)", custom_body: "Pas joué"}
+        - {session_token: 666666, body: "Qu'en avez-vous pensé ?", answer: "Bon match", custom_body: ''}
+        - {session_token: 555555, body: "Quel rôle avez-vous joué ?", answer: "Autre (précisez lequel)", custom_body: "Arbitre"}
+        - {session_token: 666666, body: "Quel rôle avez-vous joué ?", answer: "Attaquant", custom_body: ''}
 
   
   
