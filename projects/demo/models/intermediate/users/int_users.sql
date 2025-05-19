@@ -42,6 +42,8 @@ WITH users_with_age AS (
         decidim_users.date_of_birth,
         {{ translate_gender('decidim_users.gender') }} AS gender,
         decidim_users.postal_code,
+        decidim_users.half_signup_phone_number,
+        decidim_users.half_signup_phone_country,
         (CASE WHEN decidim_users.confirmed_at IS NULL THEN false ELSE true END) AS confirmed, 
         (CASE WHEN decidim_users.spam_probability IS NULL THEN false ELSE true END) AS spam, 
         decidim_users.spam_probability,
