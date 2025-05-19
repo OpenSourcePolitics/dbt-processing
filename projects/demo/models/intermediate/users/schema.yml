@@ -113,6 +113,11 @@ models:
         data_type: DECIMAL
       - name: age_category
         data_type: TEXT
+      - name: phone_number
+        data_type: TEXT
+      - name: phone_country
+        data_type: TEXT
+
 
 unit_tests:
   - name: type_check
