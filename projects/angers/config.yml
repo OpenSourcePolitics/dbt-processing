@@ -1,3 +1,3 @@
 db_name_dev: ANGERS_DBNAME_DEV
 db_name_prod: ANGERS_DBNAME_PROD
-participation_host_name: CESE_PARTICIPATION_HOST_NAME
+participation_host_name: ANGERS_PARTICIPATION_HOST_NAME
