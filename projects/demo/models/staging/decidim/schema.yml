@@ -76,12 +76,12 @@ unit_tests:
       - input: source('decidim', 'decidim_users')
         format: dict
         rows:
-          - {id: 1, extended_data: "{\"user_name\": \"Blocked user\", \"spam_detection\": {\"blocked_at\": \"2024-11-14T16:54:37.332+01:00\", \"reported_at\": \"2024-10-11T07:16:38.010+02:00\", \"spam_probability\": 0.99}}"}
+          - {id: 1, extended_data: "{\"user_name\": \"Blocked user\", \"spam_detection\": {\"blocked_at\": \"2024-11-14T16:54:37.332+01:00\", \"reported_at\": \"2024-10-11T07:16:38.010+02:00\", \"spam_probability\": 0.99}, \"half_signup\": {\"email\": \"quick_auth-AAAAAAAAAA@jeparticipe.metropole.toulouse.fr\", \"phone_number\": \"611223344\", \"phone_country\": \"FR\"}}"}
 
     expect:
       format: dict
       rows:
-          - {id: 1, spam_probability: 0.99, spam_report_timestamp: "2024-10-11T07:16:38.010+02:00"}
+          - {id: 1, spam_probability: 0.99, spam_report_timestamp: "2024-10-11T07:16:38.010+02:00", phone_number: "611223344", phone_country: "FR"}
   
   - name: testing_date_out_of_range
     description: "Checks that age is undefined if field value out of range"
