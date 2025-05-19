@@ -105,8 +105,8 @@ SELECT
     decidim_users.age_category,
     decidim_users.gender,
     decidim_users.postal_code,
-    decidim_users.phone_number,
-    decidim_users.phone_country,
+    decidim_users.half_signup_phone_number,
+    decidim_users.half_signup_phone_country,
     decidim_users.half_signup
 FROM {{ ref("int_users") }} AS decidim_users
 LEFT JOIN followings ON followings.decidim_user_id = decidim_users.id

@@ -81,7 +81,7 @@ unit_tests:
     expect:
       format: dict
       rows:
-          - {id: 1, spam_probability: 0.99, spam_report_timestamp: "2024-10-11T07:16:38.010+02:00", phone_number: "611223344", phone_country: "FR"}
+          - {id: 1, spam_probability: 0.99, spam_report_timestamp: "2024-10-11T07:16:38.010+02:00", half_signup_phone_number: "611223344", half_signup_phone_country: "FR"}
   
   - name: testing_date_out_of_range
     description: "Checks that age is undefined if field value out of range"

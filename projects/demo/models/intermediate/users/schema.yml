@@ -113,9 +113,9 @@ models:
         data_type: DECIMAL
       - name: age_category
         data_type: TEXT
-      - name: phone_number
+      - name: half_signup_phone_number
         data_type: TEXT
-      - name: phone_country
+      - name: half_signup_phone_country
         data_type: TEXT
 
 

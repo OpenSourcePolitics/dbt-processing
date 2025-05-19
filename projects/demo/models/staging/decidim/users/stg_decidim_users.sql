@@ -41,8 +41,8 @@ renamed AS (
         NULLIF(extended_data::jsonb->>'gender', '') AS gender,
         NULLIF(extended_data::jsonb->>'postal_code', '') AS postal_code,
         NULLIF(extended_data::jsonb->>'half_signup', '') AS half_signup,
-        NULLIF(extended_data::jsonb->'half_signup'->>'phone_number', '') AS phone_number,
-        NULLIF(extended_data::jsonb->'half_signup'->>'phone_country', '') AS phone_country,
+        NULLIF(extended_data::jsonb->'half_signup'->>'phone_number', '') AS half_signup_phone_number,
+        NULLIF(extended_data::jsonb->'half_signup'->>'phone_country', '') AS half_signup_phone_country,
         extended_data
     FROM source
 )
