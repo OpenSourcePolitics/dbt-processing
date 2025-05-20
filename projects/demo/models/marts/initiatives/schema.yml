@@ -88,7 +88,7 @@ models:
         data_type: BIGINT
       - name: user_id
         data_type: BIGINT
-        constraints:
+        #constraints:
         #  - type: not_null
         #  - type: foreign_key
         #    to: ref('users')
