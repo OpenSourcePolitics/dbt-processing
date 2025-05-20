@@ -89,10 +89,10 @@ models:
       - name: user_id
         data_type: BIGINT
         constraints:
-          - type: not_null
-          - type: foreign_key
-            to: ref('users')
-            to_columns: [id]
+        #  - type: not_null
+        #  - type: foreign_key
+        #    to: ref('users')
+        #    to_columns: [id]
       - name: created_at
         data_type: TIMESTAMP
       - name: hash_id
@@ -113,11 +113,11 @@ models:
         data_type: TEXT
       - name: decidim_author_id
         data_type: BIGINT
-        constraints:
-          - type: not_null
-          - type: foreign_key
-            to: ref('users')
-            to_columns: [id]
+        #constraints:
+        #  - type: not_null
+        #  - type: foreign_key
+        #    to: ref('users')
+        #    to_columns: [id]
       - name: created_at
         data_type: TIMESTAMP
       - name: depth
