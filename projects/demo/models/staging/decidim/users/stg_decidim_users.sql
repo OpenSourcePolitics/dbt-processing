@@ -41,12 +41,10 @@ renamed AS (
         NULLIF(extended_data::jsonb->>'gender', '') AS gender,
         NULLIF(extended_data::jsonb->>'postal_code', '') AS postal_code,
         NULLIF(extended_data::jsonb->>'half_signup', '') AS half_signup,
-        COALESCE(extended_data::jsonb->'half_signup'->>'phone_number',
-                   {{ get_column_if_exists(source('decidim', 'decidim_users'), 'phone_number', include_alias=False) }}
-                ) AS phone_number,
-       COALESCE(extended_data::jsonb->'half_signup'->>'phone_country',
-                    {{ get_column_if_exists(source('decidim', 'decidim_users'), 'phone_country', include_alias=False) }}
-                ) AS phone_country,
+        extended_data::jsonb->'half_signup'->>'phone_number' AS half_signup_phone_number,
+        {{ get_column_if_exists(source('decidim', 'decidim_users'), 'phone_number') }},
+        extended_data::jsonb->'half_signup'->>'phone_country' AS half_signup_phone_country,
+        {{ get_column_if_exists(source('decidim', 'decidim_users'), 'phone_country') }},
         extended_data
     FROM source
 )

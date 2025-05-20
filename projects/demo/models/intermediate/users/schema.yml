@@ -219,4 +219,34 @@ unit_tests:
      macros:
       dbt_date.today: "'2010-01-01'"
 
+  - name: phone_number_fallback_check
+    description: "Check that phone numbers are retrieved in the correct order"
+    model: int_users
+    given:
+      - input: ref('stg_decidim_users')
+        format: dict
+        rows:
+          - {id: 1, phone_number: "722222222", half_signup_phone_number: "611111111", type: 'Decidim::User'}
+          - {id: 2, phone_number: "722222222", half_signup_phone_number: NULL, type: 'Decidim::User'}
+          - {id: 3, phone_number: NULL, half_signup_phone_number: "611111111", type: 'Decidim::User'}
+    expect:
+      format: dict
+      rows:
+          - {id: 1, phone_number: "611111111"}
+          - {id: 2, phone_number: "722222222"}
+          - {id: 3, phone_number: "611111111"}
+
+  - name: testing_date_out_of_range
+    description: "Checks that age is undefined if field value out of range"
+    model: int_users
+    given:
+      - input: ref('stg_decidim_users')
+        format: dict
+        rows:
+          - {id: 1, extended_data: '{"date_of_birth": "0000-11-06"}', type: 'Decidim::User'}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, date_of_birth: null, age: null, age_category: "Âge non défini"}
+
  
