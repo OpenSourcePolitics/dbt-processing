@@ -154,9 +154,9 @@ models:
         data_type: TEXT
       - name: half_signup
         data_type: BOOLEAN
-      - name: half_signup_phone_number
+      - name: phone_number
         data_type: TEXT
-      - name: half_signup_phone_country
+      - name: phone_country
         data_type: TEXT
 
   - name: all_users
