@@ -133,6 +133,7 @@ unit_tests:
       - input: ref('int_forms_answers')
         format: dict
         rows:
+        rows:
           - {id: 901, decidim_question_id: 41}
           - {id: 902, decidim_question_id: 42}
           - {id: 903, decidim_question_id: 43}
@@ -144,13 +145,20 @@ unit_tests:
           - {id: 42, question_type: 'multiple_option'}
           - {id: 43, question_type: 'sorting'}
           - {id: 44, question_type: 'matrix_single'}
+      - input: ref('stg_decidim_forms_answer_options')
+        format: dict
+        rows:
+          - {decidim_question_id: 41, body: "Nord"}
+          - {decidim_question_id: 42, body: "Rouge"}
+          - {decidim_question_id: 43, body: "Hiver"}
+          - {decidim_question_id: 44, body: "réponse matrix"}
       - input: ref('stg_decidim_forms_answer_choices')
         format: dict
         rows:
-          - {decidim_answer_id: 901}
-          - {decidim_answer_id: 902}
-          - {decidim_answer_id: 903}
-          - {decidim_answer_id: 904}
+          - {decidim_answer_id: 901, body: "Nord"}
+          - {decidim_answer_id: 902, body: "Rouge"}
+          - {decidim_answer_id: 903, body: "Hiver"}
+          - {decidim_answer_id: 904, body: "réponse matrix"}
     expect:
       format: dict
       rows:
@@ -165,10 +173,10 @@ unit_tests:
       - input: ref('int_forms_answers')
         format: dict
         rows:
-          - {id: 901, decidim_question_id: 41}
-          - {id: 902, decidim_question_id: 42}
-          - {id: 903, decidim_question_id: 43}
-          - {id: 904, decidim_question_id: 44}
+          - {id: 901, decidim_question_id: 41, body: "Nord"}
+          - {id: 902, decidim_question_id: 42, body: "Rouge"}
+          - {id: 903, decidim_question_id: 43, body: "Hiver"}
+          - {id: 904, decidim_question_id: 44, body: "réponse matrix"}
       - input: ref('stg_decidim_forms_questions')
         format: dict
         rows:
@@ -183,6 +191,7 @@ unit_tests:
           - {decidim_answer_id: 902}
           - {decidim_answer_id: 903}
           - {decidim_answer_id: 904}
+
     expect:
       format: dict
       rows:
@@ -260,5 +269,89 @@ unit_tests:
         - {session_token: 555555, body: "Quel rôle avez-vous joué ?", answer: "Autre (précisez lequel)", custom_body: "Arbitre"}
         - {session_token: 666666, body: "Quel rôle avez-vous joué ?", answer: "Attaquant", custom_body: ''}
 
-  
-  
+  - name: answers_single_option_content_check
+    description: "Check that single option answers match pre-written options"
+    model: answers_option_and_sorting
+    given:
+      - input: ref('int_forms_answers')
+        format: dict
+        rows:
+          - {id: 901, decidim_question_id: 41}
+          - {id: 904, decidim_question_id: 41}
+      - input: ref('stg_decidim_forms_questions')
+        format: dict
+        rows:
+          - {id: 41, question_type: 'single_option'}
+      - input: ref('stg_decidim_forms_answer_choices')
+        format: dict
+        rows:
+          - {decidim_answer_id: 901, body: "Nord"}
+          - {decidim_answer_id: 904, body: "Invalide"}
+      - input: ref('stg_decidim_forms_answer_options')
+        format: dict
+        rows:
+          - {decidim_question_id: 41, body: "Nord"}
+          - {decidim_question_id: 41, body: "Sud"}
+    expect:
+      format: dict
+      rows:
+          - {answer: "Nord"}
+
+  - name: answers_multiple_option_content_check
+    description: "Check that multiple option answers match pre-written options"
+    model: answers_option_and_sorting
+    given:
+      - input: ref('int_forms_answers')
+        format: dict
+        rows:
+          - {id: 902, decidim_question_id: 42}
+          - {id: 905, decidim_question_id: 42}
+      - input: ref('stg_decidim_forms_questions')
+        format: dict
+        rows:
+          - {id: 42, question_type: 'multiple_option'}
+      - input: ref('stg_decidim_forms_answer_choices')
+        format: dict
+        rows:
+          - {decidim_answer_id: 902, body: "Bleu"}
+          - {decidim_answer_id: 905, body: "Invalide"}
+      - input: ref('stg_decidim_forms_answer_options')
+        format: dict
+        rows:
+          - {decidim_question_id: 42, body: "Rouge"}
+          - {decidim_question_id: 42, body: "Bleu"}
+          - {decidim_question_id: 42, body: "Vert"}
+    expect:
+      format: dict
+      rows:
+          - {answer: "Bleu"}
+
+  - name: answers_sorting_option_content_check
+    description: "Check that answers to sorting questions match pre-written options"
+    model: answers_option_and_sorting
+    given:
+      - input: ref('int_forms_answers')
+        format: dict
+        rows:
+          - {id: 903, decidim_question_id: 43}
+          - {id: 906, decidim_question_id: 43}
+      - input: ref('stg_decidim_forms_questions')
+        format: dict
+        rows:
+          - {id: 43, question_type: 'sorting'}
+      - input: ref('stg_decidim_forms_answer_choices')
+        format: dict
+        rows:
+          - {decidim_answer_id: 903, body: "Été"}
+          - {decidim_answer_id: 906, body: "Invalide"}
+      - input: ref('stg_decidim_forms_answer_options')
+        format: dict
+        rows:
+          - {decidim_question_id: 43, body: "Hiver"}
+          - {decidim_question_id: 43, body: "Printemps"}
+          - {decidim_question_id: 43, body: "Automne"}
+          - {decidim_question_id: 43, body: "Été"}
+    expect:
+      format: dict
+      rows:
+          - {answer: "Été"}

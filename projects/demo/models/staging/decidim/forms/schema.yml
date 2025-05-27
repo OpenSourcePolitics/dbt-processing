@@ -5,6 +5,7 @@ sources:
     database: "{{ env_var('DBNAME') }}"
     schema: public
     tables:
+      - name: decidim_forms_answer_options
       - name: decidim_forms_answer_choices
       - name: decidim_forms_answers
       - name: decidim_forms_question_matrix_rows
