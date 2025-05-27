@@ -173,10 +173,10 @@ unit_tests:
       - input: ref('int_forms_answers')
         format: dict
         rows:
-          - {id: 901, decidim_question_id: 41, answer: "Nord"}
-          - {id: 902, decidim_question_id: 42, answer: "Rouge"}
-          - {id: 903, decidim_question_id: 43, answer: "Hiver"}
-          - {id: 904, decidim_question_id: 44, answer: "réponse matrix"}
+          - {id: 901, decidim_question_id: 41, body: "Nord"}
+          - {id: 902, decidim_question_id: 42, body: "Rouge"}
+          - {id: 903, decidim_question_id: 43, body: "Hiver"}
+          - {id: 904, decidim_question_id: 44, body: "réponse matrix"}
       - input: ref('stg_decidim_forms_questions')
         format: dict
         rows:
