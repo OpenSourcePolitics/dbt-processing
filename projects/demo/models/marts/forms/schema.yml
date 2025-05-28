@@ -22,7 +22,7 @@ models:
             to_columns: [id]
       - name: questionnaire_url
         data_type: TEXT
-  - name: forms_answers
+  - name: all_forms_answers
     config:
       contract: {enforced: false}
     columns:

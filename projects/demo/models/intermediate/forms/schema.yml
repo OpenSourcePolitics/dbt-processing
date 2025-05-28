@@ -128,7 +128,7 @@ unit_tests:
 
   - name: answers_option_and_sorting_check_on_question_type
     description: "Check that question_type is correctly taken into account"
-    model: answers_option_and_sorting
+    model: all_answers_option_and_sorting
     given:
       - input: ref('int_forms_answers')
         format: dict
@@ -273,20 +273,11 @@ unit_tests:
     description: "Check that single option answers match pre-written options"
     model: answers_option_and_sorting
     given:
-      - input: ref('int_forms_answers')
+      - input: ref('all_answers_option_and_sorting')
         format: dict
         rows:
-          - {id: 901, decidim_question_id: 41}
-          - {id: 904, decidim_question_id: 41}
-      - input: ref('stg_decidim_forms_questions')
-        format: dict
-        rows:
-          - {id: 41, question_type: 'single_option'}
-      - input: ref('stg_decidim_forms_answer_choices')
-        format: dict
-        rows:
-          - {decidim_answer_id: 901, body: "Nord"}
-          - {decidim_answer_id: 904, body: "Invalide"}
+          - {id: 901, decidim_question_id: 41, question_type: 'single_option', answer: "Nord"}
+          - {id: 904, decidim_question_id: 41, question_type: 'single_option', answer: "Invalide"}
       - input: ref('stg_decidim_forms_answer_options')
         format: dict
         rows:
@@ -301,20 +292,11 @@ unit_tests:
     description: "Check that multiple option answers match pre-written options"
     model: answers_option_and_sorting
     given:
-      - input: ref('int_forms_answers')
+      - input: ref('all_answers_option_and_sorting')
         format: dict
         rows:
-          - {id: 902, decidim_question_id: 42}
-          - {id: 905, decidim_question_id: 42}
-      - input: ref('stg_decidim_forms_questions')
-        format: dict
-        rows:
-          - {id: 42, question_type: 'multiple_option'}
-      - input: ref('stg_decidim_forms_answer_choices')
-        format: dict
-        rows:
-          - {decidim_answer_id: 902, body: "Bleu"}
-          - {decidim_answer_id: 905, body: "Invalide"}
+          - {id: 902, decidim_question_id: 42, question_type: 'multiple_option', answer: "Bleu"}
+          - {id: 905, decidim_question_id: 42, question_type: 'multiple_option', answer: "Invalide"}
       - input: ref('stg_decidim_forms_answer_options')
         format: dict
         rows:
@@ -330,20 +312,11 @@ unit_tests:
     description: "Check that answers to sorting questions match pre-written options"
     model: answers_option_and_sorting
     given:
-      - input: ref('int_forms_answers')
+      - input: ref('all_answers_option_and_sorting')
         format: dict
         rows:
-          - {id: 903, decidim_question_id: 43}
-          - {id: 906, decidim_question_id: 43}
-      - input: ref('stg_decidim_forms_questions')
-        format: dict
-        rows:
-          - {id: 43, question_type: 'sorting'}
-      - input: ref('stg_decidim_forms_answer_choices')
-        format: dict
-        rows:
-          - {decidim_answer_id: 903, body: "Été"}
-          - {decidim_answer_id: 906, body: "Invalide"}
+          - {id: 903, decidim_question_id: 43, question_type: 'sorting', answer: "Été"}
+          - {id: 906, decidim_question_id: 43, question_type: 'sorting', answer: "Invalide"}
       - input: ref('stg_decidim_forms_answer_options')
         format: dict
         rows:
