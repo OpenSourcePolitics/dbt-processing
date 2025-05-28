@@ -25,4 +25,3 @@ JOIN {{ ref('stg_decidim_forms_answer_options') }} decidim_forms_answer_options
   ON decidim_forms_answer_options.decidim_question_id = decidim_forms_questions.id
   AND decidim_forms_answer_options.body = decidim_forms_answer_choices.body
 WHERE question_type = ANY('{single_option, multiple_option, sorting}'::text[])
-ORDER BY decidim_questionnaire_id DESC
