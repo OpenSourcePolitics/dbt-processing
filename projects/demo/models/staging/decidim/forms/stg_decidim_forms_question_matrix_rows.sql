@@ -8,7 +8,7 @@ renamed AS (
         id,
         decidim_question_id,
         position,
-        TRIM(body::jsonb->> '{{ lang }}') AS body
+        body::jsonb->> '{{ lang }}' AS body
     FROM source
 )
 SELECT * FROM renamed
