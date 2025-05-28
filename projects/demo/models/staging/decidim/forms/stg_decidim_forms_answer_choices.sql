@@ -7,7 +7,7 @@ renamed AS (
         decidim_answer_id,
         decidim_answer_option_id,
         position,
-        body::text AS body,
+        trim(both '"' from body) AS body,
         custom_body,
         decidim_question_matrix_row_id
     FROM source

@@ -25,7 +25,7 @@ WITH answers_short_and_long_answer AS (
 SELECT DISTINCT ON (
     answers.session_token,
     answers.body,
-    btrim(answers.answer, '"'),
+    answers.answer,
     answers.custom_body,
     answers.position
 )
@@ -34,7 +34,7 @@ SELECT DISTINCT ON (
     answers.ip_hash,
     answers.question_type,
     answers.body AS question_title,
-    btrim(answers.answer, '"') AS answer,
+    answers.answer AS answer,
     answers.sub_matrix_question,
     answers.custom_body,
     answers.sorting_position,
@@ -62,7 +62,7 @@ JOIN {{ ref('forms') }} AS decidim_forms_questionnaires ON decidim_forms_questio
 ORDER BY
     answers.session_token,
     answers.body,
-    btrim(answers.answer, '"'),
+    answers.answer,
     answers.custom_body,
     answers.position,
     answers.created_at DESC

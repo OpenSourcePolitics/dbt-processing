@@ -10,7 +10,7 @@ SELECT DISTINCT
     decidim_forms_answers.ip_hash,
     decidim_forms_questions.question_type,
     decidim_forms_questions.position AS question_position,
-    decidim_forms_answer_choices.body AS "answer",
+    decidim_forms_answer_choices.body::text AS answer,
     '' AS sub_matrix_question,
     COALESCE(decidim_forms_answer_choices.custom_body, '') AS custom_body,
     (CASE question_type WHEN 'sorting' THEN decidim_forms_answer_choices.position ELSE -1 END) AS sorting_position,
