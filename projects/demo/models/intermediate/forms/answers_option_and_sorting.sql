@@ -1,5 +1,4 @@
-
-SELECT DISTINCT
+SELECT
     decidim_forms_answers.id,
     decidim_forms_answers.decidim_user_id,
     decidim_forms_answers.session_token,
@@ -16,6 +15,5 @@ SELECT DISTINCT
     decidim_forms_answers.created_at,
     decidim_forms_answers.author_status
 FROM {{ref('all_answers_option_and_sorting')}} decidim_forms_answers
-JOIN {{ ref('stg_decidim_forms_answer_options') }} decidim_forms_answer_options
-  ON decidim_forms_answer_options.decidim_question_id = decidim_forms_answers.decidim_question_id
-  AND decidim_forms_answer_options.body = answer
+WHERE invalid_question_id IS false
+--  OR invalid_choice_body IS false
