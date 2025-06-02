@@ -25,8 +25,10 @@ SELECT DISTINCT
     (CASE WHEN decidim_forms_answer_options.decidim_question_id != decidim_forms_answers.decidim_question_id THEN true ELSE false END) AS invalid_question_id,
     (CASE WHEN decidim_forms_answer_options.body != decidim_forms_answer_choices.body THEN true ELSE false END) AS invalid_choice_body
 FROM {{ ref('int_forms_answers') }} decidim_forms_answers
-JOIN {{ ref('stg_decidim_forms_questions') }} AS decidim_forms_questions ON decidim_forms_questions.id = decidim_forms_answers.decidim_question_id
-JOIN {{ ref('stg_decidim_forms_answer_choices') }} decidim_forms_answer_choices ON decidim_forms_answer_choices.decidim_answer_id = decidim_forms_answers.id
+JOIN {{ ref('stg_decidim_forms_questions') }} AS decidim_forms_questions
+  ON decidim_forms_questions.id = decidim_forms_answers.decidim_question_id
+JOIN {{ ref('stg_decidim_forms_answer_choices') }} decidim_forms_answer_choices
+  ON decidim_forms_answer_choices.decidim_answer_id = decidim_forms_answers.id
 JOIN {{ ref('stg_decidim_forms_answer_options') }} decidim_forms_answer_options
   ON decidim_forms_answer_options.id = decidim_forms_answer_choices.decidim_answer_option_id
 WHERE question_type = ANY('{single_option, multiple_option, sorting}'::text[])

@@ -22,13 +22,7 @@ WITH answers_short_and_long_answer AS (
     SELECT * FROM answers_file
 )
 
-SELECT DISTINCT ON (
-    answers.session_token,
-    answers.body,
-    answers.answer,
-    answers.custom_body,
-    answers.position
-)
+SELECT
     answers.decidim_user_id,
     answers.session_token,
     answers.ip_hash,

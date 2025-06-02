@@ -133,7 +133,6 @@ unit_tests:
       - input: ref('int_forms_answers')
         format: dict
         rows:
-        rows:
           - {id: 901, decidim_question_id: 41}
           - {id: 902, decidim_question_id: 42}
           - {id: 903, decidim_question_id: 43}
@@ -148,17 +147,17 @@ unit_tests:
       - input: ref('stg_decidim_forms_answer_options')
         format: dict
         rows:
-          - {decidim_question_id: 41, body: "Nord"}
-          - {decidim_question_id: 42, body: "Rouge"}
-          - {decidim_question_id: 43, body: "Hiver"}
-          - {decidim_question_id: 44, body: "réponse matrix"}
+          - {id: 1}
+          - {id: 2}
+          - {id: 3}
+          - {id: 4}
       - input: ref('stg_decidim_forms_answer_choices')
         format: dict
         rows:
-          - {decidim_answer_id: 901, body: "Nord"}
-          - {decidim_answer_id: 902, body: "Rouge"}
-          - {decidim_answer_id: 903, body: "Hiver"}
-          - {decidim_answer_id: 904, body: "réponse matrix"}
+          - {decidim_answer_id: 901, decidim_answer_option_id: 1}
+          - {decidim_answer_id: 902, decidim_answer_option_id: 2}
+          - {decidim_answer_id: 903, decidim_answer_option_id: 3}
+          - {decidim_answer_id: 904, decidim_answer_option_id: 4}
     expect:
       format: dict
       rows:
@@ -271,60 +270,190 @@ unit_tests:
 
   - name: answers_single_option_content_check
     description: "Check that single option answers match pre-written options"
-    model: answers_option_and_sorting
+    model: all_answers_option_and_sorting
     given:
-      - input: ref('all_answers_option_and_sorting')
+      - input: ref('int_forms_answers')
         format: dict
         rows:
-          - {id: 901, decidim_question_id: 41, question_type: 'single_option', answer: "Nord"}
-          - {id: 904, decidim_question_id: 41, question_type: 'single_option', answer: "Invalide"}
+          - {id: 901, decidim_question_id: 41}
+          - {id: 904, decidim_question_id: 41}
+      - input: ref('stg_decidim_forms_questions')
+        format: dict
+        rows:
+        - {id: 41, question_type: 'single_option'}
+        - {id: 41, question_type: 'single_option'}
+      - input: ref('stg_decidim_forms_answer_choices')
+        format: dict
+        rows:
+          - {decidim_answer_id: 901, decidim_answer_option_id: 1, body: "Nord"}
+          - {decidim_answer_id: 904, decidim_answer_option_id: 2, body: "Nord"}
       - input: ref('stg_decidim_forms_answer_options')
         format: dict
         rows:
-          - {decidim_question_id: 41, body: "Nord"}
-          - {decidim_question_id: 41, body: "Sud"}
+          - {id: 1, decidim_question_id: 41, body: "Nord"}
+          - {id: 2, decidim_question_id: 41, body: "Sud"}
     expect:
       format: dict
       rows:
-          - {answer: "Nord"}
+          - {answer: "Nord", option_answer: "Nord", invalid_choice_body: false}
+          - {answer: "Nord", option_answer: "Sud", invalid_choice_body: true}
+
+  - name: answers_single_option_question_check
+    description: "Check that single option answers come from options belonging to the answered question"
+    model: all_answers_option_and_sorting
+    given:
+      - input: ref('int_forms_answers')
+        format: dict
+        rows:
+          - {id: 901, decidim_question_id: 41}
+          - {id: 904, decidim_question_id: 41}
+      - input: ref('stg_decidim_forms_questions')
+        format: dict
+        rows:
+        - {id: 41, question_type: 'single_option'}
+        - {id: 41, question_type: 'single_option'}
+      - input: ref('stg_decidim_forms_answer_choices')
+        format: dict
+        rows:
+          - {decidim_answer_id: 901, decidim_answer_option_id: 1, body: "Nord"}
+          - {decidim_answer_id: 904, decidim_answer_option_id: 9, body: "Rouge"}
+      - input: ref('stg_decidim_forms_answer_options')
+        format: dict
+        rows:
+          - {id: 1, decidim_question_id: 41, body: "Nord"}
+          - {id: 2, decidim_question_id: 41, body: "Sud"}
+          - {id: 8, decidim_question_id: 42, body: "Bleu"}
+          - {id: 9, decidim_question_id: 42, body: "Rouge"}
+    expect:
+      format: dict
+      rows:
+          - {answer: "Nord", invalid_question_id: false}
+          - {answer: "Rouge", invalid_question_id: true}
 
   - name: answers_multiple_option_content_check
     description: "Check that multiple option answers match pre-written options"
-    model: answers_option_and_sorting
+    model: all_answers_option_and_sorting
     given:
-      - input: ref('all_answers_option_and_sorting')
+      - input: ref('int_forms_answers')
         format: dict
         rows:
-          - {id: 902, decidim_question_id: 42, question_type: 'multiple_option', answer: "Bleu"}
-          - {id: 905, decidim_question_id: 42, question_type: 'multiple_option', answer: "Invalide"}
+          - {id: 902, decidim_question_id: 42}
+          - {id: 905, decidim_question_id: 42}
+      - input: ref('stg_decidim_forms_questions')
+        format: dict
+        rows:
+        - {id: 42, question_type: 'multiple_option'}
+        - {id: 42, question_type: 'multiple_option'}
+      - input: ref('stg_decidim_forms_answer_choices')
+        format: dict
+        rows:
+          - {decidim_answer_id: 902, decidim_answer_option_id: 8, body: "Bleu"}
+          - {decidim_answer_id: 905, decidim_answer_option_id: 9, body: "Bleu"}
       - input: ref('stg_decidim_forms_answer_options')
         format: dict
         rows:
-          - {decidim_question_id: 42, body: "Rouge"}
-          - {decidim_question_id: 42, body: "Bleu"}
-          - {decidim_question_id: 42, body: "Vert"}
+          - {id: 8, decidim_question_id: 42, body: "Bleu"}
+          - {id: 9, decidim_question_id: 42, body: "Rouge"}
+          - {id: 10, decidim_question_id: 42, body: "Vert"}
     expect:
       format: dict
       rows:
-          - {answer: "Bleu"}
+          - {answer: "Bleu", option_answer: "Bleu", invalid_choice_body: false}
+          - {answer: "Bleu", option_answer: "Rouge", invalid_choice_body: true}
+
+  - name: answers_multiple_option_question_check
+    description: "Check that multiple option answers come from options belonging to the answered question"
+    model: all_answers_option_and_sorting
+    given:
+      - input: ref('int_forms_answers')
+        format: dict
+        rows:
+          - {id: 902, decidim_question_id: 42}
+          - {id: 905, decidim_question_id: 42}
+      - input: ref('stg_decidim_forms_questions')
+        format: dict
+        rows:
+        - {id: 42, question_type: 'multiple_option'}
+        - {id: 42, question_type: 'multiple_option'}
+      - input: ref('stg_decidim_forms_answer_choices')
+        format: dict
+        rows:
+          - {decidim_answer_id: 902, decidim_answer_option_id: 8, body: "Bleu"}
+          - {decidim_answer_id: 905, decidim_answer_option_id: 16, body: "Hiver"}
+      - input: ref('stg_decidim_forms_answer_options')
+        format: dict
+        rows:
+          - {id: 8, decidim_question_id: 42, body: "Bleu"}
+          - {id: 9, decidim_question_id: 42, body: "Rouge"}
+          - {id: 10, decidim_question_id: 42, body: "Vert"}
+          - {id: 16, decidim_question_id: 43, body: "Hiver"}
+    expect:
+      format: dict
+      rows:
+          - {answer: "Bleu", invalid_question_id: false}
+          - {answer: "Hiver", invalid_question_id: true}
 
   - name: answers_sorting_option_content_check
     description: "Check that answers to sorting questions match pre-written options"
-    model: answers_option_and_sorting
+    model: all_answers_option_and_sorting
     given:
-      - input: ref('all_answers_option_and_sorting')
+      - input: ref('int_forms_answers')
         format: dict
         rows:
-          - {id: 903, decidim_question_id: 43, question_type: 'sorting', answer: "Été"}
-          - {id: 906, decidim_question_id: 43, question_type: 'sorting', answer: "Invalide"}
+          - {id: 903, decidim_question_id: 44}
+          - {id: 906, decidim_question_id: 44}
+      - input: ref('stg_decidim_forms_questions')
+        format: dict
+        rows:
+          - {id: 44, question_type: 'sorting'}
+          - {id: 44, question_type: 'sorting'}
+      - input: ref('stg_decidim_forms_answer_choices')
+        format: dict
+        rows:
+          - {decidim_answer_id: 903, decidim_answer_option_id: 19, body: "Été"}
+          - {decidim_answer_id: 906, decidim_answer_option_id: 18, body: "Été"}
       - input: ref('stg_decidim_forms_answer_options')
         format: dict
         rows:
-          - {decidim_question_id: 43, body: "Hiver"}
-          - {decidim_question_id: 43, body: "Printemps"}
-          - {decidim_question_id: 43, body: "Automne"}
-          - {decidim_question_id: 43, body: "Été"}
+          - {id: 16, decidim_question_id: 44, body: "Hiver"}
+          - {id: 17, decidim_question_id: 44, body: "Printemps"}
+          - {id: 18, decidim_question_id: 44, body: "Automne"}
+          - {id: 19, decidim_question_id: 44, body: "Été"}
     expect:
       format: dict
       rows:
-          - {answer: "Été"}
+          - {answer: "Été", option_answer: "Été", invalid_choice_body: false}
+          - {answer: "Été", option_answer: "Automne", invalid_choice_body: true}
+
+  - name: answers_sorting_option_content_check
+    description: "Check that answers to sorting questions come from options belonging to the answered question"
+    model: all_answers_option_and_sorting
+    given:
+      - input: ref('int_forms_answers')
+        format: dict
+        rows:
+          - {id: 903, decidim_question_id: 44}
+          - {id: 906, decidim_question_id: 44}
+      - input: ref('stg_decidim_forms_questions')
+        format: dict
+        rows:
+          - {id: 44, question_type: 'sorting'}
+          - {id: 44, question_type: 'sorting'}
+      - input: ref('stg_decidim_forms_answer_choices')
+        format: dict
+        rows:
+          - {decidim_answer_id: 903, decidim_answer_option_id: 19, body: "Été"}
+          - {decidim_answer_id: 906, decidim_answer_option_id: 24, body: "Chocolat"}
+      - input: ref('stg_decidim_forms_answer_options')
+        format: dict
+        rows:
+          - {id: 16, decidim_question_id: 44, body: "Hiver"}
+          - {id: 17, decidim_question_id: 44, body: "Printemps"}
+          - {id: 18, decidim_question_id: 44, body: "Automne"}
+          - {id: 19, decidim_question_id: 44, body: "Été"}
+          - {id: 24, decidim_question_id: 45, body: "Chocolat"}
+    expect:
+      format: dict
+      rows:
+          - {answer: "Été", invalid_question_id: false}
+          - {answer: "Chocolat", invalid_question_id: true}
