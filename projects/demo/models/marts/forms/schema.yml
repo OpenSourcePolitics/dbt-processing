@@ -73,3 +73,22 @@ models:
         data_type: TIMESTAMP
       - name: author_status
         data_type: TEXT
+
+unit_tests:
+  - name: forms_answers_duplicate_check
+    description: "Check that duplicated answers are filtered out"
+    model: forms_answers
+    given:
+      - input: ref('all_forms_answers')
+        format: dict
+        rows:
+          - {session_token: 555555, position: 41, answer: "Oui"}
+          - {session_token: 555555, position: 42, answer: "Oui"}
+          - {session_token: 555555, position: 42, answer: "Oui"}
+          - {session_token: 666666, position: 42, answer: "Oui"}
+    expect:
+      format: dict
+      rows:
+          - {session_token: 555555, position: 41, answer: "Oui"}
+          - {session_token: 555555, position: 42, answer: "Oui"}
+          - {session_token: 666666, position: 42, answer: "Oui"}
