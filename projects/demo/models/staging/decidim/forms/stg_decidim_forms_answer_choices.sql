@@ -7,7 +7,7 @@ renamed AS (
         decidim_answer_id,
         decidim_answer_option_id,
         position,
-        trim(both '"' from body) AS body,
+        REPLACE(SUBSTR(body, 2, length(body) - 2)::text, '\"', '"') AS body,
         custom_body,
         decidim_question_matrix_row_id
     FROM source

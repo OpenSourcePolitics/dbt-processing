@@ -5,9 +5,11 @@
 )}}
 
 SELECT
+    decidim_forms_answers.id,
     decidim_forms_answers.decidim_user_id,
     decidim_forms_answers.session_token,
     decidim_forms_answers.ip_hash,
+    decidim_forms_answers.decidim_question_id,
     decidim_forms_questions.question_type,
     decidim_forms_questions.position,
     {{ int_forms_translate_short_and_long_answers('decidim_forms_answers.body') }} AS answer,

@@ -5,9 +5,11 @@
 )}}
 
 SELECT DISTINCT
+    decidim_forms_answers.id,
     decidim_forms_answers.decidim_user_id,
     decidim_forms_answers.session_token,
     decidim_forms_answers.ip_hash,
+    decidim_forms_answers.decidim_question_id,
     decidim_forms_questions.question_type,
     decidim_forms_questions.position AS "position",
     decidim_forms_answer_choices.body::text AS "answer",
