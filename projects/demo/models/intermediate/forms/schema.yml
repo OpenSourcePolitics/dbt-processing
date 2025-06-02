@@ -425,7 +425,7 @@ unit_tests:
           - {answer: "Été", option_answer: "Été", invalid_choice_body: false}
           - {answer: "Été", option_answer: "Automne", invalid_choice_body: true}
 
-  - name: answers_sorting_option_content_check
+  - name: answers_sorting_option_question_check
     description: "Check that answers to sorting questions come from options belonging to the answered question"
     model: all_answers_option_and_sorting
     given:
