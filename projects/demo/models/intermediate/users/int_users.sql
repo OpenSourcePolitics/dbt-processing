@@ -4,7 +4,7 @@
     ]
 )}}
 
-WITH users_with_age AS (
+WITH users AS (
     SELECT
         decidim_users.id,
         decidim_users.email,
@@ -39,7 +39,8 @@ WITH users_with_age AS (
         decidim_users.admin_terms_accepted_at,
         decidim_users.blocked,
         decidim_users.blocked_at,
-        decidim_users.date_of_birth,
+        (CASE WHEN decidim_users.date_of_birth ~ '\d{1,2}\/\d{1,2}\/\d{4}' THEN TO_DATE(decidim_users.date_of_birth, 'DD/MM/YYYY')
+	    ELSE TO_DATE(decidim_users.date_of_birth, 'YYYY-MM-DD') END) AS date_of_birth,
         {{ translate_gender('decidim_users.gender') }} AS gender,
         decidim_users.postal_code,
         COALESCE(decidim_users.half_signup_phone_number, decidim_users.phone_number) AS phone_number,
@@ -49,10 +50,15 @@ WITH users_with_age AS (
         decidim_users.spam_probability,
         DATE(decidim_users.spam_report_timestamp) AS spam_reported_at,
         (CASE WHEN decidim_users.half_signup IS NULL THEN false ELSE true END) AS half_signup,
-        decidim_users.extended_data,
-        (CASE WHEN date_of_birth > '1900-01-01' THEN EXTRACT(YEAR FROM AGE({{ dbt_date.today() }}, DATE(decidim_users.date_of_birth))) ELSE NULL END) AS age
-    FROM {{ ref("stg_decidim_users") }} as decidim_users
+        decidim_users.extended_data
+        FROM {{ ref("stg_decidim_users") }} as decidim_users
     WHERE type LIKE 'Decidim::User'
+)
+, users_with_age AS (
+    SELECT
+        *,
+        (CASE WHEN users.date_of_birth > '1900-01-01' THEN EXTRACT(YEAR FROM AGE({{ dbt_date.today() }}, DATE(users.date_of_birth))) ELSE NULL END) AS age
+    FROM users
 )
 
 SELECT

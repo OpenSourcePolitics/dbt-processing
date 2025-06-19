@@ -83,7 +83,7 @@ models:
       - name: blocked_at
         data_type: TIMESTAMP
       - name: date_of_birth
-        data_type: TEXT
+        data_type: DATE
       - name: gender
         data_type: TEXT
       - name: postal_code
@@ -203,9 +203,9 @@ unit_tests:
         format: dict
         rows:
           - {id: 1, date_of_birth: "1943-11-06", type: 'Decidim::User'}
-          - {id: 2, date_of_birth: "1958-06-23", type: 'Decidim::User'} 
+          - {id: 2, date_of_birth: "23/06/1958", type: 'Decidim::User'} 
           - {id: 3, date_of_birth: "1932-05-23", type: 'Decidim::User'} 
-          - {id: 4, date_of_birth: "1992-12-01", type: 'Decidim::User'}
+          - {id: 4, date_of_birth: "1/2/1992", type: 'Decidim::User'}
           - {id: 5, date_of_birth: null, type: 'Decidim::User'} 
     expect:
         format: dict
