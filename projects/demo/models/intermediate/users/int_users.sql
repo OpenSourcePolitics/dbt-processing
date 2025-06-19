@@ -39,8 +39,7 @@ WITH users AS (
         decidim_users.admin_terms_accepted_at,
         decidim_users.blocked,
         decidim_users.blocked_at,
-        (CASE WHEN decidim_users.date_of_birth ~ '\d{1,2}\/\d{1,2}\/\d{4}' THEN TO_DATE(decidim_users.date_of_birth, 'DD/MM/YYYY')
-	    ELSE TO_DATE(decidim_users.date_of_birth, 'YYYY-MM-DD') END) AS date_of_birth,
+        {{ date_check('decidim_users.date_of_birth') }} AS date_of_birth,
         {{ translate_gender('decidim_users.gender') }} AS gender,
         decidim_users.postal_code,
         COALESCE(decidim_users.half_signup_phone_number, decidim_users.phone_number) AS phone_number,
@@ -53,11 +52,10 @@ WITH users AS (
         decidim_users.extended_data
         FROM {{ ref("stg_decidim_users") }} as decidim_users
     WHERE type LIKE 'Decidim::User'
-)
-, users_with_age AS (
+), users_with_age AS (
     SELECT
         *,
-        (CASE WHEN users.date_of_birth > '1900-01-01' THEN EXTRACT(YEAR FROM AGE({{ dbt_date.today() }}, DATE(users.date_of_birth))) ELSE NULL END) AS age
+        EXTRACT(YEAR FROM AGE({{ dbt_date.today() }}, DATE(date_of_birth))) AS age
     FROM users
 )
 
