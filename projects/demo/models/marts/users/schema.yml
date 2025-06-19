@@ -145,7 +145,7 @@ models:
         data_type: TEXT
         description: "Decidim stores in this field all data related to the user that doesn't fit into a specific column. Used in multiple Decidim modules to describe the user more precisely. Informations regarding what happens on a page and its associated metrics like visits, time spent, exits, date, url, label."
       - name: date_of_birth
-        data_type: TEXT
+        data_type: DATE
       - name: age_category
         data_type: TEXT
       - name: gender
