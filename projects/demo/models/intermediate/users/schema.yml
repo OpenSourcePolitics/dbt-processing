@@ -247,6 +247,7 @@ unit_tests:
           - {id: 2, date_of_birth: "2761-11-06", type: 'Decidim::User'}
           - {id: 3, date_of_birth: "20000-11-06", type: 'Decidim::User'}
           - {id: 4, date_of_birth: "06/11/2112", type: 'Decidim::User'}
+          - {id: 5, date_of_birth: "1982-11-06", type: 'Decidim::User'}
 
     expect:
       format: dict
@@ -255,4 +256,9 @@ unit_tests:
         - {id: 2, date_of_birth: null, age: null, age_category: "Âge non défini"}
         - {id: 3, date_of_birth: null, age: null, age_category: "Âge non défini"}
         - {id: 4, date_of_birth: null, age: null, age_category: "Âge non défini"}
+        - {id: 5, date_of_birth: "1982-11-06", age: 27, age_category: "[25-29 ans]"}
+    overrides:
+     macros:
+      dbt_date.today: "'2010-01-01'"
+
  
