@@ -1,0 +1,3 @@
+db_name_dev: NICE_DBNAME_DEV
+db_name_prod: NICE_DBNAME_PROD
+participation_host_name: NICE_PARTICIPATION_HOST_NAME
