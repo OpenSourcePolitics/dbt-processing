@@ -26,7 +26,6 @@ renamed AS (
         nb_hits_with_time_server,
         max_time_server,
         avg_time_server,
-        index,
         label,
         nb_hits_with_time_transfer,
         avg_time_transfer,
