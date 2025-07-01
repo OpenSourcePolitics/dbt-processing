@@ -7,7 +7,6 @@ renamed AS (
         country,
         nb_actions,
         bounce_count,
-        index,
         label,
         long,
         sum_visit_length,

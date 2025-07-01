@@ -2,7 +2,6 @@ SELECT
         date,
         nb_actions,
         bounce_count,
-        index,
         label,
         sum_visit_length,
         nb_visits_converted,
