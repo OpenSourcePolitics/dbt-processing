@@ -82,6 +82,9 @@ models:
       - name: endorsements_count
         data_type: BIGINT
         description: "Number of endorsements on the proposal"
+      - name: follows_count
+        data_type: BIGINT
+        description: "Number of follows on the proposal"
       - name: votes_count
         data_type: BIGINT
         description: "Number of votes the proposal has received"

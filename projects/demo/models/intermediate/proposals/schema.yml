@@ -28,6 +28,8 @@ models:
         description: "Number of comments on the proposal"
       - name: endorsements_count
         description: "Number of endorsements on the proposal"
+      - name: follows_count
+        description: "Number of follows on the proposal"
       - name: address
         description: "Address related to the proposal, with default 'Pas d'adresse' if empty"
 
