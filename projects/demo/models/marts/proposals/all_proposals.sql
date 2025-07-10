@@ -48,6 +48,7 @@ proposals AS (
         {{ categorization_first_sub_category('categorizations.sub_categories[1]') }},
         decidim_proposals.comments_count,
         decidim_proposals.endorsements_count,
+        decidim_proposals.follows_count,
         COALESCE(votes.votes_count,0) AS votes_count,
         decidim_proposals_proposal_states.id AS custom_state_id, 
         decidim_proposals_proposal_states.title AS custom_state,

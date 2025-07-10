@@ -18,6 +18,7 @@ SELECT
     decidim_proposals.decidim_proposals_proposal_state_id,
     decidim_proposals.comments_count,
     decidim_proposals.endorsements_count,
+    decidim_proposals.follows_count,
     {{ int_proposals_macro_address('decidim_proposals.address') }} AS address
 FROM {{ ref ("stg_decidim_proposals")}} AS decidim_proposals
 WHERE published_at IS NOT NULL
