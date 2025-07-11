@@ -7,7 +7,8 @@ renamed AS (
     SELECT
         id,
         title::jsonb->>'{{ lang }}' as title,
-        decidim_component_id
+        decidim_component_id,
+        total_budget
     FROM source
 )
 SELECT * FROM renamed
