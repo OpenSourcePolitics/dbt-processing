@@ -44,12 +44,33 @@
         {% elif lang == 'nl' %}'Enquêtes'
         {% else %}'Unknown'
         {% endif %}
-    ELSE
+    WHEN {{ manifest_name }} = 'blogs' THEN
         {% if lang == 'fr' %}'Blogs'
         {% elif lang == 'de' %}'Blogs'
         {% elif lang == 'en' %}'Blogs'
         {% elif lang == 'nl' %}'Blogs'
         {% else %}'Unknown'
+        {% endif %}
+    WHEN {{ manifest_name }} = 'debates' THEN
+        {% if lang == 'fr' %}'Débats'
+        {% elif lang == 'de' %}'Debatten'
+        {% elif lang == 'en' %}'Debates'
+        {% elif lang == 'nl' %}'Debatten'
+        {% else %}'Unknown'
+        {% endif %}
+    WHEN {{ manifest_name }} = 'gallery' THEN
+        {% if lang == 'fr' %}'Galerie'
+        {% elif lang == 'de' %}'Bildergalerie'
+        {% elif lang == 'en' %}'Gallery'
+        {% elif lang == 'nl' %}'Afbeeldingsgalerij'
+        {% else %}'Unknown'
+        {% endif %}
+    ELSE
+        {% if lang == 'fr' %}''
+        {% elif lang == 'de' %}''
+        {% elif lang == 'en' %}''
+        {% elif lang == 'nl' %}''
+        {% else %}''
         {% endif %}
 END)
 {% endmacro %}
