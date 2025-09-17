@@ -52,8 +52,8 @@ unit_tests:
       - input: ref('stg_decidim_proposals')
         format: dict
         rows:
-          - { id: 1, resource_type: 'Decidim::Proposals::Proposal' }
-          - { id: 2, resource_type: 'Decidim::Proposals::Proposal' }
+          - { id: 1, resource_type: 'Decidim::Proposals::Proposal', decidim_component_id: 100 }
+          - { id: 2, resource_type: 'Decidim::Proposals::Proposal', decidim_component_id: 100 }
       - input: ref('stg_decidim_debates')
         format: dict
         rows:
@@ -62,6 +62,10 @@ unit_tests:
         format: dict
         rows:
           - {}
+      - input: ref('components')
+        format: dict
+        rows:
+          - {id: 100}
     expect:
       format: dict
       rows:
@@ -95,6 +99,12 @@ unit_tests:
         format: dict
         rows:
           - {}
+      - input: ref('components')
+        format: dict
+        rows:
+          - { id: 100 }
+          - { id: 200 }
+          - { id: 300 }
     expect:
       format: dict
       rows:

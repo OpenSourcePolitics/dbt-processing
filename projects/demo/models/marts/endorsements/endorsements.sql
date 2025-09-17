@@ -41,6 +41,7 @@ SELECT
     endorsements.updated_at,
     endorsements.decidim_component_id
 FROM endorsements
+JOIN {{ ref("components")}} AS decidim_components ON decidim_components.id = endorsements.decidim_component_id
 LEFT JOIN {{ ref("stg_decidim_moderations")}} AS decidim_moderations
   ON decidim_moderations.decidim_reportable_type = endorsements.resource_type
   AND decidim_moderations.decidim_reportable_id = endorsements.resource_id

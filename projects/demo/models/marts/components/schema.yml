@@ -197,4 +197,33 @@ unit_tests:
       rows:
         - {id: 42, component_url: 'https://organization1/assemblies/assemblies1/f/42', ps_id: 1, ps_url: 'https://organization1/assemblies/assemblies1/', decidim_organization_id: 101}
         - {id: 43, component_url: 'https://organization1/processes/process1/f/43', ps_id: 2, ps_url: 'https://organization1/processes/process1/', decidim_organization_id: 101}
-
+  - name: check_depublished_spaces
+    description: "Checks that components aren't listed if their participatory space is not published"
+    model: components
+    given:
+      - input: ref('stg_decidim_assemblies')
+        format: dict
+        rows:
+          - {id: 1, title: 'Assembly 1', published_at: '2023-01-01', decidim_organization_id: 101}
+          - {id: 2, title: 'Assembly 2', published_at: NULL, decidim_organization_id: 101}
+      - input: ref('stg_decidim_participatory_processes')
+        format: dict
+        rows:
+          - {id: 3, title: 'Process 1', published_at: '2023-02-01', decidim_organization_id: 101}
+          - {id: 4, title: 'Process 2', published_at: NULL, decidim_organization_id: 101}
+      - input: ref('int_components')
+        format: dict
+        rows:
+          - {id: 41, participatory_space_id: 1, participatory_space_type: 'Decidim::Assembly', published_at: '2024-01-01'}
+          - {id: 42, participatory_space_id: 2, participatory_space_type: 'Decidim::Assembly', published_at: '2024-02-01'}
+          - {id: 43, participatory_space_id: 3, participatory_space_type: 'Decidim::ParticipatoryProcess', published_at: '2024-03-01'}
+          - {id: 44, participatory_space_id: 4, participatory_space_type: 'Decidim::ParticipatoryProcess', published_at: '2024-04-01'}
+      - input: ref('int_organizations')
+        format: dict
+        rows:
+          - {id: 101}
+    expect:
+      format: dict
+      rows:
+        - {id: 41}
+        - {id: 43}
