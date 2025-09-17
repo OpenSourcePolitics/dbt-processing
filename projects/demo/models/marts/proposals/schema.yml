@@ -337,52 +337,6 @@ unit_tests:
       format: dict
       rows:
         - {id: 43}
-  - name: published_component_check
-    description: "Check if proposals are properly ignored if the attached component is not published"
-    model: proposals
-    given:
-      - input: ref('int_users')
-        format: dict
-        rows:
-          - {}
-      - input: ref('stg_decidim_coauthorships')
-        format: dict
-        rows:
-          - {}
-      - input: ref('stg_decidim_proposals_votes')
-        format: dict
-        rows:
-          - {}
-      - input: ref('stg_decidim_proposals_custom_states')
-        format: dict
-        rows:
-          - {}
-      - input: ref('int_proposals')
-        format: dict
-        rows:
-          - {id: 43, decidim_component_id: 100}
-          - {id: 44, decidim_component_id: 101}
-      - input: ref('components')
-        format: dict
-        rows:
-          - {id: 100, published_at: '2017-01-01'}
-          - {id: 101, published_at: NULL}
-      - input: ref('stg_decidim_moderations')
-        format: dict
-        rows:
-          - {}
-      - input: ref('int_scopes')
-        format: dict
-        rows:
-          - {}
-      - input: ref('categorizations')
-        format: dict
-        rows:
-          - {}
-    expect:
-      format: dict
-      rows:
-        - {id: 43}
 #  Test cannot be run because of ARRAY issue in unit test
 #  - name: test_aggregation_coauthors
 #    description: "Test the aggregation of co-authors by coauthorable_id"

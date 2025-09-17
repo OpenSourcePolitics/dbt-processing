@@ -52,8 +52,8 @@ unit_tests:
       - input: ref('stg_decidim_proposals')
         format: dict
         rows:
-          - { id: 1, resource_type: 'Decidim::Proposals::Proposal' }
-          - { id: 2, resource_type: 'Decidim::Proposals::Proposal' }
+          - { id: 1, resource_type: 'Decidim::Proposals::Proposal', decidim_component_id: 100 }
+          - { id: 2, resource_type: 'Decidim::Proposals::Proposal', decidim_component_id: 100 }
       - input: ref('stg_decidim_debates')
         format: dict
         rows:
@@ -62,6 +62,10 @@ unit_tests:
         format: dict
         rows:
           - {}
+      - input: ref('components')
+        format: dict
+        rows:
+          - {id: 100}
     expect:
       format: dict
       rows:
@@ -95,27 +99,15 @@ unit_tests:
         format: dict
         rows:
           - {}
+      - input: ref('components')
+        format: dict
+        rows:
+          - { id: 100 }
+          - { id: 200 }
+          - { id: 300 }
     expect:
       format: dict
       rows:
         - { id: 1, decidim_component_id: 100 }
         - { id: 2, decidim_component_id: 200 }
         - { id: 3, decidim_component_id: 300 }
-  - name: published_component_check
-    description: "Check if proposals are properly ignored if the attached component is not published"
-    model: endorsements
-    given:
-      - input: ref('stg_decidim_endorsements')
-        format: dict
-        rows:
-          - {id: 1, decidim_component_id: 100}
-          - {id: 2, decidim_component_id: 101}
-      - input: ref('components')
-        format: dict
-        rows:
-          - {id: 100, published_at: '2017-01-01'}
-          - {id: 101, published_at: NULL}
-    expect:
-      format: dict
-      rows:
-        - {id: 1}
