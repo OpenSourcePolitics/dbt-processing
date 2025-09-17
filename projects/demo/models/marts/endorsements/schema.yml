@@ -101,3 +101,21 @@ unit_tests:
         - { id: 1, decidim_component_id: 100 }
         - { id: 2, decidim_component_id: 200 }
         - { id: 3, decidim_component_id: 300 }
+  - name: published_component_check
+    description: "Check if proposals are properly ignored if the attached component is not published"
+    model: endorsements
+    given:
+      - input: ref('stg_decidim_endorsements')
+        format: dict
+        rows:
+          - {id: 1, decidim_component_id: 100}
+          - {id: 2, decidim_component_id: 101}
+      - input: ref('components')
+        format: dict
+        rows:
+          - {id: 100, published_at: '2017-01-01'}
+          - {id: 101, published_at: NULL}
+    expect:
+      format: dict
+      rows:
+        - {id: 1}
