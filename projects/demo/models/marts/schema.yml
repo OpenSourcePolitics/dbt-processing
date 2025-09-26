@@ -40,6 +40,36 @@ models:
         data_type: BIGINT
       - name: time_zone
         data_type: TEXT
+  - name: moderations
+    config:
+      contract: {enforced: true}
+    columns:
+      - name: id
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: decidim_participatory_space_id
+        data_type: BIGINT
+      - name: decidim_reportable_type
+        data_type: TEXT
+      - name: decidim_reportable_id
+        data_type: BIGINT
+      - name: report_count
+        data_type: BIGINT
+      - name: hidden_at
+        data_type: TIMESTAMP
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: updated_at
+        data_type: TIMESTAMP
+      - name: decidim_participatory_space_type
+        data_type: TEXT
+      - name: reported_content
+        data_type: TEXT
+      - name: is_hidden
+        data_type: BOOLEAN
   - name: matomo_pages
     schema: "{{ env_var('TARGET_SCHEMA') }}"
     description: "Info related to a page and its associated settings: visits, time spent, exits, date, url, tag"
