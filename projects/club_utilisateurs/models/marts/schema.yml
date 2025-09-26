@@ -1,0 +1,57 @@
+version: 2
+
+models:
+  - name: reports
+    config:
+      contract: {enforced: true}
+    columns:
+      - name: id
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: decidim_moderation_id
+        data_type: BIGINT
+        #constraints:
+        #  - type: not_null
+        #  - type: foreign_key
+        #    to: ref('moderations')
+        #    to_columns: [id]
+      - name: decidim_user_id
+        data_type: BIGINT
+        #constraints:
+        #  - type: not_null
+        #  - type: foreign_key
+        #    to: ref('users')
+        #    to_columns: [id]
+      - name: reason
+        data_type: TEXT
+      - name: details
+        data_type: TEXT
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: updated_at
+        data_type: TIMESTAMP
+      - name: locale
+        data_type: TEXT
+      - name: ai_reported
+        data_type: BOOLEAN
+
+unit_tests:
+  - name: ai_report_detection
+    description: "Check if the ai_reported boolean is properly defined"
+    model: reports
+    given:
+      - input: ref('stg_decidim_reports')
+        format: dict
+        rows:
+          - {id: 1, details: "AI system marked this as spam"}
+          - {id: 2, details: "Decidim AI report"}
+          - {id: 3, details: ""}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, ai_reported: TRUE}
+        - {id: 2, ai_reported: FALSE}
+        - {id: 3, ai_reported: FALSE}
