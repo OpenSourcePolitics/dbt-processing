@@ -88,12 +88,13 @@ models:
             to: ref('moderations')
             to_columns: [id]
       - name: decidim_user_id
+        description: "ID of the user from who the report originates (usually an admin, so only in all_users model)"
         data_type: BIGINT
-        constraints:
-          - type: not_null
-          - type: foreign_key
-            to: ref('users')
-            to_columns: [id]
+        #constraints:
+        #  - type: not_null
+        #  - type: foreign_key
+        #    to: ref('all_users')
+        #    to_columns: [id]
       - name: reason
         data_type: TEXT
       - name: details

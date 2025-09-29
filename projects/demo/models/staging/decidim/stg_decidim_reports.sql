@@ -17,9 +17,9 @@ SELECT
 FROM {{ source('decidim', 'decidim_reports') }}
 {% else %}
     SELECT
-    	CAST(NULL AS INTEGER) AS id,
-    	CAST(NULL AS INTEGER) AS decidim_moderation_id,
-    	CAST(NULL AS INTEGER) AS decidim_user_id,
+    	CAST(NULL AS BIGINT) AS id,
+    	CAST(NULL AS BIGINT) AS decidim_moderation_id,
+    	CAST(NULL AS BIGINT) AS decidim_user_id,
     	CAST(NULL AS TEXT) AS reason,
 		CAST(NULL AS TEXT) AS details,
 		CAST(NULL AS TIMESTAMP) AS created_at,
