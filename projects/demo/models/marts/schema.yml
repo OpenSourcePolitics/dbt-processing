@@ -82,11 +82,11 @@ models:
           - type: primary_key
       - name: decidim_moderation_id
         data_type: BIGINT
-        constraints:
-          - type: not_null
-          - type: foreign_key
-            to: ref('moderations')
-            to_columns: [id]
+        #constraints:
+        #  - type: not_null
+        #  - type: foreign_key
+        #    to: ref('moderations')
+        #    to_columns: [id]
       - name: decidim_user_id
         description: "ID of the user from who the report originates (usually an admin, so only in all_users model)"
         data_type: BIGINT
