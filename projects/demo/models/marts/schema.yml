@@ -40,6 +40,73 @@ models:
         data_type: BIGINT
       - name: time_zone
         data_type: TEXT
+  - name: moderations
+    config:
+      contract: {enforced: true}
+    columns:
+      - name: id
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: decidim_participatory_space_id
+        data_type: BIGINT
+      - name: decidim_reportable_type
+        data_type: TEXT
+      - name: decidim_reportable_id
+        data_type: BIGINT
+      - name: report_count
+        data_type: BIGINT
+      - name: hidden_at
+        data_type: TIMESTAMP
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: updated_at
+        data_type: TIMESTAMP
+      - name: decidim_participatory_space_type
+        data_type: TEXT
+      - name: reported_content
+        data_type: TEXT
+      - name: is_hidden
+        data_type: BOOLEAN
+  - name: reports
+    config:
+      contract: {enforced: true}
+    columns:
+      - name: id
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: decidim_moderation_id
+        data_type: BIGINT
+        #constraints:
+        #  - type: not_null
+        #  - type: foreign_key
+        #    to: ref('moderations')
+        #    to_columns: [id]
+      - name: decidim_user_id
+        description: "ID of the user from who the report originates (usually an admin, so only in all_users model)"
+        data_type: BIGINT
+        #constraints:
+        #  - type: not_null
+        #  - type: foreign_key
+        #    to: ref('all_users')
+        #    to_columns: [id]
+      - name: reason
+        data_type: TEXT
+      - name: details
+        data_type: TEXT
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: updated_at
+        data_type: TIMESTAMP
+      - name: locale
+        data_type: TEXT
+      - name: ai_reported
+        data_type: BOOLEAN
   - name: matomo_pages
     schema: "{{ env_var('TARGET_SCHEMA') }}"
     description: "Info related to a page and its associated settings: visits, time spent, exits, date, url, tag"
@@ -63,3 +130,19 @@ unit_tests:
         - {slug: 'budget-participatif-2022', component_id: NULL}
         - {slug: 'convention-citoyenne', component_id: NULL}
         - {slug: '', component_id: NULL}
+  - name: ai_report_detection
+    description: "Check if the ai_reported boolean is properly defined"
+    model: reports
+    given:
+      - input: ref('stg_decidim_reports')
+        format: dict
+        rows:
+          - {id: 1, details: "AI system marked this as spam"}
+          - {id: 2, details: "Decidim AI report"}
+          - {id: 3, details: ""}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, ai_reported: TRUE}
+        - {id: 2, ai_reported: FALSE}
+        - {id: 3, ai_reported: FALSE}
