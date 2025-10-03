@@ -66,7 +66,16 @@ models:
         data_type: TIMESTAMP
       - name: decidim_participatory_space_type
         data_type: TEXT
-      - name: reported_content
+      - name: decidim_component_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('components')
+            to_columns: [id]
+      - name: reported_content_url
+        data_type: TEXT
+      - name: reported_content_contents
         data_type: TEXT
       - name: is_hidden
         data_type: BOOLEAN
