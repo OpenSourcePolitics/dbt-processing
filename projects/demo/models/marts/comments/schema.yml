@@ -34,7 +34,7 @@ models:
         data_type: BIGINT
       - name: ps_slug
         data_type: TEXT
-      - name: comment_url
+      - name: url
         data_type: TEXT
 
 #unit_tests:

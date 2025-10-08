@@ -42,7 +42,7 @@ SELECT
     commentaries.body,
     commentaries.decidim_component_id,
     components.ps_slug,
-    concat('https://', components.organization_host, '/', components.ps_space_type_slug, '/', components.ps_slug, '/f/', components.id, '/', components.manifest_name,'/', commentaries.decidim_root_commentable_id, '?commentId=', commentaries.id, '#comment_', commentaries.id) AS comment_url
+    concat('https://', components.organization_host, '/', components.ps_space_type_slug, '/', components.ps_slug, '/f/', components.id, '/', components.manifest_name,'/', commentaries.decidim_root_commentable_id, '?commentId=', commentaries.id, '#comment_', commentaries.id) AS url
 FROM commentaries
 JOIN {{ ref('components') }} AS components
     on components.id = commentaries.decidim_component_id
