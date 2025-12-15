@@ -35,10 +35,10 @@ renamed AS (
         nb_uniq_visitors,
         exit_rate,
         avg_time_generation,
-        {{ get_column_if_exists(source('matomo', 'page_titles'), 'index, 'INTEGER') }},
-        {{ get_column_if_exists(source('matomo', 'page_titles'), 'max_time_generation, 'INTEGER') }},
-        {{ get_column_if_exists(source('matomo', 'page_titles'), 'min_time_generation, 'INTEGER') }},
-        {{ get_column_if_exists(source('matomo', 'page_titles'), 'nb_hits_with_time_generation, 'INTEGER') }}
+        {{ get_column_if_exists(source('matomo', 'page_titles'), 'index', 'INTEGER') }},
+        {{ get_column_if_exists(source('matomo', 'page_titles'), 'max_time_generation', 'INTEGER') }},
+        {{ get_column_if_exists(source('matomo', 'page_titles'), 'min_time_generation', 'INTEGER') }},
+        {{ get_column_if_exists(source('matomo', 'page_titles'), 'nb_hits_with_time_generation', 'INTEGER') }}
     FROM source
 )
 select * FROM renamed
