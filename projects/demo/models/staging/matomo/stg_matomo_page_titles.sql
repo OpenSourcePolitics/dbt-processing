@@ -34,7 +34,7 @@ renamed AS (
         nb_hits,
         nb_uniq_visitors,
         exit_rate,
-        avg_time_generation,
+        {{ get_column_if_exists(source('matomo', 'page_titles'), 'avg_time_generation', 'INTEGER') }},
         {{ get_column_if_exists(source('matomo', 'page_titles'), 'index', 'INTEGER') }},
         {{ get_column_if_exists(source('matomo', 'page_titles'), 'max_time_generation', 'INTEGER') }},
         {{ get_column_if_exists(source('matomo', 'page_titles'), 'min_time_generation', 'INTEGER') }},
