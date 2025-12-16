@@ -1,7 +1,7 @@
 models:
   - name: blogs_posts
     config:
-      contract: {enforced: false}
+      contract: {enforced: true}
     columns:
       - name: id
         data_type: BIGINT

@@ -1,7 +1,7 @@
 models:
   - name: participations
     config:
-      contract: {enforced: false}
+      contract: {enforced: true}
     columns:
       - name: user_id
         data_type: BIGINT
