@@ -56,7 +56,7 @@ models:
         data_type: TEXT
         description: "Human-readable translated state of the proposal"
       - name: authors_ids
-        data_type: BIGINT[]
+        data_type: TEXT #BIGINT[]
         description: "Array of IDs of the authors of the proposal"
       - name: first_author_id
         data_type: BIGINT
@@ -65,13 +65,13 @@ models:
         data_type: TEXT
         description: "Address related to the proposal, if any"
       - name: categories
-        data_type: TEXT[]
+        data_type: TEXT #TEXT[]
         description: "Array of categories associated with the proposal"
       - name: first_category
         data_type: TEXT
         description: "First category associated with the proposal"
       - name: sub_categories
-        data_type: TEXT[]
+        data_type: TEXT #TEXT[]
         description: "Array of sub-categories associated with the proposal"
       - name: first_sub_category
         data_type: TEXT
