@@ -1,7 +1,7 @@
 models:
   - name: endorsements
     config:
-      contract: {enforced: false}
+      contract: {enforced: true}
     columns:
       - name: id
         data_type: BIGINT
@@ -10,7 +10,7 @@ models:
           - type: not_null
           - type: primary_key
       - name: resource_type
-        data_type: BIGINT
+        data_type: TEXT
       - name: resource_id
         data_type: BIGINT
       - name: decidim_author_type

@@ -24,7 +24,7 @@ models:
         data_type: TEXT
   - name: all_forms_answers
     config:
-      contract: {enforced: false}
+      contract: {enforced: true}
     columns:
       - name: decidim_user_id
         data_type: BIGINT

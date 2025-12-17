@@ -42,10 +42,10 @@ models:
       - name: resource_type
         data_type: TEXT
       - name: categories
-        data_type: TEXT #ARRAY
+        data_type: TEXT[]
       - name: first_category
         data_type: TEXT
       - name: sub_categories
-        data_type: TEXT #ARRAY
+        data_type: TEXT[]
       - name: first_sub_category
         data_type: TEXT

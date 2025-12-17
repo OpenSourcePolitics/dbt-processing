@@ -3,7 +3,7 @@ version: 2
 models:
   - name: budgets
     config:
-      contract: {enforced: false}
+      contract: {enforced: true}
     columns:
       - name: id
         data_type: BIGINT
@@ -12,7 +12,7 @@ models:
           - type: not_null
           - type: primary_key
       - name: title
-        #data_type: TEXT
+        data_type: TEXT
       - name: decidim_component_id
         data_type: BIGINT
         constraints:
@@ -28,7 +28,7 @@ models:
         data_type: TEXT
   - name: budgets_projects
     config:
-      contract: {enforced: false}
+      contract: {enforced: true}
     columns:
       - name: id
         data_type: BIGINT
@@ -66,18 +66,18 @@ models:
       - name: project_url
         data_type: TEXT
       - name: categories
-        data_type: TEXT #ARRAY
+        data_type: TEXT[]
       - name: first_category
         data_type: TEXT
       - name: sub_categories
-        data_type: TEXT #ARRAY
+        data_type: TEXT[]
       - name: first_sub_category
         data_type: TEXT
 
   - name: projects_votes
     description: "Splits budgets orders (i.e. votes) on a per-project basis"
     config:
-      contract: {enforced: false}
+      contract: {enforced: true}
     columns:
       - name: order_id
         data_type: BIGINT
