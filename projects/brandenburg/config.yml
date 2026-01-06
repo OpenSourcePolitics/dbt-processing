@@ -1,0 +1,3 @@
+db_name_dev: BRANDENBURG_DBNAME_DEV
+db_name_prod: BRANDENBURG_DBNAME_PROD
+participation_host_name: BRANDENBURG_PARTICIPATION_HOST_NAME
