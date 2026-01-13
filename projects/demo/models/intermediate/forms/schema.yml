@@ -97,7 +97,7 @@ unit_tests:
         - {answer: 'Keine Antwort', sub_matrix_question: '', custom_body: '', sorting_position: -1, decidim_questionnaire_id: 101, position: 2}
   - name: answers_matrix_check
     description: "Check if matrix answers are correctly processed"
-    model: answers_matrix
+    model: all_answers_matrix
     given:
       - input: ref('int_forms_answers')
         format: dict
@@ -199,7 +199,7 @@ unit_tests:
 
   - name: answers_matrix_check_on_question_type
     description: "Check that question_type is correctly taken into account"
-    model: answers_matrix
+    model: all_answers_matrix
     given:
       - input: ref('int_forms_answers')
         format: dict
@@ -234,7 +234,7 @@ unit_tests:
 
   - name: answers_matrix_custom_body_check
     description: "Check if custom bodies are correctly retrieved from short and long answers"
-    model: answers_matrix
+    model: all_answers_matrix
     given:
       - input: ref('int_forms_answers')
         format: dict
