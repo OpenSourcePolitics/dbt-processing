@@ -110,9 +110,15 @@ unit_tests:
       - input: ref('stg_decidim_forms_answer_choices')
         format: dict
         rows:
-          - {decidim_answer_id: 901, body: 'Rarely', decidim_question_matrix_row_id: 1}
-          - {decidim_answer_id: 901, body: 'Never', decidim_question_matrix_row_id: 2}
-          - { decidim_answer_id: 901, body: 'Often', decidim_question_matrix_row_id: 3}
+          - {decidim_answer_id: 901, body: 'Rarely', decidim_question_matrix_row_id: 1, decidim_answer_option_id: 1001}
+          - {decidim_answer_id: 901, body: 'Never', decidim_question_matrix_row_id: 2, decidim_answer_option_id: 1002}
+          - {decidim_answer_id: 901, body: 'Often', decidim_question_matrix_row_id: 3, decidim_answer_option_id: 1003}
+      - input: ref('stg_decidim_forms_answer_options')
+        format: dict
+        rows:
+          - {id: 1001}
+          - {id: 1002}
+          - {id: 1003}
       - input: ref('stg_decidim_forms_question_matrix_rows')
         format: dict
         rows:
@@ -218,8 +224,13 @@ unit_tests:
       - input: ref('stg_decidim_forms_answer_choices')
         format: dict
         rows:
-          - {decidim_answer_id: 903, decidim_question_matrix_row_id: 1}
-          - {decidim_answer_id: 904, decidim_question_matrix_row_id: 2}
+          - {decidim_answer_id: 903, decidim_question_matrix_row_id: 1, decidim_answer_option_id: 1001}
+          - {decidim_answer_id: 904, decidim_question_matrix_row_id: 2, decidim_answer_option_id: 1002}
+      - input: ref('stg_decidim_forms_answer_options')
+        format: dict
+        rows:
+          - {id: 1001}
+          - {id: 1002}
       - input: ref('stg_decidim_forms_question_matrix_rows')
         format: dict
         rows:
@@ -233,7 +244,7 @@ unit_tests:
           - {question_type: 'matrix_single'}
 
   - name: answers_matrix_custom_body_check
-    description: "Check if custom bodies are correctly retrieved from short and long answers"
+    description: "Check if custom bodies are correctly retrieved from matrix answers"
     model: all_answers_matrix
     given:
       - input: ref('int_forms_answers')
@@ -251,10 +262,17 @@ unit_tests:
       - input: ref('stg_decidim_forms_answer_choices')
         format: dict
         rows:
-          - {decidim_answer_id: 901, decidim_question_matrix_row_id: 1, body: "Rien (précisez pourquoi)", custom_body: "Pas joué"}
-          - {decidim_answer_id: 902, decidim_question_matrix_row_id: 1, body: "Bon match", custom_body: NULL}
-          - {decidim_answer_id: 903, decidim_question_matrix_row_id: 8, body: "Autre (précisez lequel)", custom_body: "Arbitre"}
-          - {decidim_answer_id: 904, decidim_question_matrix_row_id: 8, body: "Attaquant", custom_body: NULL}
+          - {decidim_answer_id: 901, decidim_question_matrix_row_id: 1, body: "Rien (précisez pourquoi)", custom_body: "Pas joué", decidim_answer_option_id: 1001}
+          - {decidim_answer_id: 902, decidim_question_matrix_row_id: 1, body: "Bon match", custom_body: NULL, decidim_answer_option_id: 1002}
+          - {decidim_answer_id: 903, decidim_question_matrix_row_id: 8, body: "Autre (précisez lequel)", custom_body: "Arbitre", decidim_answer_option_id: 1003}
+          - {decidim_answer_id: 904, decidim_question_matrix_row_id: 8, body: "Attaquant", custom_body: NULL, decidim_answer_option_id: 1004}
+      - input: ref('stg_decidim_forms_answer_options')
+        format: dict
+        rows:
+          - {id: 1001}
+          - {id: 1002}
+          - {id: 1003}
+          - {id: 1004}
       - input: ref('stg_decidim_forms_question_matrix_rows')
         format: dict
         rows:
