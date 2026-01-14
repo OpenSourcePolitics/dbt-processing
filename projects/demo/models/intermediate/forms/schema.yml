@@ -1,3 +1,172 @@
+models:
+  - name: int_forms_answers
+    config:
+      contract: {enforced: true}
+    columns:
+      - name: id
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: body
+        data_type: TEXT
+      - name: decidim_user_id
+        data_type: BIGINT
+        #constraints:
+        #  - type: foreign_key
+        #    to: ref('int_users')
+        #    to_columns: [id]
+      - name: decidim_questionnaire_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_forms_questionnaires')
+            to_columns: [id]
+      - name: decidim_question_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_forms_questions')
+            to_columns: [id]
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: author_status
+        data_type: TEXT
+      - name: updated_at
+        data_type: TIMESTAMP
+      - name: session_token
+        description: "The token identifiying the session of the answerer"
+        data_type: TEXT
+      - name: ip_hash
+        data_type: TEXT
+
+  - name: answers_short_and_long_answer
+    description: "Answers filled from text boxes"
+    config:
+      contract: {enforced: true}
+    columns:
+      - name: id
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: primary_key
+      - name: decidim_user_id
+        data_type: BIGINT
+        #constraints:
+        #  - type: foreign_key
+        #    to: ref('int_users')
+        #    to_columns: [id]
+      - name: session_token
+        data_type: TEXT
+      - name: ip_hash
+        data_type: TEXT
+      - name: decidim_question_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_forms_questions')
+            to_columns: [id]
+      - name: question_type
+        data_type: TEXT
+      - name: position
+        data_type: BIGINT
+      - name: answer
+        data_type: TEXT
+      - name: sub_matrix_question
+        data_type: TEXT
+      - name: custom_body
+        data_type: TEXT
+      - name: sorting_position
+        data_type: INT
+      - name: decidim_questionnaire_id
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_forms_questionnaires')
+            to_columns: [id]
+        data_type: BIGINT
+      - name: body
+        data_type: TEXT
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: author_status
+        data_type: TEXT
+
+  - name: all_answers_option_and_sorting
+    description: "Answers picked from choices (single, multiple or by order of preference), including invalid answers"
+    config:
+      contract: {enforced: true}
+    columns:
+      - name: id
+        data_type: BIGINT
+        description: "actually the answer id, not the answer choice id (so, not unique)"
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('int_forms_answers')
+            to_columns: [id]
+      - name: decidim_user_id
+        data_type: BIGINT
+        #constraints:
+        #  - type: foreign_key
+        #    to: ref('int_users')
+        #    to_columns: [id]
+      - name: session_token
+        data_type: TEXT
+      - name: ip_hash
+        data_type: TEXT
+      - name: decidim_question_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_forms_questions')
+            to_columns: [id]
+      - name: question_type
+        data_type: TEXT
+      - name: sorting_position
+        data_type: BIGINT
+      - name: answer
+        data_type: TEXT
+      - name: sub_matrix_question
+        data_type: TEXT
+      - name: custom_body
+        data_type: TEXT
+      - name: sorting_position
+        data_type: BIGINT
+      - name: question_position
+        data_type: BIGINT
+      - name: decidim_questionnaire_id
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_forms_questionnaires')
+            to_columns: [id]
+        data_type: BIGINT
+      - name: body
+        data_type: TEXT
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: author_status
+        data_type: TEXT
+      - name: decidim_answer_option_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_forms_answer_options')
+            to_columns: [id]
+      - name: option_answer
+        data_type: TEXT
+      - name: invalid_choice_body
+        data_type: BOOL
+      - name: invalid_question_id
+        data_type: BOOL
+
 unit_tests:
   - name: int_forms_answers_author_status_check
     description: "Check that the author status is correctly detected"

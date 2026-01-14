@@ -17,132 +17,236 @@ models:
     description: "Table for forms answer choices when the answer is in a matrix question or in a sorting or optional question, this table stores the choice of the answerer."
     columns:
       - name: id
-        description: "Primary key."
-        data_tests:
-          - not_null
-          - unique
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
       - name: decidim_answer_id
         description: "Foreign key to the answer this choice belongs to from the table decidim_forms_answers"
-        data_tests:
-          - not_null
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_forms_answers')
+            to_columns: [id]
       - name: decidim_answer_option_id
         description: "Foreign key to the answer option from the table decidim_forms_answer_options. (Currently not used)"
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_forms_answer_options')
+            to_columns: [id]
       - name: position
         description: "Position of the answer choice when the question is of type sorting."
+        data_type: BIGINT
       - name: body
         description: "Content of the answer choice."
+        data_type: TEXT
         data_tests:
           - not_null
       - name: custom_body
         description: "Custom body for the answer choice when the answer is of type free text."
+        data_type: TEXT
       - name: decidim_question_matrix_row_id
         description: "Foreign key to the question matrix row when the question is of type matrix. It matches the matrix rows."
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_forms_question_matrix_rows')
+            to_columns: [id]
+
+  - name: stg_decidim_forms_answer_options
+    description: ""
+    config:
+      contract: {enforced: true}
+    columns:
+      - name: id
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: body
+        data_type: TEXT
+      - name: decidim_question_id
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_forms_questions')
+            to_columns: [id]
+      - name: free_text
+        data_type: BOOL
 
   - name: stg_decidim_forms_answers
     description: "Table for forms answer when the answer is not in a matrix or optional and sorting question. (i.e long_answer and short_answer)"
+    config:
+      contract: {enforced: true}
     columns:
       - name: id
-        description: "Primary key."
-        data_tests:
-          - not_null
-          - unique
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
       - name: body
         description: "Content of the answer. It is null if the question is a matrix or option, or sorting. It can be 'separator' if the question is a separator"
+        data_type: TEXT
       - name: decidim_user_id
         description: "Foreign key to the user who gave the answer."
+        #constraints:
+        #  - type: foreign_key
+        #    to: ref('stg_decidim_users')
+        #    to_columns: [id]
+        data_type: BIGINT
       - name: decidim_questionnaire_id
         description: "Foreign key to the questionnaire."
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_forms_questionnaires')
+            to_columns: [id]
       - name: decidim_question_id
         description: "Foreign key to the question."
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_forms_questions')
+            to_columns: [id]
       - name: created_at
         description: "Timestamp when the answer was created."
+        data_type: TIMESTAMP
       - name: updated_at
         description: "Timestamp when the answer was last updated."
+        data_type: TIMESTAMP
       - name: session_token
         description: "Session token of the user."
+        data_type: TEXT
       - name: ip_hash
         description: "Hashed IP address of the user."
+        data_type: TEXT
 
   - name: stg_decidim_forms_question_matrix_rows
     description: "Table for forms question of type matrix."
     columns:
       - name: id
-        description: "Primary key."
-        data_tests:
-          - not_null
-          - unique
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
       - name: decidim_question_id
         description: "Foreign key to the question."
-        data_tests:
-          - not_null
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_forms_questions')
+            to_columns: [id]
       - name: position
         description: "Position of the matrix row."
+        data_type: BIGINT
       - name: body
         description: "Content of the matrix row."
+        data_type: TEXT
         data_tests:
           - not_null
 
   - name: stg_decidim_forms_questionnaires
     description: "Table for forms questionnaires"
+    config:
+      contract: {enforced: true}
     columns:
       - name: id
-        description: "Primary key."
-        data_tests:
-          - not_null
-          - unique
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
       - name: title
         description: "Title of the questionnaire."
+        data_type: TEXT
       - name: description
         description: "Description of the questionnaire."
+        data_type: TEXT
       - name: tos
         description: "Terms of service associated with the questionnaire."
+        data_type: TEXT
       - name: questionnaire_for_type
         description: "Type of entity the questionnaire is for."
+        data_type: TEXT
       - name: questionnaire_for_id
         description: "ID of the entity the questionnaire is for."
+        data_type: BIGINT
       - name: published_at
         description: "Timestamp when the questionnaire was published."
+        data_type: TIMESTAMP
       - name: created_at
         description: "Timestamp when the questionnaire was created."
+        data_type: TIMESTAMP
       - name: updated_at
         description: "Timestamp when the questionnaire was last updated."
+        data_type: TIMESTAMP
       - name: salt
         description: "Salt used for hashing."
+        data_type: TEXT
 
   - name: stg_decidim_forms_questions
     description: "Table for forms questions"
+    config:
+      contract: {enforced: true}
     columns:
       - name: id
-        description: "Primary key."
-        data_tests:
-          - not_null
-          - unique
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
       - name: decidim_questionnaire_id
         description: "Foreign key to the questionnaire."
+        data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('stg_decidim_forms_questionnaires')
+            to_columns: [id]
       - name: position
         description: "Position of the question."
+        data_type: BIGINT
       - name: question_type
         description: "Type of the question (e.g., short_answer, long_answer, single_matrix ...)."
+        data_type: TEXT
       - name: mandatory
         description: "Boolean that indicates whether the question is mandatory."
+        data_type: BOOL
       - name: body
         description: "Content of the question."
+        data_type: TEXT
       - name: description
         description: "Description of the question."
+        data_type: TEXT
       - name: max_choices
         description: "Maximum number of choices allowed for the question."
+        data_type: BIGINT
       - name: created_at
+        data_type: TIMESTAMP
         description: "Timestamp when the question was created."
       - name: updated_at
+        data_type: TIMESTAMP
         description: "Timestamp when the question was last updated."
       - name: max_characters
         description: "Maximum number of characters allowed for the question."
-
-
-
-
-
-
-
-
-
+        data_type: BIGINT
+      - name: answer_options_count
+        data_type: BIGINT
+      - name: display_conditions_count
+        data_type: BIGINT
+      - name: display_conditions_for_other_questions_count
+        data_type: BIGINT
+      - name: matrix_rows_count
+        data_type: BIGINT
