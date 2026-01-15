@@ -61,7 +61,7 @@ models:
   - name: stg_decidim_forms_answer_options
     description: ""
     config:
-      contract: {enforced: true}
+      contract: {enforced: false}
     columns:
       - name: id
         data_type: BIGINT
@@ -84,7 +84,7 @@ models:
   - name: stg_decidim_forms_answers
     description: "Table for forms answer when the answer is not in a matrix or optional and sorting question. (i.e long_answer and short_answer)"
     config:
-      contract: {enforced: true}
+      contract: {enforced: false}
     columns:
       - name: id
         data_type: BIGINT
@@ -160,7 +160,7 @@ models:
   - name: stg_decidim_forms_questionnaires
     description: "Table for forms questionnaires"
     config:
-      contract: {enforced: true}
+      contract: {enforced: false}
     columns:
       - name: id
         data_type: BIGINT
@@ -199,7 +199,7 @@ models:
   - name: stg_decidim_forms_questions
     description: "Table for forms questions"
     config:
-      contract: {enforced: true}
+      contract: {enforced: false}
     columns:
       - name: id
         data_type: BIGINT

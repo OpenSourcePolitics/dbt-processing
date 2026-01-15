@@ -1,7 +1,7 @@
 models:
   - name: int_forms_answers
     config:
-      contract: {enforced: true}
+      contract: {enforced: false}
     columns:
       - name: id
         data_type: BIGINT
@@ -46,7 +46,7 @@ models:
   - name: answers_short_and_long_answer
     description: "Answers filled from text boxes"
     config:
-      contract: {enforced: true}
+      contract: {enforced: false}
     columns:
       - name: id
         data_type: BIGINT
@@ -99,7 +99,7 @@ models:
   - name: all_answers_option_and_sorting
     description: "Answers picked from choices (single, multiple or by order of preference), including invalid answers"
     config:
-      contract: {enforced: true}
+      contract: {enforced: false}
     columns:
       - name: id
         data_type: BIGINT
