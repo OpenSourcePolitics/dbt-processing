@@ -501,26 +501,26 @@ unit_tests:
         format: dict
         rows:
           - {id: 41, decidim_questionnaire_id: 101, question_type: 'matrix_single', body: "Vous préférez aller où en vacances ?"}
-      - input: ref('stg_decidim_forms_answer_choices')
+      - input: ref('stg_decidim_forms_question_matrix_rows')
         format: dict
         rows:
-          - {decidim_answer_id: 901, decidim_answer_option_id: 1002, body: "À la montagne", decidim_question_matrix_row_id: 1}
-          - {decidim_answer_id: 901, decidim_answer_option_id: 1001, body: "À la montagne", decidim_question_matrix_row_id: 2}
+          - {id: 67, decidim_question_id: 41, body: "Vacances d'été"}
+          - {id: 68, decidim_question_id: 41, body: "Vacances d'hiver"}
       - input: ref('stg_decidim_forms_answer_options')
         format: dict
         rows:
           - {id: 1001, decidim_question_id: 41, body: "À la mer"}
           - {id: 1002, decidim_question_id: 41, body: "À la montagne"}
-      - input: ref('stg_decidim_forms_question_matrix_rows')
+      - input: ref('stg_decidim_forms_answer_choices')
         format: dict
         rows:
-          - {id: 1, decidim_question_id: 41, body: "Vacances d'été"}
-          - {id: 2, decidim_question_id: 41, body: "Vacances d'hiver"}
+          - {decidim_answer_id: 901, decidim_answer_option_id: 1001, body: "À la mer", decidim_question_matrix_row_id: 67}
+          - {decidim_answer_id: 901, decidim_answer_option_id: 1002, body: "À la mer", decidim_question_matrix_row_id: 68}
     expect:
       format: dict
       rows:
-        - {answer: "À la montagne", option_answer: "À la montagne", invalid_choice_body: false}
-        - {answer: "À la montagne", option_answer: "À la mer", invalid_choice_body: true}
+        - {answer: "À la mer", option_answer: "À la mer", invalid_choice_body: false}
+        - {answer: "À la mer", option_answer: "À la montagne", invalid_choice_body: true}
 
   - name: answers_matrix_question_check
     description: "Check that matrix answers come from options belonging to the answered question"
