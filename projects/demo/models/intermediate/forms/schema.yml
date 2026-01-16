@@ -500,7 +500,7 @@ unit_tests:
       - input: ref('stg_decidim_forms_questions')
         format: dict
         rows:
-          - {id: 41, decidim_questionnaire_id: 101, question_type: 'matrix_multiple', body: "Vous préférez aller où en vacances ?"}
+          - {id: 41, decidim_questionnaire_id: 101, question_type: 'matrix_single', body: "Vous préférez aller où en vacances ?"}
       - input: ref('stg_decidim_forms_answer_choices')
         format: dict
         rows:
@@ -533,7 +533,7 @@ unit_tests:
       - input: ref('stg_decidim_forms_questions')
         format: dict
         rows:
-          - {id: 41, decidim_questionnaire_id: 101, question_type: 'matrix_single', body: "Vous préférez aller où en vacances ?"}
+          - {id: 41, decidim_questionnaire_id: 101, question_type: 'matrix_multiple', body: "Vous préférez aller où en vacances ?"}
           - {id: 42, decidim_questionnaire_id: 101, question_type: 'matrix_single', body: "Vous préférez quelle saveur à vos repas ?"}
       - input: ref('stg_decidim_forms_answer_choices')
         format: dict
