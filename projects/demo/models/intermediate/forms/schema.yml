@@ -431,17 +431,21 @@ unit_tests:
       - input: ref('stg_decidim_forms_answer_choices')
         format: dict
         rows:
-          - {decidim_answer_id: 901, decidim_question_matrix_row_id: 1, body: "Rien (précisez pourquoi)", custom_body: "Pas joué", decidim_answer_option_id: 1001}
-          - {decidim_answer_id: 902, decidim_question_matrix_row_id: 1, body: "Bon match", custom_body: NULL, decidim_answer_option_id: 1002}
-          - {decidim_answer_id: 903, decidim_question_matrix_row_id: 8, body: "Autre (précisez lequel)", custom_body: "Arbitre", decidim_answer_option_id: 1003}
+          - {decidim_answer_id: 901, decidim_question_matrix_row_id: 1, body: "Rien (précisez pourquoi)", custom_body: "Pas joué", decidim_answer_option_id: 1003}
+          - {decidim_answer_id: 902, decidim_question_matrix_row_id: 1, body: "Bon match", custom_body: NULL, decidim_answer_option_id: 1001}
+          - {decidim_answer_id: 903, decidim_question_matrix_row_id: 8, body: "Défenseur", decidim_answer_option_id: 1005}
+          - {decidim_answer_id: 903, decidim_question_matrix_row_id: 8, body: "Autre (précisez lequel)", custom_body: "Arbitre", decidim_answer_option_id: 1007}
           - {decidim_answer_id: 904, decidim_question_matrix_row_id: 8, body: "Attaquant", custom_body: NULL, decidim_answer_option_id: 1004}
       - input: ref('stg_decidim_forms_answer_options')
         format: dict
         rows:
-          - {id: 1001}
-          - {id: 1002}
-          - {id: 1003}
-          - {id: 1004}
+          - {id: 1001, body: "Bon match"}
+          - {id: 1002, body: "Mauvais match"}
+          - {id: 1003, body: "Rien (précisez pourquoi)"}
+          - {id: 1004, body: "Attaquant"}
+          - {id: 1005, body: "Défenseur"}
+          - {id: 1006, body: "Gardien"}
+          - {id: 1007, body: "Autre (précisez lequel)"}
       - input: ref('stg_decidim_forms_question_matrix_rows')
         format: dict
         rows:
@@ -452,6 +456,7 @@ unit_tests:
       rows:
         - {session_token: 555555, body: "Qu'en avez-vous pensé ?", answer: "Rien (précisez pourquoi)", custom_body: "Pas joué"}
         - {session_token: 666666, body: "Qu'en avez-vous pensé ?", answer: "Bon match", custom_body: ''}
+        - {session_token: 555555, body: "Quel rôle avez-vous joué ?", answer: "Défenseur", custom_body: ''}
         - {session_token: 555555, body: "Quel rôle avez-vous joué ?", answer: "Autre (précisez lequel)", custom_body: "Arbitre"}
         - {session_token: 666666, body: "Quel rôle avez-vous joué ?", answer: "Attaquant", custom_body: ''}
 
@@ -495,7 +500,7 @@ unit_tests:
       - input: ref('stg_decidim_forms_questions')
         format: dict
         rows:
-          - {id: 41, decidim_questionnaire_id: 101, question_type: 'matrix_single', body: "Vous préférez aller où en vacances ?"}
+          - {id: 41, decidim_questionnaire_id: 101, question_type: 'matrix_multiple', body: "Vous préférez aller où en vacances ?"}
       - input: ref('stg_decidim_forms_answer_choices')
         format: dict
         rows:
