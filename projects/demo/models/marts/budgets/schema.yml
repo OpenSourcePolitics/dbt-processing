@@ -52,6 +52,11 @@ models:
         data_type: BOOL
       - name: budget_id
         data_type: BIGINT
+        constraints:
+          - type: not_null
+          - type: foreign_key
+            to: ref('budgets')
+            to_columns: [id]
       - name: budget_title
         data_type: TEXT
       - name: resource_type
