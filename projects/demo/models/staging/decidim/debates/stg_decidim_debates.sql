@@ -14,7 +14,9 @@ renamed AS (
         decidim_author_id,
         created_at,
         closed_at,
+        {{ get_column_if_exists(source('decidim', 'decidim_debates_debates'), 'deleted_at', 'TIMESTAMP') }},
         {{ coalesce_legacy_and_new_columns(source('decidim', 'decidim_proposals_proposals'), 'endorsements_count', 'likes_count') }},
+        {{ get_column_if_exists(source('decidim', 'decidim_debates_debates'), 'comments_layout', 'TEXT') }},
         'Decidim::Debates::Debate' as resource_type
     FROM source 
 )
