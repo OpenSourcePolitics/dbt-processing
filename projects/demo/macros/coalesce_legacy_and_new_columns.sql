@@ -7,7 +7,7 @@
   {% elif new_column_name in column_names %}
       {{ new_column_name }} AS {{ legacy_column_name }}
   {% else %}
-      {{ get_column_if_exists(relation, legacy_column_name, cast_type="TEXT", default_value="NULL", include_alias=True)
+      {{ get_column_if_exists(relation, legacy_column_name, cast_type="TEXT", default_value="NULL", include_alias=True) }}
   {% endif %}
 
 {% endmacro %}
