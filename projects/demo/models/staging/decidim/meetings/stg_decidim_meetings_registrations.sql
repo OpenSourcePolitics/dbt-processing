@@ -9,6 +9,7 @@ renamed AS (
         created_at,
         updated_at,
         code,
+        {{ get_column_if_exists(source('decidim', 'decidim_meetings_registrations'), 'status', 'TEXT') }},
         validated_at,
         decidim_user_group_id
     FROM source

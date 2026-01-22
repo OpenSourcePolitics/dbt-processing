@@ -5,6 +5,7 @@ SELECT
     {{ int_meetings_translate_adress('decidim_meetings.address') }} AS address,
     decidim_meetings.attendees_count,
     decidim_meetings.created_at,
+    decidim_meetings.deleted_at,
     decidim_meetings.decidim_scope_id,
     decidim_meetings.decidim_component_id,
     decidim_meetings.start_time,

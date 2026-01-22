@@ -39,3 +39,4 @@ JOIN {{ ref("components")}} decidim_components on decidim_components.id = decidi
 JOIN {{ ref("int_scopes")}} decidim_scopes on decidim_scopes.id = decidim_scope_id
 LEFT JOIN categorizations on categorizations.categorizable_id = decidim_meetings_meetings.id
 WHERE manifest_name like 'meetings'
+AND decidim_meetings_meetings.deleted_at IS NULL
