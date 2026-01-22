@@ -22,6 +22,7 @@ sources:
       - name: decidim_accountability_results
       - name: decidim_comments_comments
       - name: decidim_proposals_collaborative_drafts
+      - name: decidim_likes
       - name: decidim_endorsements
       - name: decidim_follows
       - name: decidim_initiatives

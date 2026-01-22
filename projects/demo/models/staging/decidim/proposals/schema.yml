@@ -6,7 +6,7 @@ unit_tests:
       - input: source('decidim', 'decidim_proposals_proposals')
         format: dict
         rows:
-          - {id: 1, endorsements_count: 0}
+          - {id: 1}
     expect:
       format: dict
       rows:
@@ -19,7 +19,7 @@ unit_tests:
       - input: source('decidim', 'decidim_proposals_proposals')
         format: dict
         rows:
-          - {id: 1, endorsements_count: 0}
+          - {id: 1}
     expect:
       format: dict
       rows:
