@@ -8,5 +8,6 @@ SELECT
     created_at,
     decidim_author_id,
     {{ get_column_if_exists(source('decidim', 'decidim_blogs_posts'), 'published_at', 'TIMESTAMP') }},
+    {{ coalesce_legacy_and_new_columns(source('decidim', 'decidim_blogs_posts'), 'endorsements_count', 'likes_count', 'INTEGER') }},
     'Decidim::Blogs::Post' AS resource_type
 FROM {{ source('decidim', 'decidim_blogs_posts') }} 

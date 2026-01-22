@@ -9,6 +9,7 @@ SELECT
     decidim_scope_id,
     created_at,
     published_at,
+    {{ get_column_if_exists(source('decidim', 'decidim_proposals_proposals'), 'deleted_at', 'TIMESTAMP') }},
     {{ get_column_if_exists(source('decidim', 'decidim_proposals_proposals'), 'withdrawn_at', 'TIMESTAMP') }},
     {{ get_column_if_exists(source('decidim', 'decidim_proposals_proposals'), 'valuation_assignments_count', 'INTEGER') }},
     {{ stg_proposals_get_state(source('decidim', 'decidim_proposals_proposals')) }} AS state,
