@@ -12,6 +12,7 @@ renamed AS (
     decidim_scope_id, 
     budget_amount as project_amount,
     selected_at,
+    {{ get_column_if_exists(source('decidim', 'decidim_budgets_projects'), 'deleted_at', 'TIMESTAMP') }},
     decidim_budgets_budget_id,
     'Decidim::Budgets::Project' as resource_type
     FROM source
