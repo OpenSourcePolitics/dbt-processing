@@ -7,3 +7,4 @@ SELECT
     decidim_components.ps_title
 FROM {{ ref ("stg_decidim_budgets")}} AS decidim_budgets_budgets
 JOIN {{ ref("components")}} AS decidim_components on decidim_components.id = decidim_budgets_budgets.decidim_component_id
+WHERE decidim_budgets_budgets.deleted_at IS NULL

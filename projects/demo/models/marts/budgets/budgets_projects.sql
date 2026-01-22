@@ -23,3 +23,4 @@ FROM {{ ref("int_budgets_projects")}} AS decidim_budgets_projects
 JOIN {{ ref("stg_decidim_budgets")}} AS decidim_budgets_budgets on decidim_budgets_budgets.id = decidim_budgets_projects.decidim_budgets_budget_id
 JOIN {{ ref("components")}} as decidim_components on decidim_components.id = decidim_budgets_budgets.decidim_component_id
 LEFT JOIN categorizations on categorizations.categorizable_id = decidim_budgets_projects.id
+WHERE decidim_budgets_projects.deleted_at IS NULL

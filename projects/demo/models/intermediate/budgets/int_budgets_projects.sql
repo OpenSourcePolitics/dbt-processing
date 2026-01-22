@@ -6,6 +6,7 @@ SELECT
     decidim_scope_id, 
     project_amount,
     selected_at,
+    deleted_at,
     decidim_budgets_budget_id,
     resource_type,
     (CASE
