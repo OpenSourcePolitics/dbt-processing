@@ -8,6 +8,7 @@ SELECT
     coalesce(attendees_count, 0) as attendees_count,
     created_at,
     {{ get_column_if_exists(source('decidim', 'decidim_meetings_meetings'), 'withdrawn_at', 'TIMESTAMP') }},
+    {{ get_column_if_exists(source('decidim', 'decidim_meetings_meetings'), 'deleted_at', 'TIMESTAMP') }},
     decidim_scope_id,
     decidim_component_id,
     start_time,
