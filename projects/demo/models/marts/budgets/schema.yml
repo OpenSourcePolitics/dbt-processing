@@ -78,6 +78,14 @@ models:
         data_type: TEXT[]
       - name: first_sub_category
         data_type: TEXT
+      - name: taxonomies
+        data_type: TEXT[]
+      - name: first_taxonomy
+        data_type: TEXT
+      - name: sub_taxonomies
+        data_type: TEXT[]
+      - name: first_sub_taxonomy
+        data_type: TEXT
 
   - name: projects_votes
     description: "Splits budgets orders (i.e. votes) on a per-project basis"

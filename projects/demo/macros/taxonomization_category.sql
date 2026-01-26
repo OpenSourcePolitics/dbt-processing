@@ -1,4 +1,4 @@
-{% macro taxonomization_first_category(column_name) %}
+{% macro taxonomization_first_taxonomy(column_name) %}
     {% set lang = var('DBT_LANG', 'fr') %}  -- Default language is 'fr'
 
     {% set translations = {
@@ -8,10 +8,10 @@
         'nl': "Geen categorie"
     } %}
 
-    COALESCE(NULLIF({{ column_name }}, ''), '{{ translations.get(lang, "Unknown") }}') AS first_category
+    COALESCE(NULLIF({{ column_name }}, ''), '{{ translations.get(lang, "Unknown") }}') AS first_taxonomy
 {% endmacro %}
 
-{% macro taxonomization_first_sub_category(column_name) %}
+{% macro taxonomization_first_sub_taxonomy(column_name) %}
     {% set lang = var('DBT_LANG', 'fr') %}  -- Default language is 'fr'
 
     {% set translations = {
@@ -21,5 +21,5 @@
         'nl': "Geen subcategorie"
     } %}
 
-    COALESCE(NULLIF({{ column_name }}, ''), '{{ translations.get(lang, "Unknown") }}') AS first_sub_category
+    COALESCE(NULLIF({{ column_name }}, ''), '{{ translations.get(lang, "Unknown") }}') AS first_sub_taxonomy
 {% endmacro %}
