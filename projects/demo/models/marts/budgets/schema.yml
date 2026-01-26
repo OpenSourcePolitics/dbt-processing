@@ -167,6 +167,11 @@ unit_tests:
         rows:
           - {categorizable_id: 1, categorizable_type: 'Decidim::Budgets::Project', category_name: 'Environnement', child_name: 'Energie'}
           - {categorizable_id: 2, categorizable_type: 'Decidim::Budgets::Project', category_name: '', child_name: ''}
+      - input: ref('taxonomizations')
+        format: dict
+        rows:
+          - {taxonomizable_id: 1, taxonomizable_type: 'Decidim::Budgets::Project' }
+          - {taxonomizable_id: 2, taxonomizable_type: 'Decidim::Budgets::Project' }
     expect:
       format: dict
       rows:
@@ -200,6 +205,11 @@ unit_tests:
         rows:
           - {categorizable_id: 1, categorizable_type: 'Decidim::Budgets::Project', category_name: 'Gezondheid', child_name: 'Zorg'}
           - {categorizable_id: 2, categorizable_type: 'Decidim::Budgets::Project', category_name: '', child_name: ''}
+      - input: ref('taxonomizations')
+        format: dict
+        rows:
+          - {taxonomizable_id: 1, taxonomizable_type: 'Decidim::Budgets::Project' }
+          - {taxonomizable_id: 2, taxonomizable_type: 'Decidim::Budgets::Project' }
     expect:
       format: dict
       rows:
