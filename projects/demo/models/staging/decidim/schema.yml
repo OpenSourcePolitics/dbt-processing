@@ -52,6 +52,8 @@ models:
           - type: primary_key
       - name: published_at
         data_type: TIMESTAMP
+      - name: deleted_at
+        data_type: TIMESTAMP
       - name: title
         data_type: TEXT
       - name: subtitle
