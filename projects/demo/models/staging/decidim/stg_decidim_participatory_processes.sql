@@ -6,7 +6,8 @@ WITH source AS (
 renamed AS (
     SELECT 
         id, 
-        published_at, 
+        published_at,
+        {{ get_column_if_exists(source('decidim', 'decidim_participatory_processes'), 'deleted_at', 'TIMESTAMP') }},
         title::jsonb->>'{{ lang }}' AS title,
         subtitle::jsonb->>'{{ lang }}' as subtitle, 
         slug, 

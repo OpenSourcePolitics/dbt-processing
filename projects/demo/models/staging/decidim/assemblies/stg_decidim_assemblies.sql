@@ -7,7 +7,6 @@ renamed AS (
     SELECT
         id,
         slug,
-        hashtag,
         decidim_organization_id,
         created_at,
         updated_at,
@@ -25,7 +24,6 @@ renamed AS (
         target,
         participatory_scope,
         participatory_structure,
-        show_statistics,
         decidim_scope_id,
         scopes_enabled,
         private_space,
@@ -54,7 +52,6 @@ renamed AS (
         decidim_assemblies_type_id,
         weight,
         follows_count
-
     FROM source
 )
 SELECT * FROM renamed
