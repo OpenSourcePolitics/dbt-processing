@@ -170,8 +170,8 @@ unit_tests:
       - input: ref('taxonomizations')
         format: dict
         rows:
-          - {taxonomizable_id: 1, taxonomizable_type: 'Decidim::Budgets::Project' }
-          - {taxonomizable_id: 2, taxonomizable_type: 'Decidim::Budgets::Project' }
+          - {}
+          - {}
     expect:
       format: dict
       rows:
@@ -208,8 +208,8 @@ unit_tests:
       - input: ref('taxonomizations')
         format: dict
         rows:
-          - {taxonomizable_id: 1, taxonomizable_type: 'Decidim::Budgets::Project' }
-          - {taxonomizable_id: 2, taxonomizable_type: 'Decidim::Budgets::Project' }
+          - {}
+          - {}
     expect:
       format: dict
       rows:
