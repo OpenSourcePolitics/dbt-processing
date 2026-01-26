@@ -77,11 +77,11 @@ models:
         data_type: TEXT
         description: "First sub-category associated with the proposal"
       - name: taxonomies
-        data_type: TEXT[]
+        data_type: TEXT #TEXT[]
       - name: first_taxonomy
         data_type: TEXT
       - name: sub_taxonomies
-        data_type: TEXT[]
+        data_type: TEXT #TEXT[]
       - name: first_sub_taxonomy
         data_type: TEXT
       - name: comments_count
