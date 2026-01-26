@@ -22,7 +22,6 @@
         created_at,
         updated_at,
         decidim_user_group_id,
-        hashtag,
         scoped_type_id,
         first_progress_notification_at,
         second_progress_notification_at,
