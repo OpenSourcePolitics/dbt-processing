@@ -22,7 +22,7 @@
 {% else %}
     SELECT
         CAST(NULL AS INTEGER) AS id,
-        CAST(NULL AS TEXT) AS title,
+        CAST(NULL AS TEXT) AS name,
         CAST(NULL AS INTEGER) AS decidim_organization_id,
         CAST(NULL AS INTEGER) AS parent_id,
         CAST(NULL AS INTEGER) AS weight,
