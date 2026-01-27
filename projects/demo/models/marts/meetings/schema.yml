@@ -63,6 +63,14 @@ models:
         data_type: TEXT[]
       - name: first_sub_category
         data_type: TEXT
+      - name: taxonomies
+        data_type: TEXT[]
+      - name: first_taxonomy
+        data_type: TEXT
+      - name: sub_taxonomies
+        data_type: TEXT[]
+      - name: first_sub_taxonomy
+        data_type: TEXT
 
 unit_tests:
   - name: test_url_concatenation
@@ -81,6 +89,10 @@ unit_tests:
         format: dict
         rows:
           - { categorizable_id: 100 }
+      - input: ref('taxonomizations')
+        format: dict
+        rows:
+          - {}
       - input: ref("int_scopes")
         format: dict
         rows:
@@ -104,6 +116,10 @@ unit_tests:
           - { id: 1, manifest_name: 'meetings' }
           - { id: 2, manifest_name: 'foo' }
       - input: ref("categorizations")
+        format: dict
+        rows:
+          - {}
+      - input: ref('taxonomizations')
         format: dict
         rows:
           - {}

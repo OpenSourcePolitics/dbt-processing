@@ -1,5 +1,8 @@
 WITH categorizations AS (
     {{ categorizations_filter('Decidim::Meetings::Meeting') }}
+),
+taxonomizations AS (
+    {{ taxonomizables_select('Decidim::Meetings::Meeting') }}
 )
 SELECT
     decidim_meetings_meetings.id,
@@ -33,10 +36,15 @@ SELECT
     categorizations.categories,
     {{ categorization_first_category('categorizations.categories[1]') }},
     categorizations.sub_categories,
-    {{ categorization_first_sub_category('categorizations.sub_categories[1]') }}
+    {{ categorization_first_sub_category('categorizations.sub_categories[1]') }},
+    taxonomizations.taxonomies,
+    {{ taxonomization_first_taxonomy('taxonomizations.taxonomies[1]') }},
+    taxonomizations.sub_taxonomies,
+    {{ taxonomization_first_sub_taxonomy('taxonomizations.sub_taxonomies[1]') }}
 FROM {{ ref("int_meetings")}} AS decidim_meetings_meetings
 JOIN {{ ref("components")}} decidim_components on decidim_components.id = decidim_component_id
 JOIN {{ ref("int_scopes")}} decidim_scopes on decidim_scopes.id = decidim_scope_id
 LEFT JOIN categorizations on categorizations.categorizable_id = decidim_meetings_meetings.id
+LEFT JOIN taxonomizations on taxonomizations.taxonomizable_id = decidim_meetings_meetings.id
 WHERE manifest_name like 'meetings'
 AND decidim_meetings_meetings.deleted_at IS NULL
