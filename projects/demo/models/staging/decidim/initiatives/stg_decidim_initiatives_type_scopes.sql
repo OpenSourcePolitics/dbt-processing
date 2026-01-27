@@ -10,6 +10,7 @@
         decidim_initiatives_types_id,
         decidim_scopes_id,
         supports_required,
+        {{ get_column_if_exists(source('decidim', 'decidim_initiatives_type_scopes'), 'decidim_taxonomy_id', 'BIGINT') }},
         created_at,
         updated_at
     FROM {{ source('decidim', 'decidim_initiatives_type_scopes') }}
@@ -19,6 +20,7 @@
         CAST(NULL AS INTEGER) AS decidim_initiatives_types_id,
         CAST(NULL AS INTEGER) AS decidim_scopes_id,
         CAST(NULL AS BOOLEAN) AS supports_required,
+        CAST(NULL AS INTEGER) AS decidim_taxonomy_id,
         CAST(NULL AS TIMESTAMP) AS created_at,
         CAST(NULL AS TIMESTAMP) AS updated_at
     LIMIT 0

@@ -37,7 +37,7 @@ renamed AS (
         creation_date,
         created_by,
         created_by_other,
-        {{ get_column_if_exists(source('decidim', 'decidim_participatory_processes'), 'deleted_at', 'TIMESTAMP') }},
+        {{ get_column_if_exists(source('decidim', 'decidim_assemblies'), 'deleted_at', 'TIMESTAMP') }},
         duration,
         included_at,
         closing_date,

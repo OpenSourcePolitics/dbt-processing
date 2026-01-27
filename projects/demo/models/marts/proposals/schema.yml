@@ -76,6 +76,14 @@ models:
       - name: first_sub_category
         data_type: TEXT
         description: "First sub-category associated with the proposal"
+      - name: taxonomies
+        data_type: TEXT #TEXT[]
+      - name: first_taxonomy
+        data_type: TEXT
+      - name: sub_taxonomies
+        data_type: TEXT #TEXT[]
+      - name: first_sub_taxonomy
+        data_type: TEXT
       - name: comments_count
         data_type: BIGINT
         description: "Number of comments on the proposal"
@@ -152,6 +160,11 @@ unit_tests:
         format: dict
         rows:
           - {}
+      - input: ref('taxonomizations')
+        format: dict
+        rows:
+          - {}
+          - {}
     expect:
       format: dict
       rows:
@@ -197,6 +210,11 @@ unit_tests:
         format: dict
         rows:
           - {}
+      - input: ref('taxonomizations')
+        format: dict
+        rows:
+          - {}
+          - {}
     expect:
       format: dict
       rows:
@@ -239,6 +257,10 @@ unit_tests:
         rows:
           - {}
       - input: ref('categorizations')
+        format: dict
+        rows:
+          - {}
+      - input: ref('taxonomizations')
         format: dict
         rows:
           - {}
@@ -288,6 +310,11 @@ unit_tests:
         format: dict
         rows:
           - {}
+      - input: ref('taxonomizations')
+        format: dict
+        rows:
+          - {}
+          - {}
     expect:
       format: dict
       rows:
@@ -332,6 +359,11 @@ unit_tests:
       - input: ref('categorizations')
         format: dict
         rows:
+          - {}
+      - input: ref('taxonomizations')
+        format: dict
+        rows:
+          - {}
           - {}
     expect:
       format: dict

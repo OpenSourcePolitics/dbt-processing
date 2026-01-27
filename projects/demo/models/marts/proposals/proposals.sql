@@ -17,6 +17,9 @@ WITH coauthorships AS (
 categorizations AS (
     {{ categorizations_filter('Decidim::Proposals::Proposal') }}
 ),
+taxonomizations AS (
+    {{ taxonomizables_select('Decidim::Proposals::Proposal') }}
+),
 votes AS (
     SELECT
         decidim_proposal_id,
@@ -46,6 +49,10 @@ proposals AS (
         {{ categorization_first_category('categorizations.categories[1]') }},
         categorizations.sub_categories::text,
         {{ categorization_first_sub_category('categorizations.sub_categories[1]') }},
+        taxonomizations.taxonomies::text,
+        {{ taxonomization_first_taxonomy('taxonomizations.taxonomies[1]') }},
+        taxonomizations.sub_taxonomies::text,
+        {{ taxonomization_first_sub_taxonomy('taxonomizations.sub_taxonomies[1]') }},
         decidim_proposals.comments_count,
         decidim_proposals.endorsements_count,
         decidim_proposals.follows_count,
@@ -63,6 +70,7 @@ proposals AS (
     LEFT JOIN {{ ref("int_scopes")}} AS decidim_scopes ON decidim_scopes.id = decidim_proposals.decidim_scope_id
     LEFT JOIN votes ON decidim_proposals.id = votes.decidim_proposal_id
     LEFT JOIN categorizations ON categorizations.categorizable_id = decidim_proposals.id
+    LEFT JOIN taxonomizations on taxonomizations.taxonomizable_id = decidim_proposals.id
     LEFT JOIN {{ ref("stg_decidim_proposals_custom_states")}} AS decidim_proposals_proposal_states ON decidim_proposals_proposal_states.id = decidim_proposals.decidim_proposals_proposal_state_id
     WHERE decidim_moderations.hidden_at IS NULL
     AND decidim_proposals.published_at IS NOT NULL

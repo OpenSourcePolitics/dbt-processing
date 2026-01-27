@@ -33,6 +33,14 @@ models:
         data_type: TEXT
       - name: post_url
         data_type: TEXT
+      - name: taxonomies
+        data_type: TEXT #TEXT[]
+      - name: first_taxonomy
+        data_type: TEXT
+      - name: sub_taxonomies
+        data_type: TEXT #TEXT[]
+      - name: first_sub_taxonomy
+        data_type: TEXT
 
 unit_tests:
   - name: test_url_concatenation
@@ -49,6 +57,11 @@ unit_tests:
         rows:
           - {organization_host: 'host1.com', ps_space_type_slug: 'foo', ps_slug: 'bar', id: 42}
           - {organization_host: 'host2.com', ps_space_type_slug: 'type', ps_slug: 'space', id: 43}
+      - input: ref('taxonomizations')
+        format: dict
+        rows:
+          - { }
+          - { }
     expect:
       format: dict
       rows:

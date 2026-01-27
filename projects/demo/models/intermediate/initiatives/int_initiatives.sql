@@ -23,7 +23,6 @@
         answer_url,
         decidim_initiatives.created_at,
         decidim_user_group_id,
-        hashtag,
         scoped_type_id,
         decidim_author_type,
         parsed_online_votes,

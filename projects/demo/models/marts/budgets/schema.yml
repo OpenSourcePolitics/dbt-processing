@@ -78,6 +78,14 @@ models:
         data_type: TEXT[]
       - name: first_sub_category
         data_type: TEXT
+      - name: taxonomies
+        data_type: TEXT[]
+      - name: first_taxonomy
+        data_type: TEXT
+      - name: sub_taxonomies
+        data_type: TEXT[]
+      - name: first_sub_taxonomy
+        data_type: TEXT
 
   - name: projects_votes
     description: "Splits budgets orders (i.e. votes) on a per-project basis"
@@ -159,6 +167,11 @@ unit_tests:
         rows:
           - {categorizable_id: 1, categorizable_type: 'Decidim::Budgets::Project', category_name: 'Environnement', child_name: 'Energie'}
           - {categorizable_id: 2, categorizable_type: 'Decidim::Budgets::Project', category_name: '', child_name: ''}
+      - input: ref('taxonomizations')
+        format: dict
+        rows:
+          - {}
+          - {}
     expect:
       format: dict
       rows:
@@ -192,6 +205,11 @@ unit_tests:
         rows:
           - {categorizable_id: 1, categorizable_type: 'Decidim::Budgets::Project', category_name: 'Gezondheid', child_name: 'Zorg'}
           - {categorizable_id: 2, categorizable_type: 'Decidim::Budgets::Project', category_name: '', child_name: ''}
+      - input: ref('taxonomizations')
+        format: dict
+        rows:
+          - {}
+          - {}
     expect:
       format: dict
       rows:
