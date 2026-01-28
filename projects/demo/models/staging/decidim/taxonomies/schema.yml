@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: decidim
+    database: "{{ env_var('DBNAME') }}"
+    schema: public
+    tables:
+      - name : decidim_taxonomies
+      - name : decidim_taxonomizations
+      - name : decidim_taxonomy_filters
+      - name : decidim_taxonomy_filter_items
