@@ -15,7 +15,7 @@ renamed AS (
         permissions,
         published_at,
         created_at,
-        updated_at
+        updated_at,
     FROM source
 )
 SELECT * FROM renamed
