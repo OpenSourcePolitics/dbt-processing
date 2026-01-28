@@ -136,18 +136,3 @@ unit_tests:
       rows:
         - {id: 1, address: 'Pas d''adresse'}
         - {id: 2, address: '1 Place Hannah Arendt'}
-  - name: test_published_at_not_null
-    description: "Test that only rows with non-null published_at are included"
-    model: int_proposals
-    given:
-      - input: ref('stg_decidim_proposals')
-        format: dict
-        rows:
-          - {id: 1, published_at: '2023-01-01'}
-          - {id: 2, published_at: NULL}
-          - {id: 3, published_at: '2023-02-01'}
-    expect:
-      format: dict
-      rows:
-        - {id: 1, published_at: '2023-01-01'}
-        - {id: 3, published_at: '2023-02-01'}

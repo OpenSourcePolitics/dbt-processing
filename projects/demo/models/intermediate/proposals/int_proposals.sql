@@ -13,6 +13,8 @@ SELECT
     decidim_proposals.decidim_scope_id,
     decidim_proposals.created_at,
     decidim_proposals.published_at,
+    decidim_proposals.withdrawn_at,
+    decidim_proposals.deleted_at,
     {{ int_proposals_translate_default_state('decidim_proposals.state') }} AS state,
     {{ int_proposals_translate_proposal_state('decidim_proposals.state') }} AS translated_state,
     decidim_proposals.decidim_proposals_proposal_state_id,
@@ -21,4 +23,3 @@ SELECT
     decidim_proposals.follows_count,
     {{ int_proposals_macro_address('decidim_proposals.address') }} AS address
 FROM {{ ref ("stg_decidim_proposals")}} AS decidim_proposals
-WHERE published_at IS NOT NULL
