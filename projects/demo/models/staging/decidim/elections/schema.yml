@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: decidim
+    database: "{{ env_var('DBNAME') }}"
+    schema: public
+    tables:
+      - name: decidim_elections_elections
+      - name: decidim_elections_questions
+      - name: decidim_elections_response_options
+      - name: decidim_elections_voters
+      - name: decidim_elections_votes
