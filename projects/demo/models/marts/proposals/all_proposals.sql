@@ -40,6 +40,7 @@ proposals AS (
         decidim_proposals.decidim_component_id,
         decidim_proposals.created_at,
         decidim_proposals.published_at,
+        decidim_proposals.withdrawn_at,
         decidim_proposals.state,
         COALESCE(decidim_proposals_proposal_states.title, decidim_proposals.translated_state) AS translated_state,
         coauthorships.authors_ids,
@@ -74,6 +75,7 @@ proposals AS (
     LEFT JOIN {{ ref("stg_decidim_proposals_custom_states")}} AS decidim_proposals_proposal_states ON decidim_proposals_proposal_states.id = decidim_proposals.decidim_proposals_proposal_state_id
     WHERE decidim_moderations.hidden_at IS NULL
     AND decidim_proposals.published_at IS NOT NULL
+    AND decidim_proposals.deleted_at IS NULL
     -- AND (decidim_proposals.state NOT LIKE '%withdrawn' OR decidim_proposals.state IS NULL)
 )
 
