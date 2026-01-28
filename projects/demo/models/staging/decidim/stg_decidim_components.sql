@@ -1,9 +1,5 @@
 {% set lang = var('DBT_LANG', 'fr') %}
 
-WITH source AS (
-      SELECT * FROM {{ source('decidim', 'decidim_components') }}
-),
-renamed AS (
     SELECT
         id,
         manifest_name,
@@ -13,9 +9,9 @@ renamed AS (
         settings,
         weight,
         permissions,
+        {{ get_column_if_exists(source('decidim', 'decidim_components'), 'visible', 'BOOLEAN') }},
         published_at,
         created_at,
-        updated_at
-    FROM source
-)
-SELECT * FROM renamed
+        updated_at,
+        {{ get_column_if_exists(source('decidim', 'decidim_components'), 'deleted_at', 'TIMESTAMP') }}
+    FROM {{ source('decidim', 'decidim_components') }}
