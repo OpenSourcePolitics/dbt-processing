@@ -1,7 +1,7 @@
 {% set relation = adapter.get_relation(
     database=target.database,
     schema='public',
-    identifier='decidim_taxonomizations'
+    identifier='decidim_taxonomy_filters'
 ) %}
 
 {% if relation is not none %}
@@ -14,8 +14,8 @@
         components_count,
         name,
         internal_name,
-        participatory_space_manifests,
-    FROM {{ source('decidim', 'decidim_taxonomizations') }}
+        participatory_space_manifests
+    FROM {{ source('decidim', 'decidim_taxonomy_filters') }}
 {% else %}
     SELECT
         CAST(NULL AS INTEGER) AS id,

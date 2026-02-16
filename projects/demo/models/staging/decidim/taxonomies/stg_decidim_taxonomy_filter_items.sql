@@ -1,7 +1,7 @@
 {% set relation = adapter.get_relation(
     database=target.database,
     schema='public',
-    identifier='decidim_taxonomizations'
+    identifier='decidim_taxonomy_filter_items'
 ) %}
 
 {% if relation is not none %}
@@ -11,7 +11,7 @@
         taxonomy_item_id,
         created_at,
         updated_at
-    FROM {{ source('decidim', 'decidim_taxonomizations') }}
+    FROM {{ source('decidim', 'decidim_taxonomy_filter_items') }}
 {% else %}
     SELECT
         CAST(NULL AS INTEGER) AS id,

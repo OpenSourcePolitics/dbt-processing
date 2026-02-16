@@ -1,0 +1,47 @@
+name: rc031_models_run_preproduction
+
+on: 
+  workflow_dispatch:
+
+env:
+  DBNAME: ${{ secrets.RC031_DBNAME_PROD }}
+  HOST_PREPROD: ${{ secrets.HOST_PREPROD }}
+  PASSWORD_PREPROD: ${{ secrets.PASSWORD_PREPROD }}
+  PORT_PREPROD: ${{ secrets.PORT_PREPROD }}
+  TARGET_SCHEMA: ${{ secrets.SCHEMA_PROD }}
+  USER_PREPROD: ${{ secrets.USER_PREPROD }}
+  PARTICIPATION_HOST_NAME: ${{ secrets.RC031_PARTICIPATION_HOST_NAME }}
+  WORKING_DIRECTORY: ./projects/rc031
+  
+
+jobs:
+  rc031_models_run_preproduction:
+    name: rc031_models_run_preproduction
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@master
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.x"
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run dbt deps
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: dbt deps --target preprod
+
+      - name: Run dbt models
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: dbt run --target preprod
+
+      - name: Test dbt models
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: dbt test --target preprod
+
