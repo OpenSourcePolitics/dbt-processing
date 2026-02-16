@@ -3,7 +3,7 @@
 {% set relation = adapter.get_relation(
     database=target.database,
     schema='public',
-    identifier='decidim_form_response_options'
+    identifier='decidim_forms_response_options'
 ) %}
 
 

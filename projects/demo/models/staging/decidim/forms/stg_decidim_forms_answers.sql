@@ -1,7 +1,7 @@
 {% set relation = adapter.get_relation(
     database=target.database,
     schema='public',
-    identifier='decidim_form_responses'
+    identifier='decidim_forms_responses'
 ) %}
 
 {% if relation is not none %}
