@@ -9,3 +9,107 @@ sources:
       - name : decidim_taxonomizations
       - name : decidim_taxonomy_filters
       - name : decidim_taxonomy_filter_items
+
+
+models:
+  - name: stg_decidim_taxonomies
+    config:
+      contract: {enforced: true}
+    description: "All taxonomies, parent and children"
+    columns:
+      - name: id
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: name
+        data_type: TEXT
+      - name: decidim_organization_id
+        data_type: BIGINT
+        constraints:
+          - type: foreign_key
+            to: ref('stg_decidim_organizations')
+            to_columns: [id]
+      - name: parent_id
+        data_type: BIGINT
+        #constraints:
+        #  - type: foreign_key
+        #    to: ref('stg_decidim_taxonomies')
+        #    to_columns: [id]
+      - name: weight
+        data_type: BIGINT
+      - name: children_count
+        data_type: BIGINT
+      - name: taxonomizations_count
+        data_type: BIGINT
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: updated_at
+        data_type: TIMESTAMP
+      - name: filters_count
+        data_type: BIGINT
+      - name: filter_items_count
+        data_type: BIGINT
+      - name: part_of
+        data_type: JSONB
+
+  - name: stg_decidim_taxonomy_filters
+    config:
+      contract: {enforced: true}
+    description: "TODO"
+    columns:
+      - name: id
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: root_taxonomy_id
+        data_type: BIGINT
+        constraints:
+          - type: foreign_key
+            to: ref('stg_decidim_taxonomies')
+            to_columns: [ id ]
+      - name: filter_items_count
+        data_type: BIGINT
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: updated_at
+        data_type: TIMESTAMP
+      - name: components_count
+        data_type: BIGINT
+      - name: name
+        data_type: TEXT
+      - name: internal_name
+        data_type: TEXT
+      - name: participatory_space_manifests
+        data_type: JSONB
+
+  - name: stg_decidim_taxonomy_filter_items
+    config:
+      contract: {enforced: true}
+    description: "TODO"
+    columns:
+      - name: id
+        data_type: BIGINT
+        constraints:
+          - type: unique
+          - type: not_null
+          - type: primary_key
+      - name: taxonomy_filter_id
+        data_type: BIGINT
+        constraints:
+          - type: foreign_key
+            to: ref('stg_decidim_taxonomy_filters')
+            to_columns: [ id ]
+      - name: taxonomy_item_id
+        data_type: BIGINT
+        constraints:
+          - type: foreign_key
+            to: ref('stg_decidim_taxonomies')
+            to_columns: [ id ]
+      - name: created_at
+        data_type: TIMESTAMP
+      - name: updated_at
+        data_type: TIMESTAMP

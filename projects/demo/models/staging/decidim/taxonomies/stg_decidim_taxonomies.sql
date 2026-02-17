@@ -4,10 +4,12 @@
     identifier='decidim_taxonomies'
 ) %}
 
+{% set lang = var('DBT_LANG', 'fr') %}
+
 {% if relation is not none %}
     SELECT
         id,
-        name,
+        regexp_replace(name::jsonb->>'{{ lang }}', E'(<[^>]+>)|(&[a-z]+;)', '', 'gi') as name,
         decidim_organization_id,
         parent_id,
         weight,

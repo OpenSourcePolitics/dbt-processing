@@ -4,6 +4,8 @@
     identifier='decidim_taxonomy_filters'
 ) %}
 
+{% set lang = var('DBT_LANG', 'fr') %}
+
 {% if relation is not none %}
     SELECT
         id,
@@ -12,8 +14,8 @@
         created_at,
         updated_at,
         components_count,
-        name,
-        internal_name,
+        regexp_replace(name::jsonb->>'{{ lang }}', E'(<[^>]+>)|(&[a-z]+;)', '', 'gi') as name,
+        regexp_replace(internal_name::jsonb->>'{{ lang }}', E'(<[^>]+>)|(&[a-z]+;)', '', 'gi') as internal_name,
         participatory_space_manifests
     FROM {{ source('decidim', 'decidim_taxonomy_filters') }}
 {% else %}
