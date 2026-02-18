@@ -3,6 +3,9 @@ WITH categorizations AS (
 ),
 taxonomizations AS (
     {{ taxonomizables_select('Decidim::Meetings::Meeting') }}
+),
+scopes AS (
+    {{ import_scopes_from_taxonomies('Decidim::Meetings::Meeting') }}
 )
 SELECT
     decidim_meetings_meetings.id,
@@ -11,7 +14,12 @@ SELECT
     decidim_meetings_meetings.address,
     decidim_meetings_meetings.attendees_count,
     decidim_meetings_meetings.created_at,
-    decidim_meetings_meetings.decidim_scope_id,
+    (CASE WHEN scopes.is_scope
+        THEN
+        scopes.child_name
+        ELSE
+        decidim_scopes.name
+    END) AS decidim_scope_name,
     decidim_meetings_meetings.decidim_component_id,
     decidim_meetings_meetings.start_time,
     decidim_meetings_meetings.end_time,
@@ -43,8 +51,9 @@ SELECT
     {{ taxonomization_first_sub_taxonomy('taxonomizations.sub_taxonomies[1]') }}
 FROM {{ ref("int_meetings")}} AS decidim_meetings_meetings
 JOIN {{ ref("components")}} decidim_components on decidim_components.id = decidim_component_id
-JOIN {{ ref("int_scopes")}} decidim_scopes on decidim_scopes.id = decidim_scope_id
+LEFT JOIN {{ ref("int_scopes")}} AS decidim_scopes ON decidim_scopes.id = decidim_meetings_meetings.decidim_scope_id
 LEFT JOIN categorizations on categorizations.categorizable_id = decidim_meetings_meetings.id
 LEFT JOIN taxonomizations on taxonomizations.taxonomizable_id = decidim_meetings_meetings.id
+LEFT JOIN scopes on scopes.taxonomizable_id = decidim_meetings_meetings.id
 WHERE manifest_name like 'meetings'
 AND decidim_meetings_meetings.deleted_at IS NULL

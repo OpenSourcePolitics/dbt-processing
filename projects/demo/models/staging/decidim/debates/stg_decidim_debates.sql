@@ -11,6 +11,7 @@ renamed AS (
         start_time,
         end_time,
         decidim_component_id,
+        decidim_scope_id,
         decidim_author_id,
         created_at,
         closed_at,

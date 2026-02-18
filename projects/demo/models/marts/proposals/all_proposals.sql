@@ -35,12 +35,12 @@ proposals AS (
         decidim_proposals.id,
         decidim_components.ps_id AS decidim_participatory_space_id,
         decidim_components.ps_slug AS decidim_participatory_space_slug,
-        (CASE WHEN scopes.is_scope THEN
-           scopes.child_name
-        ELSE
-           decidim_scopes.name
-       END)
-       AS decidim_scope_name,
+        (CASE WHEN scopes.is_scope
+            THEN
+            scopes.child_name
+            ELSE
+            decidim_scopes.name
+        END) AS decidim_scope_name,
         decidim_proposals.title,
         decidim_proposals.body,
         decidim_proposals.resource_type,

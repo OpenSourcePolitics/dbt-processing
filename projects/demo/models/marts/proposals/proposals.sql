@@ -20,6 +20,9 @@ categorizations AS (
 taxonomizations AS (
     {{ taxonomizables_select('Decidim::Proposals::Proposal') }}
 ),
+scopes AS (
+    {{ import_scopes_from_taxonomies('Decidim::Proposals::Proposal') }}
+),
 votes AS (
     SELECT
         decidim_proposal_id,
@@ -32,7 +35,12 @@ proposals AS (
         decidim_proposals.id,
         decidim_components.ps_id AS decidim_participatory_space_id,
         decidim_components.ps_slug AS decidim_participatory_space_slug,
-        decidim_scopes.name AS decidim_scope_name,
+        (CASE WHEN scopes.is_scope
+            THEN
+            scopes.child_name
+            ELSE
+            decidim_scopes.name
+        END) AS decidim_scope_name,
         decidim_proposals.title,
         decidim_proposals.body,
         decidim_proposals.resource_type,
@@ -71,6 +79,7 @@ proposals AS (
     LEFT JOIN votes ON decidim_proposals.id = votes.decidim_proposal_id
     LEFT JOIN categorizations ON categorizations.categorizable_id = decidim_proposals.id
     LEFT JOIN taxonomizations on taxonomizations.taxonomizable_id = decidim_proposals.id
+    LEFT JOIN scopes on scopes.taxonomizable_id = decidim_proposals.id
     LEFT JOIN {{ ref("stg_decidim_proposals_custom_states")}} AS decidim_proposals_proposal_states ON decidim_proposals_proposal_states.id = decidim_proposals.decidim_proposals_proposal_state_id
     WHERE decidim_moderations.hidden_at IS NULL
     AND decidim_proposals.published_at IS NOT NULL
