@@ -4,6 +4,7 @@ WITH main_taxonomies AS (
         decidim_taxonomies.name AS taxonomy_name,
         0 AS child_id,
         '' AS child_name,
+        decidim_taxonomies.is_scope,
         decidim_taxonomizations.taxonomizable_id,
         decidim_taxonomizations.taxonomizable_type
     FROM {{ ref ("stg_decidim_taxonomizations")}} AS decidim_taxonomizations
@@ -16,6 +17,7 @@ sub_taxonomies AS (
         parent_taxonomies.name AS taxonomy_name,
         decidim_taxonomies.id AS child_id,
         decidim_taxonomies.name AS child_name,
+        decidim_taxonomies.is_scope,
         decidim_taxonomizations.taxonomizable_id,
         decidim_taxonomizations.taxonomizable_type
     FROM {{ ref ("stg_decidim_taxonomizations")}} AS decidim_taxonomizations
