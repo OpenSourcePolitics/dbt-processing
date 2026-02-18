@@ -16,8 +16,8 @@ unit_tests:
     expect:
       format: dict
       rows:
-        - {id: 1, category_name: "Environment" , child_id: 0, child_name: "", categorizable_id: 23 , categorizable_type: "Decidim::Proposals::Proposal"}
-        - {id: 2, category_name: "Public Affairs", child_id: 0, child_name: "" , categorizable_id: 25, categorizable_type: "Decidim::Budgets::Project"}
+        - {category_id: 1, category_name: "Environment" , child_id: 0, child_name: "", categorizable_id: 23 , categorizable_type: "Decidim::Proposals::Proposal"}
+        - {category_id: 2, category_name: "Public Affairs", child_id: 0, child_name: "" , categorizable_id: 25, categorizable_type: "Decidim::Budgets::Project"}
   
   - name: testing_that_sub_categories_are_properly_processed
     description: "Checks that sub categories has the correct infos "
@@ -42,8 +42,8 @@ unit_tests:
     expect:
       format: dict
       rows:
-        - {id: 1, category_name: "Environment" , child_id: 0, child_name: "", categorizable_id: 23 , categorizable_type: "Decidim::Proposals::Proposal"}
-        - {id: 2, category_name: "Public Affairs", child_id: 0, child_name: "" , categorizable_id: 25, categorizable_type: "Decidim::Budgets::Project"}
-        - {id: 1, category_name: "Environment" , child_id: 101, child_name: "Green public spaces", categorizable_id: 1001 , categorizable_type: "Decidim::Proposals::Proposal"} 
-        - {id: 1, category_name: "Environment" , child_id: 102, child_name: "Pollution", categorizable_id: 1002 , categorizable_type: "Decidim::Proposals::Proposal"}   
-        - {id: 2, category_name: "Public Affairs", child_id: 201, child_name: "Administration" , categorizable_id: 2001, categorizable_type: "Decidim::Budgets::Project"}    
+        - {category_id: 1, category_name: "Environment" , child_id: 0, child_name: "", categorizable_id: 23 , categorizable_type: "Decidim::Proposals::Proposal"}
+        - {category_id: 2, category_name: "Public Affairs", child_id: 0, child_name: "" , categorizable_id: 25, categorizable_type: "Decidim::Budgets::Project"}
+        - {category_id: 1, category_name: "Environment" , child_id: 101, child_name: "Green public spaces", categorizable_id: 1001 , categorizable_type: "Decidim::Proposals::Proposal"}
+        - {category_id: 1, category_name: "Environment" , child_id: 102, child_name: "Pollution", categorizable_id: 1002 , categorizable_type: "Decidim::Proposals::Proposal"}
+        - {category_id: 2, category_name: "Public Affairs", child_id: 201, child_name: "Administration" , categorizable_id: 2001, categorizable_type: "Decidim::Budgets::Project"}
