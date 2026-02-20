@@ -51,9 +51,9 @@ SELECT
     {{ taxonomization_first_sub_taxonomy('taxonomizations.sub_taxonomies[1]') }}
 FROM {{ ref("int_meetings")}} AS decidim_meetings_meetings
 JOIN {{ ref("components")}} decidim_components on decidim_components.id = decidim_component_id
-LEFT JOIN {{ ref("int_scopes")}} AS decidim_scopes ON decidim_scopes.id = decidim_meetings_meetings.decidim_scope_id
 LEFT JOIN categorizations on categorizations.categorizable_id = decidim_meetings_meetings.id
 LEFT JOIN taxonomizations on taxonomizations.taxonomizable_id = decidim_meetings_meetings.id
 LEFT JOIN scopes on scopes.taxonomizable_id = decidim_meetings_meetings.id
+LEFT JOIN {{ ref("int_scopes")}} AS decidim_scopes ON decidim_scopes.id = decidim_meetings_meetings.decidim_scope_id
 WHERE manifest_name like 'meetings'
 AND decidim_meetings_meetings.deleted_at IS NULL

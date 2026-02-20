@@ -76,11 +76,11 @@ proposals AS (
     LEFT JOIN {{ ref("stg_decidim_moderations")}} AS decidim_moderations
         ON decidim_moderations.decidim_reportable_id = decidim_proposals.id
         AND decidim_moderations.decidim_reportable_type = 'Decidim::Proposals::Proposal'
-    LEFT JOIN {{ ref("int_scopes")}} AS decidim_scopes ON decidim_scopes.id = decidim_proposals.decidim_scope_id
     LEFT JOIN votes ON decidim_proposals.id = votes.decidim_proposal_id
     LEFT JOIN categorizations ON categorizations.categorizable_id = decidim_proposals.id
     LEFT JOIN taxonomizations on taxonomizations.taxonomizable_id = decidim_proposals.id
     LEFT JOIN scopes on scopes.taxonomizable_id = decidim_proposals.id
+    LEFT JOIN {{ ref("int_scopes")}} AS decidim_scopes ON decidim_scopes.id = decidim_proposals.decidim_scope_id
     LEFT JOIN {{ ref("stg_decidim_proposals_custom_states")}} AS decidim_proposals_proposal_states ON decidim_proposals_proposal_states.id = decidim_proposals.decidim_proposals_proposal_state_id
     WHERE decidim_moderations.hidden_at IS NULL
     AND decidim_proposals.published_at IS NOT NULL

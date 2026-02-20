@@ -41,8 +41,8 @@ SELECT
     {{ taxonomization_first_sub_taxonomy('taxonomizations.sub_taxonomies[1]') }}
 FROM {{ ref("stg_decidim_debates")}} AS decidim_debates_debates
     JOIN {{ ref("components")}} decidim_components on decidim_components.id = decidim_component_id
-    LEFT JOIN {{ ref("int_scopes")}} AS decidim_scopes ON decidim_scopes.id = decidim_debates_debates.decidim_scope_id
     LEFT JOIN categorizations on categorizations.categorizable_id = decidim_debates_debates.id
     LEFT JOIN taxonomizations on taxonomizations.taxonomizable_id = decidim_debates_debates.id
     LEFT JOIN scopes on scopes.taxonomizable_id = decidim_debates_debates.id
+    LEFT JOIN {{ ref("int_scopes")}} AS decidim_scopes ON decidim_scopes.id = decidim_debates_debates.decidim_scope_id
 WHERE decidim_debates_debates.deleted_at IS NULL
