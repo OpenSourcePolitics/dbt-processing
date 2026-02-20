@@ -14,9 +14,9 @@
     FROM {{ source('decidim', 'decidim_taxonomy_filter_items') }}
 {% else %}
     SELECT
-        CAST(NULL AS INTEGER) AS id,
-        CAST(NULL AS INTEGER) AS taxonomy_filter_id,
-        CAST(NULL AS INTEGER) AS taxonomy_item_id,
+        CAST(NULL AS BIGINT) AS id,
+        CAST(NULL AS BIGINT) AS taxonomy_filter_id,
+        CAST(NULL AS BIGINT) AS taxonomy_item_id,
         CAST(NULL AS TIMESTAMP) AS created_at,
         CAST(NULL AS TIMESTAMP) AS updated_at
     LIMIT 0

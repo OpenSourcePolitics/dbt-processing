@@ -1,6 +1,6 @@
 WITH main_categories AS (
     SELECT
-        decidim_categories.id AS id,
+        decidim_categories.id AS category_id,
         decidim_categories.name AS category_name,
         0 AS child_id,
         '' AS child_name,
@@ -12,7 +12,7 @@ WITH main_categories AS (
 ), 
 sub_categories AS (  
     SELECT
-        parent_categories.id AS id,
+        parent_categories.id AS category_id,
         parent_categories.name AS category_name,
         decidim_categories.id AS child_id,
         decidim_categories.name AS child_name,

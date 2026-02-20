@@ -3,6 +3,9 @@ WITH categorizations AS (
 ),
 taxonomizations AS (
     {{ taxonomizables_select('Decidim::Debates::Debate') }}
+),
+scopes AS (
+    {{ import_scopes_from_taxonomies('Decidim::Debates::Debate') }}
 )
 SELECT
     decidim_debates_debates.id,
@@ -14,6 +17,7 @@ SELECT
     decidim_debates_debates.decidim_author_id,
     decidim_debates_debates.created_at,
     decidim_debates_debates.closed_at,
+    scopes.child_name AS decidim_scope_name,
     decidim_components.ps_slug,
     concat(
         'https://',
@@ -39,4 +43,6 @@ FROM {{ ref("stg_decidim_debates")}} AS decidim_debates_debates
     JOIN {{ ref("components")}} decidim_components on decidim_components.id = decidim_component_id
     LEFT JOIN categorizations on categorizations.categorizable_id = decidim_debates_debates.id
     LEFT JOIN taxonomizations on taxonomizations.taxonomizable_id = decidim_debates_debates.id
+    LEFT JOIN scopes on scopes.taxonomizable_id = decidim_debates_debates.id
+    LEFT JOIN {{ ref("int_scopes")}} AS decidim_scopes ON decidim_scopes.id = decidim_debates_debates.decidim_scope_id
 WHERE decidim_debates_debates.deleted_at IS NULL

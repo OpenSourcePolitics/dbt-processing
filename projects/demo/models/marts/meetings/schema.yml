@@ -19,12 +19,8 @@ models:
         data_type: BIGINT
       - name: created_at
         data_type: TIMESTAMP
-      - name: decidim_scope_id
-        data_type: BIGINT
-        constraints:
-          - type: foreign_key
-            to: ref('int_scopes')
-            to_columns: [id]
+      - name: decidim_scope_name
+        data_type: TEXT
       - name: decidim_component_id
         data_type: BIGINT
         constraints:
