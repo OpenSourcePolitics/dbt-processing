@@ -6,14 +6,14 @@
 )}}
 
 WITH coauthorships AS (
-    SELECT 
+    SELECT
         array_agg(decidim_users.id) AS authors_ids,
-        decidim_coauthorships.coauthorable_id 
-    FROM {{ ref("int_users")}} AS decidim_users 
+        decidim_coauthorships.coauthorable_id
+    FROM {{ ref("int_users")}} AS decidim_users
     JOIN {{ ref("stg_decidim_coauthorships")}} AS decidim_coauthorships on decidim_users.id = decidim_coauthorships.decidim_author_id
     WHERE coauthorable_type = 'Decidim::Proposals::Proposal'
     GROUP BY coauthorable_id
-), 
+),
 categorizations AS (
     {{ categorizations_filter('Decidim::Proposals::Proposal') }}
 ),
@@ -65,7 +65,7 @@ proposals AS (
         decidim_proposals.endorsements_count,
         decidim_proposals.follows_count,
         COALESCE(votes.votes_count,0) AS votes_count,
-        decidim_proposals_proposal_states.id::int AS custom_state_id, 
+        decidim_proposals_proposal_states.id::int AS custom_state_id,
         decidim_proposals_proposal_states.title AS custom_state,
         decidim_proposals_proposal_states.description,
         decidim_proposals_proposal_states.proposals_count::int

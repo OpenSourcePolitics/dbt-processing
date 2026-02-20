@@ -6,6 +6,6 @@
         taxonomizable_id
     FROM {{ ref("taxonomizations")}} AS taxonomizations
     WHERE taxonomizations.taxonomizable_type = '{{type}}'
-    AND is_scope IS FALSE
+    AND is_scope IS FALSE AND is_category IS FALSE
     GROUP BY taxonomizable_id
 {% endmacro %}

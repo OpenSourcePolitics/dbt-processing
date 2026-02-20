@@ -14,6 +14,14 @@ SELECT
     EXISTS (
         SELECT 1 FROM jsonb_array_elements(decidim_taxonomies.part_of) AS elem
         WHERE elem::text = '1'
-    ) AS is_scope
+    ) AS is_scope,
+    EXISTS (
+        SELECT 1 FROM jsonb_array_elements(decidim_taxonomies.part_of) AS elem
+        WHERE elem::text = '2'
+    ) AS is_category,
+    (CASE WHEN decidim_taxonomies.parent_id IS NOT NULL AND decidim_taxonomies.parent_id != 2
+        THEN TRUE
+        ELSE FALSE
+    END) as is_subtaxonomy
 FROM {{ ref ("stg_decidim_taxonomies") }}  as decidim_taxonomies
 JOIN {{ ref ("int_organizations")}}  AS decidim_organizations ON decidim_organization_id = decidim_organizations.id
