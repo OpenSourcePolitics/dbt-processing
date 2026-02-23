@@ -12,10 +12,9 @@
             ELSE
             NULL
         END) AS sub_categories,
-        taxonomizable_id,
-        is_category
+        taxonomizable_id
     FROM {{ ref("taxonomizations")}} AS taxonomizations
     WHERE taxonomizations.taxonomizable_type = '{{type}}'
     AND is_category
-    GROUP BY taxonomizable_id, is_category, is_subtaxonomy
+    GROUP BY taxonomizable_id, is_subtaxonomy
 {% endmacro %}
