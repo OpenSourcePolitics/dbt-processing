@@ -26,6 +26,15 @@ categories_from_taxonomies AS (
 categorizations AS (
     {{ categorizations_filter('Decidim::Proposals::Proposal') }}
 ),
+categories_final AS (
+    SELECT
+        id,
+        COALESCE(categories_from_taxonomies.categories, categorizations.categories) AS categories,
+        COALESCE(categories_from_taxonomies.sub_categories, categorizations.sub_categories) AS sub_categories
+    FROM {{ ref("int_proposals")}} AS decidim_proposals
+    LEFT JOIN categories_from_taxonomies on categories_from_taxonomies.taxonomizable_id = decidim_proposals.id
+    LEFT JOIN categorizations ON categorizations.categorizable_id = decidim_proposals.id
+),
 votes AS (
     SELECT
         decidim_proposal_id,
@@ -51,16 +60,10 @@ proposals AS (
         coauthorships.authors_ids::text,
         COALESCE(coauthorships.authors_ids[1], -1) AS first_author_id,
         decidim_proposals.address,
-        COALESCE(categories_from_taxonomies.categories, categorizations.categories)::text AS categories,
-        COALESCE(
-            {{ categorization_first_category('categories_from_taxonomies.categories[1]') }},
-            {{ categorization_first_category('categorizations.categories[1]') }}
-        ) AS first_category,
-        COALESCE(categories_from_taxonomies.sub_categories, categorizations.sub_categories)::text AS sub_categories,
-        COALESCE(
-            {{ categorization_first_sub_category('categories_from_taxonomies.sub_categories[1]') }},
-            {{ categorization_first_sub_category('categorizations.sub_categories[1]') }}
-        ) AS first_sub_category,
+        categories_final.categories::text,
+        {{ categorization_first_category('categories_final.categories[1]') }} AS first_category,
+        categories_final.sub_categories::text,
+        {{ categorization_first_sub_category('categories_final.sub_categories[1]') }} AS first_sub_category,
         taxonomizations.taxonomies::text,
         {{ taxonomization_first_taxonomy('taxonomizations.taxonomies[1]') }},
         taxonomizations.sub_taxonomies::text,
@@ -84,6 +87,7 @@ proposals AS (
     LEFT JOIN scopes_from_taxonomies on scopes_from_taxonomies.taxonomizable_id = decidim_proposals.id
     LEFT JOIN categories_from_taxonomies on categories_from_taxonomies.taxonomizable_id = decidim_proposals.id
     LEFT JOIN categorizations ON categorizations.categorizable_id = decidim_proposals.id
+    LEFT JOIN categories_final ON categories_final.id = decidim_proposals.id
     LEFT JOIN {{ ref("int_scopes")}} AS decidim_scopes ON decidim_scopes.id = decidim_proposals.decidim_scope_id
     LEFT JOIN {{ ref("stg_decidim_proposals_custom_states")}} AS decidim_proposals_proposal_states ON decidim_proposals_proposal_states.id = decidim_proposals.decidim_proposals_proposal_state_id
     WHERE decidim_moderations.hidden_at IS NULL

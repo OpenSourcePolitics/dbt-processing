@@ -413,7 +413,7 @@ unit_tests:
       - input: ref('categorizations')
         format: dict
         rows:
-          - {categorizable_id: 43, categorizable_type: 'Decidim::Proposals::Proposal', category_name: "Sport", child_name: ""}
+          - {categorizable_id: 43, categorizable_type: 'Decidim::Proposals::Proposal', category_name: "Sport", child_name: "Tennis"}
       - input: ref('taxonomizations')
         format: dict
         rows:
