@@ -5,13 +5,22 @@ WITH parsed_data AS (
         xpath('//text()', unnest(xpath('//dt', xml_data)))::text AS private_field_description,
         unnest(xpath('//dd/div/text()', unnest(xpath('//dd', xml_data))))::text AS private_field_content
     FROM
-        {{ ref ("stg_decidim_awesome_private_proposal_fields")}} as decidim_awesome_private_proposal_fields,
-        LATERAL xmlparse(document private_body) AS xml_data
+        {{ ref("stg_decidim_awesome_private_proposal_fields") }} AS decidim_awesome_private_proposal_fields,
+        LATERAL xmlparse(
+            document replace(private_body, '&nbsp;', ' ')
+        ) AS xml_data
 )
+
 SELECT
     parsed_data.id,
     parsed_data.proposal_id,
-    replace(replace(private_field_description, '{"', ''), '"}', '') AS private_field_description,
+    trim(
+        replace(
+            replace(private_field_description, '{"', ''),
+            '"}',
+            ''
+        )
+    ) AS private_field_description,
     parsed_data.private_field_content
 FROM
     parsed_data

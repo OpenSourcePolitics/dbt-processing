@@ -31,3 +31,21 @@ unit_tests:
         - {id: 1, proposal_id: 101, private_field_description: "Code postal", private_field_content: "75003"}
         - {id: 1, proposal_id: 101, private_field_description: "Comment avez-vous eu connaissance de la plateforme ?", private_field_content: "Par la Cour des comptes et les CRTC (site web, réseaux sociaux…)"}
         - {id: 1, proposal_id: 101, private_field_description: "Comment avez-vous eu connaissance de la plateforme ?", private_field_content: "Par mon entourage personnel ou professionnel"}
+
+   - name: testing_that_2026_private_fields_with_nbsp_are_parsed
+     description: "Checks that 2026 private proposal fields containing HTML entities such as &nbsp; are correctly parsed."
+     model: int_decidim_awesome_private_proposal_fields
+     given:
+       - input: ref('stg_decidim_awesome_private_proposal_fields')
+         format: dict
+         rows:
+           - { id: 2, proposal_id: 202, private_body: '<xml><dl class="decidim_awesome-custom_fields" data-generator="decidim_awesome" data-version="0.9.2"><dt name="radio-group-1756741529152-0">Votre genre :</dt><dd id="radio-group-1756741529152-0" name="radio-group"><div alt="homme">Homme</div></dd><dt name="radio-group-1724336804706-0">Vous appartenez à la catégorie socioprofessionnelle :</dt><dd id="radio-group-1724336804706-0" name="radio-group"><div alt="retraite">Retraités</div></dd><dt name="number-1724336900935-0">Code postal</dt><dd id="number-1724336900935-0" name="number"><div>75013</div></dd><dt name="checkbox-group-1724336967989-0">Comment avez-vous eu connaissance de la plateforme ?</dt><dd id="checkbox-group-1724336967989-0" name="checkbox-group"><div alt="campagne_precedente">J’ai déjà participé à une campagne précédente</div><div alt="media">Par un média (presse, TV, radio...)</div></dd><dt name="radio-group-1776345971853-0">Origine de la contribution&nbsp;</dt><dd id="radio-group-1776345971853-0" name="radio-group"><div alt="option-1">Citoyenne</div></dd></dl></xml>' }
+     expect:
+       format: dict
+       rows:
+         - { id: 2, proposal_id: 202, private_field_description: "Votre genre :", private_field_content: "Homme" }
+         - { id: 2, proposal_id: 202, private_field_description: "Vous appartenez à la catégorie socioprofessionnelle :", private_field_content: "Retraités" }
+         - { id: 2, proposal_id: 202, private_field_description: "Code postal", private_field_content: "75013" }
+         - { id: 2, proposal_id: 202, private_field_description: "Comment avez-vous eu connaissance de la plateforme ?", private_field_content: "J’ai déjà participé à une campagne précédente" }
+         - { id: 2, proposal_id: 202, private_field_description: "Comment avez-vous eu connaissance de la plateforme ?", private_field_content: "Par un média (presse, TV, radio...)" }
+         - { id: 2, proposal_id: 202, private_field_description: "Origine de la contribution", private_field_content: "Citoyenne" }
