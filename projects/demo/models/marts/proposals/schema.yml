@@ -369,7 +369,65 @@ unit_tests:
       format: dict
       rows:
         - {id: 43}
-#  Test cannot be run because of ARRAY issue in unit test
+  - name: import_categories_from_taxonomies
+    description: "Check if platforms running Decidim >0.31 get categories based on taxonomies with id=2"
+    model: proposals
+    overrides:
+      vars:
+        DBT_LANG: 'fr'
+    given:
+      - input: ref('int_users')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_coauthorships')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_proposals_votes')
+        format: dict
+        rows:
+          - {}
+      - input: ref('stg_decidim_proposals_custom_states')
+        format: dict
+        rows:
+          - {}
+      - input: ref('int_proposals')
+        format: dict
+        rows:
+          - {id: 43, state: 'submitted', published_at: '2026-01-03', decidim_component_id: 100}
+          - {id: 44, state: 'submitted', published_at: '2026-01-04', decidim_component_id: 100}
+          - {id: 45, state: 'submitted', published_at: '2026-01-05', decidim_component_id: 100}
+      - input: ref('components')
+        format: dict
+        rows:
+          - {id: 100}
+      - input: ref('stg_decidim_moderations')
+        format: dict
+        rows:
+          - {}
+      - input: ref('int_scopes')
+        format: dict
+        rows:
+          - {}
+      - input: ref('categorizations')
+        format: dict
+        rows:
+          - {categorizable_id: 43, categorizable_type: 'Decidim::Proposals::Proposal', category_name: "Sport", child_name: "Tennis"}
+      - input: ref('taxonomizations')
+        format: dict
+        rows:
+          - {taxonomizable_id: 44, taxonomizable_type: 'Decidim::Proposals::Proposal', taxonomy_name: "Genre de musique", child_name: "Rap", is_category: False, is_subtaxonomy: True}
+          - {taxonomizable_id: 44, taxonomizable_type: 'Decidim::Proposals::Proposal', taxonomy_name: "Catégories", child_name: "Culture", is_category: True, is_subtaxonomy: False}
+          - {taxonomizable_id: 45, taxonomizable_type: 'Decidim::Proposals::Proposal', taxonomy_name: "Sport", child_name: "Spikeball", is_category: True, is_subtaxonomy: True}
+    expect:
+      format: dict
+      rows:
+        - {id: 43, first_category: "Sport", first_sub_category: "Tennis"}
+        - {id: 44, first_category: "Culture", first_sub_category: "Sans sous-catégorie"}
+        - {id: 45, first_category: "Sport", first_sub_category: "Spikeball"}
+
+# Test cannot be run because of ARRAY issue in unit test
 #  - name: test_aggregation_coauthors
 #    description: "Test the aggregation of co-authors by coauthorable_id"
 #    model: proposals
@@ -388,6 +446,10 @@ unit_tests:
 #        format: dict
 #        rows:
 #          - {id: 1, decidim_proposal_id: 101}
+#      - input: ref('stg_decidim_proposals_custom_states')
+#        format: dict
+#        rows:
+#          - {}
 #      - input: ref('int_proposals')
 #        format: dict
 #        rows:
@@ -407,7 +469,11 @@ unit_tests:
 #      - input: ref('categorizations')
 #        format: dict
 #        rows:
-#          - {id: 101}
+#          - {categorizable_id: 101}
+#      - input: ref('taxonomizations')
+#        format: dict
+#        rows:
+#          - {}
 #    expect:
 #      format: dict
 #      rows:

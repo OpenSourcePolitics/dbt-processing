@@ -8,7 +8,7 @@
         'nl': "Geen categorie"
     } %}
 
-    COALESCE(NULLIF({{ column_name }}, ''), '{{ translations.get(lang, "Unknown") }}') AS first_category
+    COALESCE(NULLIF({{ column_name }}, ''), '{{ translations.get(lang, "Unknown") }}')
 {% endmacro %}
 
 {% macro categorization_first_sub_category(column_name) %}
@@ -21,5 +21,5 @@
         'nl': "Geen subcategorie"
     } %}
 
-    COALESCE(NULLIF({{ column_name }}, ''), '{{ translations.get(lang, "Unknown") }}') AS first_sub_category
+    COALESCE(NULLIF({{ column_name }}, ''), '{{ translations.get(lang, "Unknown") }}')
 {% endmacro %}

@@ -1,9 +1,10 @@
 WITH taxonomizations AS (
     {{ taxonomizables_select('Decidim::Blogs::Post') }}
 ),
-scopes AS (
+scopes_from_taxonomies AS (
     {{ import_scopes_from_taxonomies('Decidim::Blogs::Post') }}
 )
+
 SELECT
     decidim_blogs_posts.id,
     decidim_blogs_posts.title,
@@ -13,7 +14,7 @@ SELECT
     decidim_blogs_posts.decidim_author_id,
     decidim_blogs_posts.resource_type,
     concat('https://', decidim_components.organization_host, '/', decidim_components.ps_space_type_slug, '/', decidim_components.ps_slug, '/f/', decidim_components.id, '/posts/', decidim_blogs_posts.id) AS post_url,
-    scopes.child_name AS decidim_scope_name,
+    scopes_from_taxonomies.child_name AS decidim_scope_name,
     taxonomizations.taxonomies::text,
     {{ taxonomization_first_taxonomy('taxonomizations.taxonomies[1]') }},
     taxonomizations.sub_taxonomies::text,
@@ -21,5 +22,5 @@ SELECT
 FROM {{ ref ("stg_decidim_blogs_posts")}} AS decidim_blogs_posts
 JOIN {{ ref ("components")}} AS decidim_components ON decidim_components.id = decidim_component_id
 LEFT JOIN taxonomizations on taxonomizations.taxonomizable_id = decidim_blogs_posts.id
-LEFT JOIN scopes on scopes.taxonomizable_id = decidim_blogs_posts.id
+LEFT JOIN scopes_from_taxonomies on scopes_from_taxonomies.taxonomizable_id = decidim_blogs_posts.id
 WHERE decidim_blogs_posts.deleted_at IS NULL

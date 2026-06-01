@@ -1,0 +1,77 @@
+
+version: 2
+
+models:
+  - name: int_taxonomies
+    columns:
+      - name: id
+      - name: name
+      - name: decidim_organization_id
+      - name: parent_id
+      - name: weight
+      - name: children_count
+      - name: taxonomizations_count
+      - name: created_at
+      - name: updated_at
+      - name: filters_count
+      - name: filter_items_count
+      - name: part_of
+      - name: is_scope
+        description: "Is true if the taxonomy is a child of taxonomy with id=1 (it must always be set up as 'Scopes' in the Decidim settings)"
+      - name: is_category
+        description: "Is true if the taxonomy is a child of taxonomy with id=2 (it must always be set up as 'Categories' in the Decidim settings)"
+      - name: is_subtaxonomy
+        description: "Is true if the taxonomy has a parent taxonomy other than 'Categories'"
+
+
+
+
+unit_tests:
+  - name: flag_specific_taxonomies_as_scopes
+    description: "Check that children taxonomies of id=1 are flagged as scopes."
+    model: int_taxonomies
+    given:
+      - input: ref('stg_decidim_taxonomies')
+        format: dict
+        rows:
+          - {id: 1, name: "Les territoires de l'agglo", parent_id: NULL, part_of: '[1]', decidim_organization_id: 100}
+          - {id: 3, name: "Secteurs", parent_id: NULL, part_of: '[3]' , decidim_organization_id: 100}
+          - {id: 5, name: "Aubagne", parent_id: 1, part_of: '[5,1]', decidim_organization_id: 100}
+          - {id: 6, name: "Aubagne-Centre", parent_id: 5, part_of: '[6,1,5]', decidim_organization_id: 100}
+          - {id: 9, name: "Nord", parent_id: 3, part_of: '[9,3]', decidim_organization_id: 100}
+      - input: ref('int_organizations')
+        format: dict
+        rows:
+          - {id: 100}
+    expect:
+      format: dict
+      rows:
+        - {id: 1, is_scope: True, is_category: False}
+        - {id: 3, is_scope: False, is_category: False}
+        - {id: 5, is_scope: True, is_category: False}
+        - {id: 6, is_scope: True, is_category: False}
+        - {id: 9, is_scope: False, is_category: False}
+  - name: flag_specific_taxonomies_as_categories
+    description: "Check that children taxonomies of id=1 are flagged as categories."
+    model: int_taxonomies
+    given:
+      - input: ref('stg_decidim_taxonomies')
+        format: dict
+        rows:
+          - {id: 2, name: "Les piliers de notre action", parent_id: NULL, part_of: '[2]', decidim_organization_id: 100}
+          - {id: 4, name: "Catégories", parent_id: NULL, part_of: '[4]', decidim_organization_id: 100 }
+          - {id: 7, name: "Ville citoyenne et de la proximité", parent_id: 2, part_of: '[7,2]', decidim_organization_id: 100}
+          - {id: 8, name: "Tranquillité publique", parent_id: 7, part_of: '[8,7,2]', decidim_organization_id: 100}
+          - {id: 10, name: "Urbanisme", parent_id: 4, part_of: '[10,4]', decidim_organization_id: 100}
+      - input: ref('int_organizations')
+        format: dict
+        rows:
+          - {id: 100}
+    expect:
+      format: dict
+      rows:
+        - {id: 2, is_scope: False, is_category: True, is_subtaxonomy: False}
+        - {id: 4, is_scope: False, is_category: False, is_subtaxonomy: False}
+        - {id: 7, is_scope: False, is_category: True, is_subtaxonomy: False}
+        - {id: 8, is_scope: False, is_category: True, is_subtaxonomy: True}
+        - {id: 10, is_scope: False, is_category: False, is_subtaxonomy: True}

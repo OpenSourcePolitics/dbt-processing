@@ -13,15 +13,27 @@ WITH coauthorships AS (
     JOIN {{ ref("stg_decidim_coauthorships")}} AS decidim_coauthorships on decidim_users.id = decidim_coauthorships.decidim_author_id
     WHERE coauthorable_type = 'Decidim::Proposals::Proposal'
     GROUP BY coauthorable_id
-), 
-categorizations AS (
-    {{ categorizations_filter('Decidim::Proposals::Proposal') }}
 ),
 taxonomizations AS (
     {{ taxonomizables_select('Decidim::Proposals::Proposal') }}
 ),
-scopes AS (
+scopes_from_taxonomies AS (
     {{ import_scopes_from_taxonomies('Decidim::Proposals::Proposal') }}
+),
+categories_from_taxonomies AS (
+    {{ import_categories_from_taxonomies('Decidim::Proposals::Proposal') }}
+),
+categorizations AS (
+    {{ categorizations_filter('Decidim::Proposals::Proposal') }}
+),
+categories_final AS (
+    SELECT
+        id,
+        COALESCE(categories_from_taxonomies.categories, categorizations.categories) AS categories,
+        COALESCE(categories_from_taxonomies.sub_categories, categorizations.sub_categories) AS sub_categories
+    FROM {{ ref("int_proposals")}} AS decidim_proposals
+    LEFT JOIN categories_from_taxonomies on categories_from_taxonomies.taxonomizable_id = decidim_proposals.id
+    LEFT JOIN categorizations ON categorizations.categorizable_id = decidim_proposals.id
 ),
 votes AS (
     SELECT
@@ -35,12 +47,7 @@ proposals AS (
         decidim_proposals.id,
         decidim_components.ps_id AS decidim_participatory_space_id,
         decidim_components.ps_slug AS decidim_participatory_space_slug,
-        (CASE WHEN scopes.is_scope
-            THEN
-            scopes.child_name
-            ELSE
-            decidim_scopes.name
-        END) AS decidim_scope_name,
+        COALESCE(scopes_from_taxonomies.child_name, decidim_scopes.name) AS decidim_scope_name,
         decidim_proposals.title,
         decidim_proposals.body,
         decidim_proposals.resource_type,
@@ -54,10 +61,10 @@ proposals AS (
         coauthorships.authors_ids,
         COALESCE(coauthorships.authors_ids[1], -1) AS first_author_id,
         decidim_proposals.address,
-        categorizations.categories,
-        {{ categorization_first_category('categorizations.categories[1]') }},
-        categorizations.sub_categories,
-        {{ categorization_first_sub_category('categorizations.sub_categories[1]') }},
+        categories_final.categories::text,
+        {{ categorization_first_category('categories_final.categories[1]') }} AS first_category,
+        categories_final.sub_categories::text,
+        {{ categorization_first_sub_category('categories_final.sub_categories[1]') }} AS first_sub_category,
         taxonomizations.taxonomies,
         {{ taxonomization_first_taxonomy('taxonomizations.taxonomies[1]') }},
         taxonomizations.sub_taxonomies,
@@ -77,9 +84,11 @@ proposals AS (
         ON decidim_moderations.decidim_reportable_id = decidim_proposals.id
         AND decidim_moderations.decidim_reportable_type = 'Decidim::Proposals::Proposal'
     LEFT JOIN votes ON decidim_proposals.id = votes.decidim_proposal_id
-    LEFT JOIN categorizations ON categorizations.categorizable_id = decidim_proposals.id
     LEFT JOIN taxonomizations on taxonomizations.taxonomizable_id = decidim_proposals.id
-    LEFT JOIN scopes on scopes.taxonomizable_id = decidim_proposals.id
+    LEFT JOIN scopes_from_taxonomies on scopes_from_taxonomies.taxonomizable_id = decidim_proposals.id
+    LEFT JOIN categories_from_taxonomies on categories_from_taxonomies.taxonomizable_id = decidim_proposals.id
+    LEFT JOIN categorizations ON categorizations.categorizable_id = decidim_proposals.id
+    LEFT JOIN categories_final ON categories_final.id = decidim_proposals.id
     LEFT JOIN {{ ref("int_scopes")}} AS decidim_scopes ON decidim_scopes.id = decidim_proposals.decidim_scope_id
     LEFT JOIN {{ ref("stg_decidim_proposals_custom_states")}} AS decidim_proposals_proposal_states ON decidim_proposals_proposal_states.id = decidim_proposals.decidim_proposals_proposal_state_id
     WHERE decidim_moderations.hidden_at IS NULL
